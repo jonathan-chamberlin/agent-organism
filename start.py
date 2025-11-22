@@ -9,6 +9,7 @@ environment_y_length = 10
 
 maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
 wall_value = -1
+walls = [(1,0),(4,0), (2,3),(3,0)]
 
 print(maze)
 
@@ -60,41 +61,6 @@ print([5,5] + [0,1])
 # results in [5,5,0,1]
 '''
 
-def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tuple[int, int]:
-    """A function that takes current position and direction, returns new position.
-    
-    If the inputted coordinates are outside the environmet, the function returns [-1.-1].
-    
-    If the movement takes the agent outside the environment, the function returns [-5,-5].  """
-    
-    global q_table_width
-    global environment_x_length
-    global environment_y_length
-    global direction_map
-    
-    x_coord = coordinates[0]
-    y_coord = coordinates[1]
-    
-    # checking if the inputted coordinates are inside the environment
-    if (x_coord >= environment_x_length) or (y_coord >= environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
-        return (-1,-1)
-    
-    # creating new coordinates
-    
-    new_x_coord = x_coord + direction_map[direction][0]
-    new_y_coord = y_coord + direction_map[direction][1]
-
-    
-    # checking if the resulting coordinates are inside the environment
-    if (new_x_coord >= environment_x_length) or (new_y_coord >= environment_y_length) or (new_x_coord < 0) or (new_y_coord < 0 ):
-        return (-5,-5)
-    
-    # at this point, since everything has been checked and the movement is valid, we create the new tuple (different place in memory) representing the new coordinates after the movement.
-    
-    new_coords = (new_x_coord, new_y_coord)
-
-    return new_coords
-
 def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
     """Takes in a list of cells in the form a a tuple. The cells are in the form (x_coord, y_coord). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to wall_value.
     
@@ -118,14 +84,45 @@ def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
     return copied_maze_grid
 
 
-"""def test_add_walls() -> None:
-    example_maze = np.zeros((2,2))
-    example_walls_1 = [(0,0)]
-    example_walls_2 = [(0,0), (1,0)]
-    example_walls_3 = [(0,0), (1,0), (0,1)]
-    example_walls_4 = [(0,0), (1,0), (0,1), (1,1)]
-    assert add_walls(example_maze, example_walls_1) == [[-1,0],[0,0]]
-    assert add_walls(example_maze, example_walls_2) == [[-1,-1],[0,0]]
-    assert add_walls(example_maze, example_walls_3) == [[-1,-1],[-1,0]]
-    assert add_walls(example_maze, example_walls_4) == [[-1,-1],[-1,-1]]
-    """
+# next steps is to modify the coordinates_after_moving function so it returns something bad if the agent's resulting coordinates are on a wall. If the movement takes the agent to hit a wall, the function returns (-2,-2)
+
+def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
+    """A function that takes current position and direction, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
+    
+    If the inputted coordinates are outside the environment's borders, the function returns (-1.-1).
+    
+    If the movement takes the agent outside the environment, the function returns (-5,-5).
+    
+    If the movement takes the agent to hit a wall, the function returns (-2,-2)."""
+    
+    global q_table_width
+    global environment_x_length
+    global environment_y_length
+    global direction_map
+    
+    
+    x_coord = coordinates[0]
+    y_coord = coordinates[1]
+    output_valid = True
+    
+    # checking if the inputted coordinates are inside the environment
+    if (x_coord >= environment_x_length) or (y_coord >= environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
+        output_valid = False
+    
+    # creating new coordinates
+    
+    new_x_coord = x_coord + direction_map[direction][0]
+    new_y_coord = y_coord + direction_map[direction][1]
+    
+    # checking if the resulting coordinates are inside the environment
+    if (new_x_coord >= environment_x_length) or (new_y_coord >= environment_y_length) or (new_x_coord < 0) or (new_y_coord < 0 ):
+        output_valid = False
+    
+    # we create the new tuple (different place in memory) representing the new coordinates after the movement.
+    
+    new_coords = (new_x_coord, new_y_coord)
+    
+    # check if the new coords hit a wall
+    if new_coords in walls:
+        output_valid = False
+    return (new_coords, output_valid)
