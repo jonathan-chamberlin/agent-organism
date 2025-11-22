@@ -28,15 +28,15 @@ def test_coordinates_after_moving() -> None:
     assert coordinates_after_moving((0,10),"up") == (-1,-1)
 
 def test_add_walls() -> None:
-    example_maze = np.zeros((2,2))
+    example_maze = np.zeros((2,2), dtype=int)
     example_walls_1 = [(0,0)]
     example_walls_2 = [(0,0), (1,0)]
     example_walls_3 = [(0,0), (1,0), (0,1)]
     example_walls_4 = [(0,0), (1,0), (0,1), (1,1)]
-    assert add_walls(example_maze, example_walls_1) == [[-1,0],[0,0]]
-    assert add_walls(example_maze, example_walls_2) == [[-1,-1],[0,0]]
-    assert add_walls(example_maze, example_walls_3) == [[-1,-1],[-1,0]]
-    assert add_walls(example_maze, example_walls_4) == [[-1,-1],[-1,-1]]
+    assert np.array_equal(add_walls(example_maze, example_walls_1), [[-1,0],[0,0]])
+    assert np.array_equal(add_walls(example_maze, example_walls_2), [[-1,-1],[0,0]])
+    assert np.array_equal(add_walls(example_maze, example_walls_3), [[-1,-1],[-1,0]])
+    assert np.array_equal(add_walls(example_maze, example_walls_4), [[-1,-1],[-1,-1]])
     
     
     

@@ -8,6 +8,7 @@ environment_x_length = 10
 environment_y_length = 10
 
 maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
+wall_value = -1
 
 print(maze)
 
@@ -95,9 +96,36 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tu
     return new_coords
 
 def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
-    """Takes in a list of cells in the form a a tuple. The cells are in the form (x_coord, y_coord). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to -1. """
+    """Takes in a list of cells in the form a a tuple. The cells are in the form (x_coord, y_coord). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to wall_value.
+    
+    Because of aliasing, this will not modify whatever maze_grid is inputted.
+    """
+    
+    global wall_value
+    
+    # This makes sure that the orignal maze_grid isn't changed in memory.
+    copied_maze_grid = maze_grid.copy()
+    
+    for cell in wall_cells:
+        #get the x and y coords of the wall
+        x_coord_of_wall = cell[0]
+        y_coord_of_wall = cell[1]
+        
+        # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
+        copied_maze_grid[y_coord_of_wall][x_coord_of_wall] = wall_value
     
     
-    
-    
-    return 0
+    return copied_maze_grid
+
+
+"""def test_add_walls() -> None:
+    example_maze = np.zeros((2,2))
+    example_walls_1 = [(0,0)]
+    example_walls_2 = [(0,0), (1,0)]
+    example_walls_3 = [(0,0), (1,0), (0,1)]
+    example_walls_4 = [(0,0), (1,0), (0,1), (1,1)]
+    assert add_walls(example_maze, example_walls_1) == [[-1,0],[0,0]]
+    assert add_walls(example_maze, example_walls_2) == [[-1,-1],[0,0]]
+    assert add_walls(example_maze, example_walls_3) == [[-1,-1],[-1,0]]
+    assert add_walls(example_maze, example_walls_4) == [[-1,-1],[-1,-1]]
+    """
