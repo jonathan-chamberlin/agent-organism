@@ -7,13 +7,13 @@ directions_agent_can_move = 4
 environment_x_length = 10
 environment_y_length = 10
 
-maze = np.zeros((environment_x_length,environment_y_length))
+maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
 
 print(maze)
 
 q_table_width = directions_agent_can_move
 
-q_table = np.zeros((environment_x_length*environment_y_length,directions_agent_can_move))
+q_table = np.zeros((environment_x_length*environment_y_length,directions_agent_can_move), dtype=float)
 
 direction_map = {
     "up": (0,-1),
@@ -52,14 +52,12 @@ def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
     
     return row_index
 
-
 '''
 Here I learn how tuples work
 
 print([5,5] + [0,1])
 # results in [5,5,0,1]
 '''
-
 
 def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tuple[int, int]:
     """A function that takes current position and direction, returns new position.
@@ -95,3 +93,11 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tu
     new_coords = (new_x_coord, new_y_coord)
 
     return new_coords
+
+def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
+    """Takes in a list of cells in the form a a tuple. The cells are in the form (x_coord, y_coord). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to -1. """
+    
+    
+    
+    
+    return 0
