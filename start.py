@@ -123,3 +123,5 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     if new_coords in walls:
         output_valid = False
     return (new_coords, output_valid)
+
+# Next step is to create A function that updates the Q-table after learning
