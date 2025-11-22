@@ -3,11 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-print("Hey")
-
 directions_agent_can_move = 4
 environment_x_length = 10
 environment_y_length = 10
+
+maze = np.zeros((environment_x_length,environment_y_length))
+
+print(maze)
 
 q_table_width = directions_agent_can_move
 
