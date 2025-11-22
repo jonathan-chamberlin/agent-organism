@@ -76,7 +76,7 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tu
     
     # checking if the inputted coordinates are inside the environment
     if (x_coord > environment_x_length) or (y_coord > environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
-        return [-1,-1]
+        return (-1,-1)
     
     # creating new coordinates
     
@@ -86,10 +86,10 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tu
     
     # checking if the resulting coordinates are inside the environment
     if (new_x_coord > environment_x_length) or (new_y_coord > environment_y_length) or (new_x_coord < 0) or (new_y_coord < 0 ):
-        return [-5,-5]
+        return (-5,-5)
     
     # at this point, since everything has been checked and the movement is valid, we create the new tuple (different place in memory) representing the new coordinates after the movement.
     
-    new_coords = [new_x_coord, new_y_coord]
+    new_coords = (new_x_coord, new_y_coord)
 
     return new_coords
