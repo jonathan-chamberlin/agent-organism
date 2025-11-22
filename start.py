@@ -42,7 +42,7 @@ def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
     x_coord = coordinates[0]
     y_coord = coordinates[1]
     
-    if (x_coord > environment_x_length) or (y_coord > environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
+    if (x_coord >= environment_x_length) or (y_coord >= environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
         return -1
     
     row_index = x_coord + y_coord * q_table_width
@@ -75,7 +75,7 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tu
     y_coord = coordinates[1]
     
     # checking if the inputted coordinates are inside the environment
-    if (x_coord > environment_x_length) or (y_coord > environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
+    if (x_coord >= environment_x_length) or (y_coord >= environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
         return (-1,-1)
     
     # creating new coordinates
@@ -85,7 +85,7 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tu
 
     
     # checking if the resulting coordinates are inside the environment
-    if (new_x_coord > environment_x_length) or (new_y_coord > environment_y_length) or (new_x_coord < 0) or (new_y_coord < 0 ):
+    if (new_x_coord >= environment_x_length) or (new_y_coord >= environment_y_length) or (new_x_coord < 0) or (new_y_coord < 0 ):
         return (-5,-5)
     
     # at this point, since everything has been checked and the movement is valid, we create the new tuple (different place in memory) representing the new coordinates after the movement.
