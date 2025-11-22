@@ -51,9 +51,12 @@ def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
     return row_index
 
 
+'''
+Here I learn how tuples work
 
 print([5,5] + [0,1])
 # results in [5,5,0,1]
+'''
 
 
 def coordinates_after_moving(coordinates: tuple[int, int], direction: str) -> tuple[int, int]:
