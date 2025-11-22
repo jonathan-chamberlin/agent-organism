@@ -4,7 +4,6 @@ from start import coordinates_after_moving
 from start import add_walls
 import numpy as np
 
-
 def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,0]) == 0
     assert coordinates_to_q_table_index([1,0]) == 1 + 0 * q_table_width

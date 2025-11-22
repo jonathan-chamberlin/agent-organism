@@ -83,9 +83,6 @@ def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
     
     return copied_maze_grid
 
-
-# next steps is to modify the coordinates_after_moving function so it returns something bad if the agent's resulting coordinates are on a wall. If the movement takes the agent to hit a wall, the function returns (-2,-2)
-
 def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
     """A function that takes current position and direction, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
     
