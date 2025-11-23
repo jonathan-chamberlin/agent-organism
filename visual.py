@@ -131,7 +131,7 @@ draw_grid(full_environment, cell_color_map)
 
 agent_color = (0,0,255)
 
-pg.draw.circle(window, agent_color, (0,0), 100, 100)
+pg.draw.circle(window, agent_color, (0,0), int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length)))
 
 # renders everything
 pg.display.flip()
