@@ -8,6 +8,12 @@ directions_agent_can_move = 4
 environment_x_length = 10
 environment_y_length = 10
 
+cell_value_map = {
+    -1: "wall",
+    2: "goal",
+    0: "empty"
+}
+
 maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
 wall_value = -1
 walls = [(2,1), (6,1), (8,3), (1,4), (4,4), (7,4), (3,5), (9,5), (0,6), (5,6), (2,7), (6,8), (8,8), (4,9), (7,9)]
@@ -26,12 +32,6 @@ direction_map = {
     }
 
 
-
-cell_type_map = {
-    -1: "wall",
-    2: "goal",
-    0: "empty"
-}
 
 cell_color_map = {
     "wall": (30,30,30),
