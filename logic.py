@@ -28,9 +28,9 @@ cell_color_map = {
     }
 
 empty_maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
-wall_value = -1
+wall_value = cell_name_to_value_map["wall"]
 walls = [(2,1), (6,1), (8,3), (1,4), (4,4), (7,4), (3,5), (9,5), (0,6), (5,6), (2,7), (6,8), (8,8), (4,9), (7,9)]
-goal_value = 2
+goal_value = cell_name_to_value_map["goal"]
 goals = [ (9,0), (5,3), (2,9), (9,9)]
 
 q_table_width = directions_agent_can_move
@@ -86,6 +86,7 @@ def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
     
     Because of aliasing, this will not modify whatever maze_grid is inputted.
     """
+    global cell_name_to_value_map
     
     # This makes sure that the orignal maze_grid isn't changed in memory.
     copied_maze_grid = maze_grid.copy()
@@ -96,7 +97,7 @@ def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
         y_coord_of_wall = cell[1]
         
         # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid[y_coord_of_wall][x_coord_of_wall] = wall_value
+        copied_maze_grid[y_coord_of_wall][x_coord_of_wall] = cell_name_to_value_map["wall"]
     
     
     return copied_maze_grid
@@ -107,7 +108,7 @@ def add_goals(maze_grid, goal_cells: list[tuple]) -> ndarray:
     Because of aliasing, this will not modify whatever maze_grid is inputted.
     """
     
-    global goal_value
+    global cell_name_to_value_map
     
     # This makes sure that the orignal maze_grid isn't changed in memory.
     copied_maze_grid_with_goals = maze_grid.copy()
@@ -118,7 +119,7 @@ def add_goals(maze_grid, goal_cells: list[tuple]) -> ndarray:
         y_coord_of_wall = cell[1]
         
         # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid_with_goals[y_coord_of_wall][x_coord_of_wall] = goal_value
+        copied_maze_grid_with_goals[y_coord_of_wall][x_coord_of_wall] = cell_name_to_value_map["goal"]
     
     
     return copied_maze_grid_with_goals
