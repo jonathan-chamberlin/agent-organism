@@ -5,6 +5,7 @@ from start import coordinates_after_moving
 from start import add_walls
 from start import add_goals
 from start import goal_value
+from start import add_custom_object
 
 def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,0]) == 0
@@ -55,3 +56,15 @@ def test_add_goals() -> None:
     assert np.array_equal(add_goals(example_maze, example_goals_2), [[goal_value,goal_value],[0,0]])
     assert np.array_equal(add_goals(example_maze, example_goals_3), [[goal_value,goal_value],[goal_value,0]])
     assert np.array_equal(add_goals(example_maze, example_goals_4), [[goal_value,goal_value],[goal_value,goal_value]])
+
+def test_add_custom_object() -> None:
+    example_maze = np.zeros((2,2), dtype=int)
+    example_chosen_value = 5
+    example_object_1 = [(0,0)]
+    example_object_2 = [(0,0), (1,0)]
+    example_object_3 = [(0,0), (1,0), (0,1)]
+    example_object_4 = [(0,0), (1,0), (0,1), (1,1)]
+    assert np.array_equal(add_custom_object(example_maze, example_object_1, example_chosen_value), [[example_chosen_value,0],[0,0]])
+    assert np.array_equal(add_custom_object(example_maze, example_object_2, example_chosen_value), [[example_chosen_value,example_chosen_value],[0,0]])
+    assert np.array_equal(add_custom_object(example_maze, example_object_3,example_chosen_value), [[example_chosen_value,example_chosen_value],[example_chosen_value,0]])
+    assert np.array_equal(add_custom_object(example_maze, example_object_4,example_chosen_value), [[example_chosen_value,example_chosen_value],[example_chosen_value,example_chosen_value]])
