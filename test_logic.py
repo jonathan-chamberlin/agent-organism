@@ -1,11 +1,5 @@
 import numpy as np
-from start import coordinates_to_q_table_index
-from start import q_table_width
-from start import coordinates_after_moving
-from start import add_walls
-from start import add_goals
-from start import goal_value
-from start import add_custom_object
+from logic import *
 
 def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,0]) == 0

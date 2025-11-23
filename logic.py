@@ -167,7 +167,6 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     return (new_coords, output_valid)
 
 # For learning, I need to create A function that updates the Q-table after learning
-# For display, I need to print out the maze array with the addition of walls and goals.
 
 
 
@@ -178,3 +177,7 @@ print(add_walls(add_goals(maze,goals),walls))
 
 print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
 '''
+
+
+# For display, I need to print out the maze array with the addition of walls and goals.
+
