@@ -82,7 +82,7 @@ def draw_objects(objects: tuple[int,int], object_name: str, object_coloring: map
         """
 # draw_objects(example_walls_to_draw,"wall",cell_color_map)
 
-def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_coloring: map) -> None:
+def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_color: tuple[int,int,int]) -> None:
     """Accepts the (x,y) coordinates of one object, and it's type, and draws it."""
     global cell_type_map
     global pixel_rendering_offset_x_from_top_left
@@ -97,9 +97,6 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     x_coord_in_pixels = x_coord * cell_x_length + pixel_rendering_offset_x_from_top_left
     y_coord_in_pixels = y_coord * cell_y_length +pixel_rendering_offset_y_from_top_left
     
-    # finds color of cell from the object_coloring_map
-    object_color = object_coloring[cell_type]
-    
     # draws the cell
     pg.draw.rect(window, object_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
     """TESTS:
@@ -107,9 +104,9 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     draw_one_object((6,6), "wall", cell_color_map)
     draw_one_object((4,5), "wall", cell_color_map)"""
 
-draw_one_object((5,5), "wall", cell_color_map)
-draw_one_object((6,6), "wall", cell_color_map)
-draw_one_object((4,5), "wall", cell_color_map)
+draw_one_object((5,5), "wall", cell_color_map["wall"])
+draw_one_object((6,6), "wall", cell_color_map["wall"])
+draw_one_object((4,5), "wall", cell_color_map["wall"])
 
 def draw_grid(grid: tuple[tuple[int,int]], object_values: map, object_coloring: map)-> None:
     """For each cell in the grid, it gets the cell's value. From that value, it looks up its name using the object_values map. Using the name, the function looks up the cell's coloring, then draws the object"""
@@ -121,7 +118,7 @@ def draw_grid(grid: tuple[tuple[int,int]], object_values: map, object_coloring: 
             cell_value = grid[row][cell]
             cell_name = cell_value_map[cell_value] # issue here
             cell_color = object_coloring[cell_name]
-            draw_one_object((row, cell),cell_name,object_coloring)
+            draw_one_object((row, cell),cell_name,cell_color)
 
 print(type(cell_value_map[-1]))
 
