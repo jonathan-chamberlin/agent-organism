@@ -38,6 +38,12 @@ for cell in example_walls_to_draw:
 
 # LEFT OFF, now create a function that renders a list of coordinates given a cell type.
 
+# the grid is just an array with 0s
+# the grid is updated to include walls and goals, and custom objects
+# the grid is rendered by looking at the int value in each cell, and finding the color for that value, then rending the cell in that color.
+
+def render_grid(maze, object_coloring)
+
 
 # renders everything
 pg.display.flip()

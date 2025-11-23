@@ -25,11 +25,19 @@ direction_map = {
     "right":(1,0)
     }
 
+
+
 cell_type_map = {
-    "wall": -1,
+    "wall": -1, 
     "goal": 2,
     "empty": 0
+}
 
+cell_color_map = {
+    "wall": (30,30,30),
+    "goal:": (100,100,0),
+    "empty": (200,200,200)
+    
 }
 
 '''
