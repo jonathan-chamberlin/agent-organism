@@ -1,8 +1,9 @@
+import numpy as np
 from start import coordinates_to_q_table_index
 from start import q_table_width
 from start import coordinates_after_moving
 from start import add_walls
-import numpy as np
+from start import add_goals
 
 def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,0]) == 0
@@ -43,5 +44,13 @@ def test_add_walls() -> None:
     assert np.array_equal(add_walls(example_maze, example_walls_3), [[-1,-1],[-1,0]])
     assert np.array_equal(add_walls(example_maze, example_walls_4), [[-1,-1],[-1,-1]])
     
-    
-    
+def test_add_goals() -> None:
+    example_maze = np.zeros((2,2), dtype=int)
+    example_goals_1 = [(0,0)]
+    example_goals_2 = [(0,0), (1,0)]
+    example_goals_3 = [(0,0), (1,0), (0,1)]
+    example_goals_4 = [(0,0), (1,0), (0,1), (1,1)]
+    assert np.array_equal(add_goals(example_maze, example_goals_1), [[-1,0],[0,0]])
+    assert np.array_equal(add_goals(example_maze, example_goals_2), [[-1,-1],[0,0]])
+    assert np.array_equal(add_goals(example_maze, example_goals_3), [[-1,-1],[-1,0]])
+    assert np.array_equal(add_goals(example_maze, example_goals_4), [[-1,-1],[-1,-1]])
