@@ -28,9 +28,9 @@ direction_map = {
 
 
 cell_type_map = {
-    "wall": -1, 
-    "goal": 2,
-    "empty": 0
+    -1: "wall",
+    2: "goal",
+    0: "empty"
 }
 
 cell_color_map = {
