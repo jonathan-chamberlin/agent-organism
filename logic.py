@@ -8,10 +8,17 @@ directions_agent_can_move = 4
 environment_x_length = 10
 environment_y_length = 10
 
-cell_value_map = {
+cell_value_to_name_map = {
     -1: "wall",
     2: "goal",
     0: "empty"
+}
+
+cell_name_to_value_map = {
+    "wall": -1,
+    "goal": 2,
+    "empty": 0
+    
 }
 
 cell_color_map = {
