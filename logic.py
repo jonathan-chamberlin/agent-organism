@@ -23,15 +23,18 @@ cell_name_to_value_map = {
 
 cell_color_map = {
     "wall": (30,30,30),
-    "goal": (100,100,0),
-    "empty": (200,200,200)
+    "goal": (255,215,0),
+    "empty": (100,100,100)
     }
 
 empty_maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
+
+walls = [(5,0), (2,1), (5,1), (7,1), (8,1), (9,1), (0,2), (1,2), (2,2), (5,2), (7,2), (4,3), (5,3), (7,3), (1,4), (2,4), (3,4), (4,4), (7,4), (9,4), (1,5), (6,5), (7,5), (9,5), (1,6), (3,6), (4,6), (5,6), (6,6), (1,7), (8,7), (1,8), (2,8), (3,8), (4,8), (5,8), (6,8), (8,8), (8,9)]
+goals = [(9,0), (9,9)]
+
 wall_value = cell_name_to_value_map["wall"]
-walls = [(2,1), (6,1), (8,3), (1,4), (4,4), (7,4), (3,5), (9,5), (0,6), (5,6), (2,7), (6,8), (8,8), (4,9), (7,9)]
 goal_value = cell_name_to_value_map["goal"]
-goals = [ (9,0), (5,3), (2,9), (9,9)]
+
 
 q_table_width = directions_agent_can_move
 

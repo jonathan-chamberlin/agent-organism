@@ -24,7 +24,6 @@ pg.draw.rect(window, wall_color, (0,0,cell_x_length, cell_y_length))
 pg.draw.rect(window, empty_cell_color, (0,0,cell_x_length, cell_y_length))
 """
 
-example_walls_to_draw = [(0,0), (3,1),(2,3),(0,9),(9,0),(9,9)]
 
 
 # LEFT OFF, now create a function that renders a list of coordinates given a cell type.
@@ -109,7 +108,7 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
 
 
 def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
-    """For each cell in the grid, it gets the cell's value. From that value, it looks up its name using the object_values map. Using the name, the function looks up the cell's coloring, then draws the object"""
+    """Accepts a grid, not a one-dimensional tuple. For each cell in the grid, it gets the cell's value. From that value, it looks up its name using the object_values map. Using the name, the function looks up the cell's coloring, then draws the object"""
     
     global cell_value_to_name_map
     
