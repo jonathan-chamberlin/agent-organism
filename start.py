@@ -25,7 +25,6 @@ direction_map = {
     "right":(1,0)
     }
 
-
 '''
 Plan for which functions to create to allow the agent to move across the environment.
 
