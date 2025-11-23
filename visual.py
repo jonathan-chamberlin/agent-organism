@@ -4,8 +4,8 @@ pg.init()
 
 cell_x_length = 50
 cell_y_length = 50
-pixel_rendering_offset_x_from_top_left = 20
-pixel_rendering_offset_y_from_top_left = 20
+pixel_rendering_offset_x_from_top_left = 0
+pixel_rendering_offset_y_from_top_left = 0
 
 window_dimensions = (800,700)
 
@@ -129,9 +129,20 @@ def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
 
 draw_grid(full_environment, cell_color_map)
 
+
+# draw agent
 agent_color = (0,0,255)
 
-pg.draw.circle(window, agent_color, (0,0), int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length)))
+circle_centered_on_start_coords = start
+
+circle_centered_on_start_in_pixels = (circle_centered_on_start_coords[0][1]*cell_y_length+cell_y_length/2, circle_centered_on_start_coords[0][0]* cell_x_length+cell_x_length/2)
+
+
+
+
+
+pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length)))
+# LEFT OFF, now make the agent centered on the (0,0) cell
 
 # renders everything
 pg.display.flip()
