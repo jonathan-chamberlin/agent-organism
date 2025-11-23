@@ -67,8 +67,6 @@ def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
     Because of aliasing, this will not modify whatever maze_grid is inputted.
     """
     
-    global wall_value
-    
     # This makes sure that the orignal maze_grid isn't changed in memory.
     copied_maze_grid = maze_grid.copy()
     
@@ -124,4 +122,4 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
         output_valid = False
     return (new_coords, output_valid)
 
-# Next step is to create A function that updates the Q-table after learning
+# For learning, I need to create A function that updates the Q-table after learning
