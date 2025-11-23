@@ -4,8 +4,8 @@ pg.init()
 
 cell_x_length = 50
 cell_y_length = 50
-pixel_rendering_offset_x_from_top_left = 0
-pixel_rendering_offset_y_from_top_left = 0
+pixel_rendering_offset_x_from_top_left = 20
+pixel_rendering_offset_y_from_top_left = 20
 
 window_dimensions = (800,700)
 
@@ -135,7 +135,7 @@ agent_color = (0,0,255)
 
 circle_centered_on_start_coords = start
 
-circle_centered_on_start_in_pixels = (circle_centered_on_start_coords[0][1]*cell_y_length+cell_y_length/2, circle_centered_on_start_coords[0][0]* cell_x_length+cell_x_length/2)
+circle_centered_on_start_in_pixels = (pixel_rendering_offset_y_from_top_left + circle_centered_on_start_coords[0][1]*cell_y_length+cell_y_length/2, pixel_rendering_offset_x_from_top_left + circle_centered_on_start_coords[0][0]* cell_x_length+cell_x_length/2)
 
 
 
