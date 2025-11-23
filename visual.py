@@ -80,8 +80,32 @@ def draw_objects(objects: tuple[int,int], object_name: str, object_coloring: map
         </2>
         
         """
+# draw_objects(example_walls_to_draw,"wall",cell_color_map)
 
-draw_objects(example_walls_to_draw,"wall",cell_color_map)
+def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_coloring: map) -> None:
+    """Accepts the (x,y) coordinates of one object, and it's type, and draws it."""
+    global cell_type_map
+    global pixel_rendering_offset_x_from_top_left
+    global pixel_rendering_offset_y_from_top_left
+    global cell_x_length
+    global cell_y_length
+    
+    # convert cell cordinate locations to placement on the window using pixels
+    x_coord = cell_coordinates[0]
+    y_coord = cell_coordinates[1]
+    
+    x_coord_in_pixels = x_coord * cell_x_length + pixel_rendering_offset_x_from_top_left
+    y_coord_in_pixels = y_coord * cell_y_length +pixel_rendering_offset_y_from_top_left
+    
+    # finds color of cell from the object_coloring_map
+    object_color = object_coloring[cell_type]
+    
+    # draws the cell
+    pg.draw.rect(window, object_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
+
+draw_one_object((5,5), "wall", cell_color_map)
+draw_one_object((6,6), "wall", cell_color_map)
+draw_one_object((4,5), "wall", cell_color_map)
 
 # I could create a draw_grid(grid: tuple[tuple[int,int]], cell_index: map) -> None,,, that calls the draw_objects function for every item in the maze. 
 # My current draw_objects function accepts a tuple. Which means it should be called once for each type of object.
