@@ -129,9 +129,12 @@ def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
 
 draw_grid(full_environment, cell_color_map)
 
+agent_color = (0,0,255)
+
+pg.draw.circle(window, agent_color, (0,0), 100, 100)
+
 # renders everything
 pg.display.flip()
-
 
 running = True
 while running:
