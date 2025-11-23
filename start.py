@@ -9,7 +9,8 @@ environment_y_length = 10
 
 maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
 wall_value = -1
-walls = [(1,0),(4,0), (2,3),(3,0)]
+walls = [(2,1), (6,1), (8,3), (1,4), (4,4), (7,4), (3,5), (9,5), (0,6), (5,6), (2,7), (6,8), (8,8), (4,9), (7,9)]
+goal_value = 2
 goals = [(5,5), (1,7)]
 
 print(maze)
@@ -87,6 +88,8 @@ def add_goals(maze_grid, goal_cells: list[tuple]) -> ndarray:
     Because of aliasing, this will not modify whatever maze_grid is inputted.
     """
     
+    global goal_value
+    
     # This makes sure that the orignal maze_grid isn't changed in memory.
     copied_maze_grid_with_goals = maze_grid.copy()
     
@@ -96,7 +99,7 @@ def add_goals(maze_grid, goal_cells: list[tuple]) -> ndarray:
         y_coord_of_wall = cell[1]
         
         # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid_with_goals[y_coord_of_wall][x_coord_of_wall] = wall_value
+        copied_maze_grid_with_goals[y_coord_of_wall][x_coord_of_wall] = goal_value
     
     
     return copied_maze_grid_with_goals
@@ -143,3 +146,6 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     return (new_coords, output_valid)
 
 # For learning, I need to create A function that updates the Q-table after learning
+# For display, I need to print out the maze array with the addition of walls and goals.
+
+print(add_walls(maze,walls))
