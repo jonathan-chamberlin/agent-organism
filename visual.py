@@ -16,25 +16,16 @@ empty_cell_color = (100,100,100)
 window = pg.display.set_mode(window_dimensions)
 pg.display.set_caption("Maze Robot Simulator")
 pg.draw.rect(window, background_color, (0,0,window_dimensions[0], window_dimensions[1]))
-
+"""Drawing one thing at a time
 # draws a wall
 pg.draw.rect(window, wall_color, (0,0,cell_x_length, cell_y_length))
 
 # draws a empty cell
 pg.draw.rect(window, empty_cell_color, (0,0,cell_x_length, cell_y_length))
+"""
 
 example_walls_to_draw = [(0,0), (3,1),(2,3),(0,9),(9,0),(9,9)]
-for cell in example_walls_to_draw:
-    
-    # convert cell cordinate locations to placement on the window using pixels
-    
-    x_coord = cell[0]
-    y_coord = cell[1]
-    
-    x_coord_in_pixels = x_coord * cell_x_length + pixel_rendering_offset_x_from_top_left
-    y_coord_in_pixels = y_coord * cell_y_length +pixel_rendering_offset_y_from_top_left
-    
-    pg.draw.rect(window, wall_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
+
 
 # LEFT OFF, now create a function that renders a list of coordinates given a cell type.
 
@@ -42,8 +33,58 @@ for cell in example_walls_to_draw:
 # the grid is updated to include walls and goals, and custom objects
 # the grid is rendered by looking at the int value in each cell, and finding the color for that value, then rending the cell in that color.
 
-def render_grid(maze, object_coloring)
+def draw_objects(objects: tuple[int,int], object_name: str, object_coloring: map) -> None:
+    """The objects are rendered by looking at the int value in each cell, and finding the color for that value from the object_coloring map, then rending the cell in that color."""
+    
+    global cell_type_map
+    global pixel_rendering_offset_x_from_top_left
+    global pixel_rendering_offset_y_from_top_left
+    global cell_x_length
+    global cell_y_length
+    
+    for cell in objects:
+        # convert cell cordinate locations to placement on the window using pixels
+        x_coord = cell[0]
+        y_coord = cell[1]
+        
+        x_coord_in_pixels = x_coord * cell_x_length + pixel_rendering_offset_x_from_top_left
+        y_coord_in_pixels = y_coord * cell_y_length +pixel_rendering_offset_y_from_top_left
+        
+        # finds color of cell from the object_coloring_map
+        object_color = object_coloring[object_name]
+        
+        # draws the cell
+        pg.draw.rect(window, object_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
+        
+        """
+    TEST. Does <1> produce the same as <2>?
+    <both>
+    example_walls_to_draw = [(0,0), (3,1),(2,3),(0,9),(9,0),(9,9)]
+    </both>
+    <1>
+    for cell in example_walls_to_draw:
+        
+        # convert cell cordinate locations to placement on the window using pixels
+        
+        x_coord = cell[0]
+        y_coord = cell[1]
+        
+        x_coord_in_pixels = x_coord * cell_x_length + pixel_rendering_offset_x_from_top_left
+        y_coord_in_pixels = y_coord * cell_y_length +pixel_rendering_offset_y_from_top_left
+        
+        pg.draw.rect(window, wall_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
+        </1>
+        
+        <2> 
+        draw_objects(example_walls_to_draw,"wall",cell_color_map)
+        </2>
+        
+        """
 
+draw_objects(example_walls_to_draw,"wall",cell_color_map)
+
+# I could create a draw_grid(grid: tuple[tuple[int,int]], cell_index: map) -> None,,, that calls the draw_objects function for every item in the maze. 
+# My current draw_objects function accepts a tuple. Which means it should be called once for each type of object.
 
 # renders everything
 pg.display.flip()
