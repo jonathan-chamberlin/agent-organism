@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import pygame
+import pygame as pg
 
 directions_agent_can_move = 4
 environment_x_length = 10
@@ -14,9 +14,6 @@ walls = [(2,1), (6,1), (8,3), (1,4), (4,4), (7,4), (3,5), (9,5), (0,6), (5,6), (
 goal_value = 2
 goals = [ (9,0), (5,3), (2,9), (9,9)]
 
-
-print(maze)
-
 q_table_width = directions_agent_can_move
 
 q_table = np.zeros((environment_x_length*environment_y_length,directions_agent_can_move), dtype=float)
@@ -27,6 +24,13 @@ direction_map = {
     "left":(-1,0),
     "right":(1,0)
     }
+
+cell_type_map = {
+    "wall": -1,
+    "goal": 2,
+    "empty": 0
+
+}
 
 '''
 Plan for which functions to create to allow the agent to move across the environment.
