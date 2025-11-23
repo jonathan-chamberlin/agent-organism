@@ -14,7 +14,13 @@ cell_value_map = {
     0: "empty"
 }
 
-maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
+cell_color_map = {
+    "wall": (30,30,30),
+    "goal:": (100,100,0),
+    "empty": (200,200,200)
+    }
+
+empty_maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
 wall_value = -1
 walls = [(2,1), (6,1), (8,3), (1,4), (4,4), (7,4), (3,5), (9,5), (0,6), (5,6), (2,7), (6,8), (8,8), (4,9), (7,9)]
 goal_value = 2
@@ -31,14 +37,6 @@ direction_map = {
     "right":(1,0)
     }
 
-
-
-cell_color_map = {
-    "wall": (30,30,30),
-    "goal:": (100,100,0),
-    "empty": (200,200,200)
-    
-}
 
 '''
 Plan for which functions to create to allow the agent to move across the environment.
@@ -191,6 +189,9 @@ print(add_walls(add_goals(maze,goals),walls))
 print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
 '''
 
+full_environment = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
+
+print(full_environment)
 
 # For display, I need to print out the maze array with the addition of walls and goals.
 

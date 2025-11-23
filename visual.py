@@ -102,10 +102,30 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     
     # draws the cell
     pg.draw.rect(window, object_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
+    """TESTS:
+    draw_one_object((5,5), "wall", cell_color_map)
+    draw_one_object((6,6), "wall", cell_color_map)
+    draw_one_object((4,5), "wall", cell_color_map)"""
 
 draw_one_object((5,5), "wall", cell_color_map)
 draw_one_object((6,6), "wall", cell_color_map)
 draw_one_object((4,5), "wall", cell_color_map)
+
+def draw_grid(grid: tuple[tuple[int,int]], object_values: map, object_coloring: map)-> None:
+    """For each cell in the grid, it gets the cell's value. From that value, it looks up its name using the object_values map. Using the name, the function looks up the cell's coloring, then draws the object"""
+    
+    global cell_value_map
+    
+    for row in grid:
+        for cell in grid[row]:
+            cell_value = grid[row][cell]
+            cell_name = cell_value_map[cell_value] # issue here
+            cell_color = object_coloring[cell_name]
+            draw_one_object((row, cell),cell_name,object_coloring)
+
+print(type(cell_value_map[-1]))
+
+# draw_grid(full_environment, cell_value_map, cell_color_map)
 
 # I could create a draw_grid(grid: tuple[tuple[int,int]], cell_index: map) -> None,,, that calls the draw_objects function for every item in the maze. 
 # My current draw_objects function accepts a tuple. Which means it should be called once for each type of object.
