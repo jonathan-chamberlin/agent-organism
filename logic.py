@@ -2,6 +2,7 @@ import pytest
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import pygame
 
 directions_agent_can_move = 4
 environment_x_length = 10
