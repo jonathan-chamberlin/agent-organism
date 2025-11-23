@@ -16,7 +16,7 @@ cell_value_map = {
 
 cell_color_map = {
     "wall": (30,30,30),
-    "goal:": (100,100,0),
+    "goal": (100,100,0),
     "empty": (200,200,200)
     }
 

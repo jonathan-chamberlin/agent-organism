@@ -104,23 +104,33 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     draw_one_object((6,6), "wall", cell_color_map)
     draw_one_object((4,5), "wall", cell_color_map)"""
 
+"""
 draw_one_object((5,5), "wall", cell_color_map["wall"])
 draw_one_object((6,6), "wall", cell_color_map["wall"])
 draw_one_object((4,5), "wall", cell_color_map["wall"])
+"""
 
-def draw_grid(grid: tuple[tuple[int,int]], object_values: map, object_coloring: map)-> None:
+def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
     """For each cell in the grid, it gets the cell's value. From that value, it looks up its name using the object_values map. Using the name, the function looks up the cell's coloring, then draws the object"""
     
     global cell_value_map
     
+    row_index = 0
+    
+    
     for row in grid:
-        for cell in grid[row]:
-            cell_value = grid[row][cell]
+        cell_index = 0
+        for cell in row:
+            cell_value = cell
             cell_name = cell_value_map[cell_value] # issue here
             cell_color = object_coloring[cell_name]
-            draw_one_object((row, cell),cell_name,cell_color)
+            draw_one_object((row_index, cell_index),cell_name,cell_color)
+            
+            cell_index = cell_index + 1
+        
+        row_index = row_index + 1
 
-print(type(cell_value_map[-1]))
+draw_grid(full_environment, cell_color_map)
 
 # draw_grid(full_environment, cell_value_map, cell_color_map)
 
