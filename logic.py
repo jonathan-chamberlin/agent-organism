@@ -11,29 +11,34 @@ environment_y_length = 10
 cell_value_to_name_map = {
     -1: "wall",
     2: "goal",
-    0: "empty"
+    0: "empty",
+    1: "start"
 }
 
 cell_name_to_value_map = {
     "wall": -1,
     "goal": 2,
-    "empty": 0
+    "empty": 0,
+    "start": 1
     
 }
 
 cell_color_map = {
     "wall": (30,30,30),
     "goal": (255,215,0),
-    "empty": (100,100,100)
+    "empty": (100,100,100),
+    "start": (0,255,0)
     }
 
 empty_maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
 
 walls = [(5,0), (2,1), (5,1), (7,1), (8,1), (9,1), (0,2), (1,2), (2,2), (5,2), (7,2), (4,3), (5,3), (7,3), (1,4), (2,4), (3,4), (4,4), (7,4), (9,4), (1,5), (6,5), (7,5), (9,5), (1,6), (3,6), (4,6), (5,6), (6,6), (1,7), (8,7), (1,8), (2,8), (3,8), (4,8), (5,8), (6,8), (8,8), (8,9)]
 goals = [(9,0), (9,9)]
+start = [(0,0)]
 
 wall_value = cell_name_to_value_map["wall"]
 goal_value = cell_name_to_value_map["goal"]
+start_value = cell_name_to_value_map["start"]
 
 
 q_table_width = directions_agent_can_move
@@ -200,7 +205,8 @@ print(add_walls(add_goals(maze,goals),walls))
 print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
 '''
 
-full_environment = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
+environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
+full_environment = add_custom_object(environemnt_with_walls_and_goals,start,start_value)
 
 print(full_environment)
 
