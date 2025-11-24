@@ -22,7 +22,6 @@ coords_calc = coordinates_after_moving(start,"down",walls)
 next_coords = coords_calc[0]
 movement_valid = coords_calc[1] 
 draw_agent(next_coords)
-# draw_agent((0,1))
 pg.display.flip()
 
 
