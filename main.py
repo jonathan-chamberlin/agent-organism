@@ -12,11 +12,14 @@ from setup_environment import *
 
 # first frame
 draw_grid_and_background(full_environment, cell_color_map, background_color)
-# draw_background(background_color)
-# draw_grid(full_environment, cell_color_map)
 draw_agent(start)
+pg.display.flip()
+pg.time.delay(500)
 
-draw_agent((3,3))
+# second frame
+window.fill((0,0,0))
+draw_grid_and_background(full_environment, cell_color_map, background_color)
+draw_agent((0,1))
 pg.display.flip()
 
 
