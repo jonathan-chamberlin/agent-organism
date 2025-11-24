@@ -24,7 +24,7 @@ for move in moves:
 
 # left off. create funcion that takes in list of moves, and then renders everything
 
-game_loop(full_environment, walls, cell_color_map, background_color, moves)
+game_loop(full_environment, start, walls, cell_color_map, background_color, moves)
 
 running = True
 while running:
