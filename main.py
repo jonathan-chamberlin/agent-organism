@@ -21,6 +21,9 @@ for move in moves:
     agent_coords = next_coords
     pg.time.delay(delay_in_ms_for_framerate)
 
+
+# left off. create funcion that takes in list of moves, and then renders everything
+
 running = True
 while running:
     for event in pg.event.get():
