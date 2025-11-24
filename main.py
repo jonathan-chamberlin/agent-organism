@@ -1,9 +1,11 @@
 from logic import *
 from setup_environment import *
 
-moves = ["down", "down", "down", "right", "right","right","up","up","up","right","right"]
+moves = ["right","right","right"]
 
-game_loop(full_environment, start, walls, cell_color_map, background_color, moves)
+print(game_loop(full_environment, start, walls, cell_color_map, background_color, moves))
+
+# left off: Since I have a working game loop and way to 
 
 running = True
 while running:
