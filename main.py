@@ -18,7 +18,11 @@ pg.time.delay(500)
 
 # second frame
 draw_grid_and_background(full_environment, cell_color_map, background_color)
-draw_agent((0,1))
+coords_calc = coordinates_after_moving(start,"down",walls)
+next_coords = coords_calc[0]
+movement_valid = coords_calc[1] 
+draw_agent(next_coords)
+# draw_agent((0,1))
 pg.display.flip()
 
 
