@@ -133,7 +133,7 @@ circle_centered_on_start_in_pixels = (pixel_rendering_offset_y_from_top_left + c
 agent_width = int(math.floor(0.5* cell_x_length))
 agent_height = int(math.floor(0.5* cell_y_length))
 
-
+# draw agent on start square
 pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, agent_width, agent_height)
 
 test_pixel_location = coords_to_center_of_cell_in_pixels((5,5))
