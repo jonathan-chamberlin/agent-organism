@@ -9,7 +9,6 @@ from visual import *
 
 
 
-
 running = True
 while running:
     for event in pg.event.get():

@@ -169,6 +169,7 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     global direction_map
     
     
+    
     x_coord = coordinates[0]
     y_coord = coordinates[1]
     output_valid = True
@@ -197,7 +198,27 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
 
 # For learning, I need to create A function that updates the Q-table after learning
 
+def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> None:
+    """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall."""
+    
+    global walls
+    global window
+    global agent_color
+    
+    final_coords = coordinates_after_moving(starting_coords, direction_to_move, walls)[0]
+    movement_valid = coordinates_after_moving(starting_coords, direction_to_move, walls)[1]
+    
+    if movement_valid == True:
+        output_in_coords = final_coords
+    else:
+        output_in_coords = starting_coords
+    
+    # now i have to convert the output_in_coords to pixels
+        
+    pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length)))
 
+    
+    
 
 '''By seeing that this evaluates to true, it's clear that add_custom_object is a generalized application of add_walls and add_gaols
 print(np.array_equal((add_walls(add_goals(maze,goals),walls)),add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value)))

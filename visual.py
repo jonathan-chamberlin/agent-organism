@@ -141,6 +141,7 @@ circle_centered_on_start_in_pixels = (pixel_rendering_offset_y_from_top_left + c
 
 
 
+
 pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length)))
 # LEFT OFF, now make the agent centered on the (0,0) cell
 
