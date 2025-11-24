@@ -237,8 +237,10 @@ def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> bool:
     global agent_width
     global agent_height
     
-    final_coords = coordinates_after_moving(starting_coords, direction_to_move, walls)[0]
-    movement_valid = coordinates_after_moving(starting_coords, direction_to_move, walls)[1]
+    coords_calc = coordinates_after_moving(starting_coords, direction_to_move, walls)
+    
+    final_coords = coords_calc[0]
+    movement_valid = coords_calc[1]
     
     if movement_valid == True:
         output_in_coords = final_coords
