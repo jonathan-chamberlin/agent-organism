@@ -23,6 +23,16 @@ next_coords = coords_calc[0]
 movement_valid = coords_calc[1] 
 draw_agent(next_coords)
 pg.display.flip()
+pg.time.delay(500)
+
+
+# third frame
+draw_grid_and_background(full_environment, cell_color_map, background_color)
+coords_calc2 = coordinates_after_moving(next_coords,"right",walls)
+next_coords2 = coords_calc2[0]
+movement_valid = coords_calc2[1] 
+draw_agent(next_coords2)
+pg.display.flip()
 
 
 running = True
