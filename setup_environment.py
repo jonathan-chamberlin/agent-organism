@@ -124,7 +124,7 @@ def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
 draw_grid(full_environment, cell_color_map)
 
 # draw agent on start square
-draw_agent((start)[0])
+draw_agent(start)
 # circle_centered_on_start_coords = start
 # agent_at_start_location = coords_to_center_of_cell_in_pixels(start[0])
 # pg.draw.circle(window, agent_color, agent_at_start_location, agent_width, agent_height)

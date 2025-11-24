@@ -47,7 +47,8 @@ empty_maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
 
 walls = [(5,0), (2,1), (5,1), (7,1), (8,1), (9,1), (0,2), (1,2), (2,2), (5,2), (7,2), (4,3), (5,3), (7,3), (1,4), (2,4), (3,4), (4,4), (7,4), (9,4), (1,5), (6,5), (7,5), (9,5), (1,6), (3,6), (4,6), (5,6), (6,6), (1,7), (8,7), (1,8), (2,8), (3,8), (4,8), (5,8), (6,8), (8,8), (8,9)]
 goals = [(9,0), (9,9)]
-start = [(0,0)]
+start_list = [(0,0)]
+start = start_list[0]
 
 wall_value = cell_name_to_value_map["wall"]
 goal_value = cell_name_to_value_map["goal"]
@@ -279,7 +280,7 @@ def draw_agent(coords: tuple[int,int]) -> bool:
 
 # This is the creation of the environment the agent will move through
 environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
-full_environment = add_custom_object(environemnt_with_walls_and_goals,start,start_value)
+full_environment = add_custom_object(environemnt_with_walls_and_goals,start_list,start_value)
 print(full_environment)
 
 # For display, I need to print out the maze array with the addition of walls and goals.
