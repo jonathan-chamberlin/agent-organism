@@ -17,7 +17,6 @@ pg.display.flip()
 pg.time.delay(500)
 
 # second frame
-window.fill((0,0,0))
 draw_grid_and_background(full_environment, cell_color_map, background_color)
 draw_agent((0,1))
 pg.display.flip()
