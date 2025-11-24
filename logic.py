@@ -229,14 +229,15 @@ def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int
 
 # This function I have the scaffold but I haven't finished it yet. I need to see how the agent can be moved on the pygame display.
 def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> bool:
-    """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall. Returns a boolean of if the move was valid or not."""
+    """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall. Returns a boolean of if the move was valid or not. This function draws the agent too, but doesn't render it."""
     
+    from setup_environment import window
     global walls
-    global window
-    global agent_color
-    global agent_width
-    global agent_height
-    
+    from setup_environment import agent_color
+    from setup_environment import agent_width
+    from setup_environment import agent_height
+
+
     coords_calc = coordinates_after_moving(starting_coords, direction_to_move, walls)
     
     final_coords = coords_calc[0]
@@ -248,8 +249,9 @@ def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> bool:
         output_in_coords = starting_coords
     
     # now i have to convert the output_in_coords to pixels
+    coords_in_pixels = coords_to_center_of_cell_in_pixels((output_in_coords))
         
-    pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, agent_width, agent_height) 
+    pg.draw.circle(window, agent_color, coords_in_pixels, agent_width, agent_height) 
     
     return movement_valid
 
