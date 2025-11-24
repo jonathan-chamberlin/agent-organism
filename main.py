@@ -6,7 +6,7 @@ from setup_environment import *
 # LEFT OFF. Now I have to create the game loop, where the agent is drawn then rendered, then the agent is cleared, then it's new position is calculated, then the agent is drawn again and rendered again.
 
 # Game loop
-move_agent((0,0), "down")
+draw_agent((3,3))
 pg.display.flip()
 
 
