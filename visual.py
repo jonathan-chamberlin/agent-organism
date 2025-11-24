@@ -2,16 +2,7 @@ from logic import *
 
 pg.init()
 
-cell_x_length = 50
-cell_y_length = 50
-pixel_rendering_offset_x_from_top_left = 20
-pixel_rendering_offset_y_from_top_left = 20
 
-window_dimensions = (800,700)
-
-background_color = (255,255,255)
-wall_color = (20,20,20)
-empty_cell_color = (100,100,100)
 
 window = pg.display.set_mode(window_dimensions)
 pg.display.set_caption("Maze Robot Simulator")
@@ -139,11 +130,14 @@ circle_centered_on_start_in_pixels = (pixel_rendering_offset_y_from_top_left + c
 
 
 
+agent_width = int(math.floor(0.5* cell_x_length))
+agent_height = int(math.floor(0.5* cell_y_length))
 
 
+pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, agent_width, agent_height)
 
-pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length)))
-# LEFT OFF, now make the agent centered on the (0,0) cell
+test_pixel_location = coords_to_center_of_cell_in_pixels((5,5))
+pg.draw.circle(window, agent_color, test_pixel_location, agent_width, agent_height)
 
 # renders everything
 pg.display.flip()

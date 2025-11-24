@@ -9,6 +9,17 @@ directions_agent_can_move = 4
 environment_x_length = 10
 environment_y_length = 10
 
+cell_x_length = 50
+cell_y_length = 50
+pixel_rendering_offset_x_from_top_left = 20
+pixel_rendering_offset_y_from_top_left = 20
+
+window_dimensions = (800,700)
+
+background_color = (255,255,255)
+wall_color = (20,20,20)
+empty_cell_color = (100,100,100)
+
 cell_value_to_name_map = {
     -1: "wall",
     2: "goal",
@@ -198,6 +209,22 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
 
 # For learning, I need to create A function that updates the Q-table after learning
 
+def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int]:
+    """This is used for drawing objects at the center of a cell. Takes in coordinates of the cell, and return the location in pixels of the cell's center"""
+    
+    global pixel_rendering_offset_y_from_top_left
+    global pixel_rendering_offset_x_from_top_left
+    global cell_x_length
+    global cell_y_length
+    
+    center_in_pixels = (pixel_rendering_offset_y_from_top_left + coords[1]*cell_y_length+cell_y_length/2, pixel_rendering_offset_x_from_top_left + coords[0]* cell_x_length+cell_x_length/2)
+    
+    return center_in_pixels
+
+
+
+# use function above to draw circle at (5,5)  
+
 def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> None:
     """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall."""
     
@@ -215,10 +242,7 @@ def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> None:
     
     # now i have to convert the output_in_coords to pixels
         
-    pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length)))
-
-    
-    
+    pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length))) 
 
 '''By seeing that this evaluates to true, it's clear that add_custom_object is a generalized application of add_walls and add_gaols
 print(np.array_equal((add_walls(add_goals(maze,goals),walls)),add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value)))
