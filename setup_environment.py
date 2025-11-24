@@ -130,12 +130,13 @@ def draw_background(color: tuple[int,int,int]) -> None:
     
     pg.draw.rect(window, color, (0,0,window_dimensions[0], window_dimensions[1]))
 
-
-def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map) -> None:
+def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, color_for_background) -> None:
         """Accepts a grid, not a one-dimensional tuple. It first draws the background, then draws the whole grid using draw_grid."""
+        
+        draw_background(color_for_background)
+        draw_grid(grid, object_coloring)
 
 
-draw_background(background_color)
 
 # drawing agent on start square before I created draw_agent
 # circle_centered_on_start_coords = start
