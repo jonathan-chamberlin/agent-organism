@@ -2,6 +2,9 @@ from logic import *
 
 pg.init()
 
+agent_color = (0,0,255)
+agent_width = int(math.floor(0.5* cell_x_length))
+agent_height = int(math.floor(0.5* cell_y_length))
 
 
 window = pg.display.set_mode(window_dimensions)
@@ -120,24 +123,11 @@ def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
 
 draw_grid(full_environment, cell_color_map)
 
-
-# draw agent
-agent_color = (0,0,255)
+# draw agent on start square
 
 circle_centered_on_start_coords = start
-
-circle_centered_on_start_in_pixels = (pixel_rendering_offset_y_from_top_left + circle_centered_on_start_coords[0][1]*cell_y_length+cell_y_length/2, pixel_rendering_offset_x_from_top_left + circle_centered_on_start_coords[0][0]* cell_x_length+cell_x_length/2)
-
-
-
-agent_width = int(math.floor(0.5* cell_x_length))
-agent_height = int(math.floor(0.5* cell_y_length))
-
-# draw agent on start square
-pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, agent_width, agent_height)
-
-test_pixel_location = coords_to_center_of_cell_in_pixels((5,5))
-pg.draw.circle(window, agent_color, test_pixel_location, agent_width, agent_height)
+agent_at_start_location = coords_to_center_of_cell_in_pixels(start[0])
+pg.draw.circle(window, agent_color, agent_at_start_location, agent_width, agent_height)
 
 # renders everything
 pg.display.flip()
