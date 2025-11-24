@@ -59,10 +59,10 @@ q_table_width = directions_agent_can_move
 q_table = np.zeros((environment_x_length*environment_y_length,directions_agent_can_move), dtype=float)
 
 direction_map = {
-    "up": (0,-1),
-    "down":(0,1),
-    "left":(-1,0),
-    "right":(1,0)
+    "up": (-1,0),
+    "down":(1,0),
+    "left":(0,1),
+    "right":(0,-1)
     }
 
 

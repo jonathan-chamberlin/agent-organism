@@ -2,7 +2,7 @@ from logic import *
 from setup_environment import *
 
 
-move_agent((1,1), "down")
+move_agent((0,0), "down")
 
 pg.display.flip()
 
