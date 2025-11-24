@@ -227,12 +227,15 @@ def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int
     
     return center_in_pixels
 
-def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> None:
-    """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall."""
+# This function I have the scaffold but I haven't finished it yet. I need to see how the agent can be moved on the pygame display.
+def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> bool:
+    """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall. Returns a boolean of if the move was valid or not."""
     
     global walls
     global window
     global agent_color
+    global agent_width
+    global agent_height
     
     final_coords = coordinates_after_moving(starting_coords, direction_to_move, walls)[0]
     movement_valid = coordinates_after_moving(starting_coords, direction_to_move, walls)[1]
@@ -244,7 +247,9 @@ def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> None:
     
     # now i have to convert the output_in_coords to pixels
         
-    pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length))) 
+    pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, agent_width, agent_height) 
+    
+    return movement_valid
 
 # This is the creation of the environment the agent will move through
 environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
