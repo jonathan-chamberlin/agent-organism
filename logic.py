@@ -20,6 +20,9 @@ background_color = (255,255,255)
 wall_color = (20,20,20)
 empty_cell_color = (100,100,100)
 
+framerate = 10
+delay_in_ms_for_framerate = int((1 / framerate) * 1000)
+
 cell_value_to_name_map = {
     -1: "wall",
     2: "goal",
