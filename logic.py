@@ -165,6 +165,14 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     
     return copied_maze_grid_with_custom_objects
 
+    '''By seeing that this evaluates to true, it's clear that add_custom_object is a generalized application of add_walls and add_gaols
+    print(np.array_equal((add_walls(add_goals(maze,goals),walls)),add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value)))
+
+    print(add_walls(add_goals(maze,goals),walls))
+
+    print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
+    '''
+
 def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
     """A function that takes current position and direction, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
     
@@ -207,8 +215,6 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
         output_valid = False
     return (new_coords, output_valid)
 
-# For learning, I need to create A function that updates the Q-table after learning
-
 def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int]:
     """This is used for drawing objects at the center of a cell. Takes in coordinates of the cell, and return the location in pixels of the cell's center"""
     
@@ -220,10 +226,6 @@ def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int
     center_in_pixels = (pixel_rendering_offset_y_from_top_left + coords[1]*cell_y_length+cell_y_length/2, pixel_rendering_offset_x_from_top_left + coords[0]* cell_x_length+cell_x_length/2)
     
     return center_in_pixels
-
-
-
-# use function above to draw circle at (5,5)  
 
 def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> None:
     """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall."""
@@ -244,17 +246,9 @@ def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> None:
         
     pg.draw.circle(window, agent_color, circle_centered_on_start_in_pixels, int(math.floor(0.5* cell_x_length)), int(math.floor(0.5* cell_y_length))) 
 
-'''By seeing that this evaluates to true, it's clear that add_custom_object is a generalized application of add_walls and add_gaols
-print(np.array_equal((add_walls(add_goals(maze,goals),walls)),add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value)))
-
-print(add_walls(add_goals(maze,goals),walls))
-
-print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
-'''
-
+# This is the creation of the environment the agent will move through
 environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
 full_environment = add_custom_object(environemnt_with_walls_and_goals,start,start_value)
-
 print(full_environment)
 
 # For display, I need to print out the maze array with the addition of walls and goals.

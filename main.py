@@ -3,6 +3,10 @@ from visual import *
 
 
 
+
+
+
+
 # LEFT OFF. Now use the function to move the agent, and have his coords update, and have the visual rerender. 
 
 
