@@ -7,7 +7,8 @@ from setup_environment import *
 
 # Game loop
 
-# draw agent on start square
+# first frame
+draw_grid(full_environment, cell_color_map)
 draw_agent(start)
 
 draw_agent((3,3))

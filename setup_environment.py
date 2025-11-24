@@ -9,7 +9,10 @@ agent_height = int(math.floor(0.5* cell_y_length))
 
 window = pg.display.set_mode(window_dimensions)
 pg.display.set_caption("Maze Robot Simulator")
-pg.draw.rect(window, background_color, (0,0,window_dimensions[0], window_dimensions[1]))
+
+
+# pg.draw.rect(window, background_color, (0,0,window_dimensions[0], window_dimensions[1]))
+
 """Drawing one thing at a time
 # draws a wall
 pg.draw.rect(window, wall_color, (0,0,cell_x_length, cell_y_length))
@@ -99,8 +102,6 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     draw_one_object((4,5), "wall", cell_color_map["wall"])
     """
 
-
-
 def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
     """Accepts a grid, not a one-dimensional tuple. For each cell in the grid, it gets the cell's value. From that value, it looks up its name using the object_values map. Using the name, the function looks up the cell's coloring, then draws the object"""
     
@@ -121,8 +122,20 @@ def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
         
         row_index = row_index + 1
 
-draw_grid(full_environment, cell_color_map)
+def draw_background(color: tuple[int,int,int]) -> None:
+    """Accepts a color and draws the background in that color."""
+    
+    global window
+    from logic import window_dimensions
+    
+    pg.draw.rect(window, color, (0,0,window_dimensions[0], window_dimensions[1]))
 
+
+def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map) -> None:
+        """Accepts a grid, not a one-dimensional tuple. It first draws the background, then draws the whole grid using draw_grid."""
+
+
+draw_background(background_color)
 
 # drawing agent on start square before I created draw_agent
 # circle_centered_on_start_coords = start
