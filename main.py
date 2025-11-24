@@ -2,8 +2,11 @@ from logic import *
 from setup_environment import *
 
 
-move_agent((0,0), "down")
 
+
+
+# Game loop
+move_agent((0,0), "down")
 pg.display.flip()
 
 
