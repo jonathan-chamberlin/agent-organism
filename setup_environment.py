@@ -137,7 +137,10 @@ def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, 
         draw_grid(grid, object_coloring)
 
 def game_loop(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, moves: list[str]) -> list[bool]:
-    """Takes in a bunch of inputs, and for every move it draws the full environment (grid and backgroun), then draws the agent, then calculates its next move nad position, then checks if that next position would be valid, then draws it. """
+    """Takes in a bunch of inputs, and for every move it draws the full environment (grid and backgroun), then draws the agent, then calculates its next move nad position, then checks if that next position would be valid, then draws it, and renders it.
+    
+    Improvement: The data for start and walls is inside the full_environment variable that is inputted into this function, so teh inputs of start and walls are redundant. I could write code to look at the environment input and find which cell has the start_value and store those coords as a tuple, and which cells have the wall_value and store that as a list of tuples, and then use those variables in the code below.
+    """
     
     movement_valid_list = []
 
