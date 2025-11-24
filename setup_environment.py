@@ -136,6 +136,37 @@ def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, 
         draw_background(color_for_background)
         draw_grid(grid, object_coloring)
 
+def game_loop(environment: tuple[tuple[int,int]], walls: list[tuple(int,int)], object_coloring: map, color_for_background, moves: list[str]) -> list[bool]:
+    from logic import start
+    """Takes in a bunch of inputs, and for every move it draws the full environment (grid and backgroun), then draws the agent, then calculates its next move nad position, then checks if that next position would be valid, then draws it. """
+    
+    movement_valid_list = []
+
+    agent_coords = start
+    draw_grid_and_background(environment, object_coloring, color_for_background)
+    draw_agent(agent_coords)
+    pg.display.flip()
+    pg.time.delay(delay_in_ms_for_framerate)
+
+    for move in moves:
+        # clear and redraw environment
+        draw_grid_and_background(full_environment, cell_color_map, background_color)
+        # find the next place the agent will go
+        coords_calc = coordinates_after_moving(agent_coords,move,walls)
+        next_coords = coords_calc[0]
+        # determines if that next movement is valid
+        movement_valid = coords_calc[1] 
+        movement_valid_list.append(movement_valid)
+        # draws agent at the next coordinates
+        draw_agent(next_coords)
+        # renders everything
+        pg.display.flip()
+        # updates the next coordinates value since the agent is now there
+        agent_coords = next_coords
+        # time control for framerate
+        pg.time.delay(delay_in_ms_for_framerate)
+    
+    return movement_valid_list
 
 
 # drawing agent on start square before I created draw_agent

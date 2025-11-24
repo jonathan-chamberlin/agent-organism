@@ -287,5 +287,3 @@ environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maz
 full_environment = add_custom_object(environemnt_with_walls_and_goals,start_list,start_value)
 print(full_environment)
 
-# For display, I need to print out the maze array with the addition of walls and goals.
-

@@ -1,10 +1,10 @@
 from logic import *
 from setup_environment import *
 
-moves = ["down", "down", "down", "right", "right","right","up","up","up"]
+moves = ["down", "down", "down", "right", "right","right","up","up","up","right","right"]
 
 # Game loop
-
+"""
 agent_coords = start
 draw_grid_and_background(full_environment, cell_color_map, background_color)
 draw_agent(agent_coords)
@@ -20,9 +20,11 @@ for move in moves:
     pg.display.flip()
     agent_coords = next_coords
     pg.time.delay(delay_in_ms_for_framerate)
-
+"""
 
 # left off. create funcion that takes in list of moves, and then renders everything
+
+game_loop(full_environment, walls, cell_color_map, background_color, moves)
 
 running = True
 while running:
