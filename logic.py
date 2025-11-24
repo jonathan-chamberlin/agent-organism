@@ -62,7 +62,8 @@ direction_map = {
     "up": (-1,0),
     "down":(1,0),
     "left":(0,1),
-    "right":(0,-1)
+    "right":(0,-1),
+    "remain": (0,0)
     }
 
 
@@ -250,6 +251,27 @@ def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> bool:
     
     # now i have to convert the output_in_coords to pixels
     coords_in_pixels = coords_to_center_of_cell_in_pixels((output_in_coords))
+        
+    pg.draw.circle(window, agent_color, coords_in_pixels, agent_width, agent_height) 
+    
+    return movement_valid
+
+def draw_agent(coords: tuple[int,int]) -> bool:
+    """Taking in the agent's starting coordinates, this draws the agent at those coordinates. Returns a boolean of if the move was valid or not, meaning if the coordinates are outside the environment or on top of a wall. This function draws the agent too, but doesn't render it."""
+    
+    from setup_environment import window
+    global walls
+    from setup_environment import agent_color
+    from setup_environment import agent_width
+    from setup_environment import agent_height
+
+    coords_calc = coordinates_after_moving(coords, "remain", walls)
+    
+    coords_to_draw_at = coords_calc[0]
+    movement_valid = coords_calc[1]
+    
+    # now i have to convert the output_in_coords to pixels
+    coords_in_pixels = coords_to_center_of_cell_in_pixels((coords_to_draw_at))
         
     pg.draw.circle(window, agent_color, coords_in_pixels, agent_width, agent_height) 
     
