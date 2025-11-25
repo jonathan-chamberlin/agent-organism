@@ -1,4 +1,5 @@
 from logic import *
+from reward import *
 from setup_environment import *
 
 moves = ["down","down","down", "right","right", "right","up","up","up","right","right","right","right","right","right","down","down","down","down","down","down","down","left","left","left","down","down","right","right","right"]
