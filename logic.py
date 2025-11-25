@@ -27,10 +27,10 @@ framerate = 10
 delay_in_ms_for_framerate = int((1 / framerate) * 1000)
 
 cell_name_to_value_map = {
-    "wall": -10,
-    "goal": 50,
-    "empty": 0,
-    "start": 1 
+    "wall": -30,
+    "goal": 20,
+    "empty": -3,
+    "start": 3 
 }
 
 cell_value_to_name_map = cell_value_to_name_map = {value: key for key, value in cell_name_to_value_map.items()}
@@ -52,17 +52,17 @@ direction_map = {
     "remain": (0,0)
     }
 
-empty_maze = np.zeros((environment_x_length,environment_y_length), dtype=int)
+wall_value = cell_name_to_value_map["wall"]
+goal_value = cell_name_to_value_map["goal"]
+start_value = cell_name_to_value_map["start"]
+empty_value = cell_name_to_value_map["empty"]
+
+empty_maze = np.full((environment_x_length,environment_y_length), empty_value,dtype=int)
 
 walls = [(5,0), (2,1), (5,1), (7,1), (8,1), (9,1), (0,2), (1,2), (2,2), (5,2), (7,2), (4,3), (5,3), (7,3), (1,4), (2,4), (3,4), (4,4), (7,4), (9,4), (1,5), (6,5), (7,5), (9,5), (1,6), (3,6), (4,6), (5,6), (6,6), (1,7), (8,7), (1,8), (2,8), (3,8), (4,8), (5,8), (6,8), (8,8), (8,9)]
 goals = [(9,9)]
 start_list = [(0,0)]
 start = start_list[0]
-
-wall_value = cell_name_to_value_map["wall"]
-goal_value = cell_name_to_value_map["goal"]
-start_value = cell_name_to_value_map["start"]
-
 
 q_table_width = directions_agent_can_move
 
