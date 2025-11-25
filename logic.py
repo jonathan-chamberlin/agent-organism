@@ -11,8 +11,11 @@ environment_y_length = 10
 
 cell_x_length = 50
 cell_y_length = 50
-pixel_rendering_offset_x_from_top_left = 20
-pixel_rendering_offset_y_from_top_left = 20
+# opportunity to improve: the rendering is incorrect when cell_x_length != cell_y_length 
+
+pixel_rendering_offset_x_from_top_left = 50
+pixel_rendering_offset_y_from_top_left = 50
+# opportunity to improve: the location of the agent is offset when pixel_rendering_offset_x_from_top_left != pixel_rendering_offset_y_from_top_left 
 
 window_dimensions = (800,700)
 

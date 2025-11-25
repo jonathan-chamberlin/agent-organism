@@ -114,7 +114,7 @@ def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
         cell_index = 0
         for cell in row:
             cell_value = cell
-            cell_name = cell_value_to_name_map[cell_value] # issue here
+            cell_name = cell_value_to_name_map[cell_value]
             cell_color = object_coloring[cell_name]
             draw_one_object((row_index, cell_index),cell_name,cell_color)
             
