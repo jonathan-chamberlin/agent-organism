@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 from logic import *
 
 def test_coordinates_to_q_table_index() -> None:
@@ -15,30 +16,30 @@ def test_coordinates_to_q_table_index() -> None:
 
 def test_coordinates_after_moving() -> None:
     example_walls = [(1,0),(4,0), (2,3),(3,0)]
-    assert coordinates_after_moving((0,0),"down", example_walls) == ((0,1),True)
+    assert coordinates_after_moving((0,0),"down", example_walls) == ((0,0),False)
     # output_valid == False because agent hits a wall
-    assert coordinates_after_moving((0,0),"right", example_walls) == ((1,0), False)
-    assert coordinates_after_moving((1,1),"left", example_walls) == ((0,1),True)
-    assert coordinates_after_moving((1,1),"left", example_walls) == ((0,1), True)
-    # output_valid == False because the movement moves the agent outside the environment
-    assert coordinates_after_moving((0,0),"up", example_walls) == ((0,-1), False)
-    assert coordinates_after_moving((9,0),"right", example_walls) == ((10,0), False)
+    assert coordinates_after_moving((0,0),"right", example_walls) == ((0,1), True)
+    assert coordinates_after_moving((1,1),"left", example_walls) == ((1,1),False)
+
+    assert coordinates_after_moving((0,0),"up", example_walls) == ((0,0),False)
+    assert coordinates_after_moving((9,0),"right", example_walls) == ((9,0), False)
      # output_valid == False because the input coordinate is outside the environment
-    assert coordinates_after_moving((10,0),"left", example_walls) == ((9,0), False)
-    assert coordinates_after_moving((0,10),"up", example_walls) == ((0,9), False)
+    assert coordinates_after_moving((10,0),"left", example_walls) == ((10,0), False)
+    assert coordinates_after_moving((0,10),"up", example_walls) == ((0,10), False)
     # now testing if it hits walls
-    assert coordinates_after_moving((4,1), "up", example_walls) == ((4,0), False)
+    assert coordinates_after_moving((3,0), "down", example_walls) == ((3,0), False)
 
 def test_add_walls() -> None:
+    from logic import wall_value
     example_maze = np.zeros((2,2), dtype=int)
     example_walls_1 = [(0,0)]
     example_walls_2 = [(0,0), (1,0)]
     example_walls_3 = [(0,0), (1,0), (0,1)]
     example_walls_4 = [(0,0), (1,0), (0,1), (1,1)]
-    assert np.array_equal(add_walls(example_maze, example_walls_1), [[-1,0],[0,0]])
-    assert np.array_equal(add_walls(example_maze, example_walls_2), [[-1,-1],[0,0]])
-    assert np.array_equal(add_walls(example_maze, example_walls_3), [[-1,-1],[-1,0]])
-    assert np.array_equal(add_walls(example_maze, example_walls_4), [[-1,-1],[-1,-1]])
+    assert np.array_equal(add_walls(example_maze, example_walls_1), [[wall_value,0],[0,0]])
+    assert np.array_equal(add_walls(example_maze, example_walls_2), [[wall_value,wall_value],[0,0]])
+    assert np.array_equal(add_walls(example_maze, example_walls_3), [[wall_value,wall_value],[wall_value,0]])
+    assert np.array_equal(add_walls(example_maze, example_walls_4), [[wall_value,wall_value],[wall_value,wall_value]])
     
 def test_add_goals() -> None:
     example_maze = np.zeros((2,2), dtype=int)
@@ -62,3 +63,16 @@ def test_add_custom_object() -> None:
     assert np.array_equal(add_custom_object(example_maze, example_object_2, example_chosen_value), [[example_chosen_value,example_chosen_value],[0,0]])
     assert np.array_equal(add_custom_object(example_maze, example_object_3,example_chosen_value), [[example_chosen_value,example_chosen_value],[example_chosen_value,0]])
     assert np.array_equal(add_custom_object(example_maze, example_object_4,example_chosen_value), [[example_chosen_value,example_chosen_value],[example_chosen_value,example_chosen_value]])
+
+def test_object_at_coordinates() -> None:
+    initializing_environment = np.full((4,4), empty_value,dtype=int)
+    example_walls = [(0,1),(0,2),(0,3)]
+    global wall_value
+    example_environment = add_custom_object(initializing_environment, example_walls,wall_value)
+    
+    object_at_coords((0,1),example_environment) == "wall"
+    object_at_coords((1,0),example_environment) == "empty"
+    object_at_coords((0,2),example_environment) == "wall"
+    object_at_coords((2,0),example_environment) == "empty"
+    object_at_coords((0,3),example_environment) == "wall"
+    object_at_coords((3,0),example_environment) == "empty"

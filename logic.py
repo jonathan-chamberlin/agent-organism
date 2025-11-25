@@ -180,12 +180,17 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
 def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
     """A function that takes current position and direction, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
     
-    If the inputted coordinates are outside the environment's borders, the function returns (-1.-1).
+    In short, the function returns the new coordinates, but if either the start or next coords are invalid (outside the environment, or if the next coords cause the agent to hit a wall), the the output is the original coordinates and false.
     
-    If the movement takes the agent outside the environment, the function returns (-5,-5).
+    If both the starting and next coorindates are valid, then the output is the next coordinates and true.
     
-    If the movement takes the agent to hit a wall, the function returns (-2,-2)."""
+    If the inputted coordinates are outside the environment's borders, the function returns the original coordinates and false.
     
+    If the movement takes the agent outside the environment, the function returns the original coordinates and false.
+    
+    If the movement takes the agent to hit a wall, the function returns the original coordinates and false."""
+    
+       
     global q_table_width
     global environment_x_length
     global environment_y_length
@@ -197,27 +202,34 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     y_coord = coordinates[1]
     output_valid = True
     
-    # checking if the inputted coordinates are inside the environment
-    if (x_coord >= environment_x_length) or (y_coord >= environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
+    # checking if the inputted coordinates are inside the environment. If they are not, the function outputs the original starting coordinates.
+    if (x_coord > environment_x_length) or (y_coord > environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
         output_valid = False
+        return (coordinates, output_valid)
     
     # creating new coordinates
     
     new_x_coord = x_coord + direction_map[direction][0]
     new_y_coord = y_coord + direction_map[direction][1]
     
-    # checking if the resulting coordinates are inside the environment
+    # checking if the resulting coordinates are inside the environment. If they are not, the function outputs the original starting coordinates.
     if (new_x_coord >= environment_x_length) or (new_y_coord >= environment_y_length) or (new_x_coord < 0) or (new_y_coord < 0 ):
         output_valid = False
+        return (coordinates, output_valid)
+    
     
     # we create the new tuple (different place in memory) representing the new coordinates after the movement.
     
-    new_coords = (new_x_coord, new_y_coord)
+    new_coords = (new_x_coord, new_y_coord) 
     
     # check if the new coords hit a wall
     if new_coords in walls:
         output_valid = False
-    return (new_coords, output_valid)
+        return (coordinates, output_valid)
+
+    # Since the new_coords passed all the checks, we return the new_coords and output_valid (which by this point is still True)
+
+    return(new_coords, output_valid)
 
 def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int]:
     """This is used for drawing objects at the center of a cell. Takes in coordinates of the cell, and return the location in pixels of the cell's center"""
@@ -295,17 +307,15 @@ def object_at_coords(coords: tuple[int,int], grid: tuple[tuple[int,int]]) -> str
     x_coord = coords[0]
     y_coord = coords[1]
     
-    cell_value = grid[x_coord][y_coord]
+    cell_value = grid[y_coord][x_coord]
     
     cell_name = cell_value_to_name_map[cell_value]
     
     return cell_name
 
-print(object_at_coords((0,0),full_environment)) #expect start
-print(object_at_coords((1,0),full_environment)) #expect empty
-print(object_at_coords((2,0),full_environment)) #expect wall
-print(object_at_coords((0,2),full_environment)) #expect empty
-print(object_at_coords((9,9),full_environment)) #expect goal
+
+
+
 
 
 
