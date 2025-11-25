@@ -35,12 +35,6 @@ cell_name_to_value_map = {
 
 cell_value_to_name_map = cell_value_to_name_map = {value: key for key, value in cell_name_to_value_map.items()}
 
-cell_reward = {
-    "wall": -10,
-    "goal": 50,
-    "empty": -1,
-    "start": 0 
-}
 
 cell_color_map = {
     "wall": (30,30,30),
