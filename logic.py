@@ -27,13 +27,15 @@ framerate = 10
 delay_in_ms_for_framerate = int((1 / framerate) * 1000)
 
 cell_name_to_value_map = {
-    "wall": -1,
-    "goal": 2,
+    "wall": -10,
+    "goal": 50,
     "empty": 0,
     "start": 1 
 }
 
 cell_value_to_name_map = cell_value_to_name_map = {value: key for key, value in cell_name_to_value_map.items()}
+
+print(cell_value_to_name_map)
 
 cell_color_map = {
     "wall": (30,30,30),
