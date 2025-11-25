@@ -285,3 +285,28 @@ environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maz
 full_environment = add_custom_object(environemnt_with_walls_and_goals,start_list,start_value)
 print(full_environment)
 
+# So first make a function object_at_coords which takes in coordinates and the grid and tells you what object is at those coordinates.
+
+def object_at_coords(coords: tuple[int,int], grid: tuple[tuple[int,int]]) -> str:
+    """takes in coordinates and the grid and returns the name of the object at those coordinates."""
+    
+    global cell_value_to_name_map
+    
+    x_coord = coords[0]
+    y_coord = coords[1]
+    
+    cell_value = grid[x_coord][y_coord]
+    
+    cell_name = cell_value_to_name_map[cell_value]
+    
+    return cell_name
+
+print(object_at_coords((0,0),full_environment)) #expect start
+print(object_at_coords((1,0),full_environment)) #expect empty
+print(object_at_coords((2,0),full_environment)) #expect wall
+print(object_at_coords((0,2),full_environment)) #expect empty
+print(object_at_coords((9,9),full_environment)) #expect goal
+
+
+
+# Then create function adjacent_coordinates which takes in coordinates and a direction, and outputs the coordinates. 

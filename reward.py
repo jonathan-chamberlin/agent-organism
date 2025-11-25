@@ -39,3 +39,24 @@ empty_reward = cell_reward["empty"]
 # The simulation run ends if the agent hits the goal, or reaches the max number of steps. The ideal path is 30 moves, so my step_cap will be 50.
 
 # To save knowledge between runs, I'd store the Q table in a text file using np.save(file,array) and np.load(file). This allows me to use data from previous times I ran the code, instead of the agent having to relearn everything from scratch.'''
+
+def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tuple[int,int]]) -> tuple[float , tuple[int,int], bool]:
+    """Takes in the starting coordinates and a direction, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
+    
+    Outputs reward as float, new_pos coords as tuple[int,int], and
+    movement_valid as bool 
+    """
+    
+    from logic import walls
+    
+    # So first make a function object_at_coords which takes in coordinates and the grid and tells you what object is at those coordinates.
+    # Then create function adjacent_coordinates which takes in coordinates and a direction, and outputs the coordinates. 
+    # Then call object_at_coords on the output coords of adjacent_coords to get the name of the item.
+    # Using those functions, I'll then be able to lookup the reward value of that cell from cell_reward
+    
+    
+    coords_calc = coordinates_after_moving(old_pos,direction, walls)
+    new_pos = coords_calc[0]
+    movement_valid = coords_calc[1]
+    
+    
