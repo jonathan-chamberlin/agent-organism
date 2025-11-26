@@ -1,11 +1,12 @@
 import numpy as np
 import pytest
 from logic import *
+from reward import *
 
 
 initializing_environment = np.full((4,4), empty_value,dtype=int)
-example_walls = [(0,1),(0,2),(0,3)]
-example_goal = [(2,0)]
+example_walls = [(0,2),(0,3)]
+example_goal = [(2,1)]
 example_start = [(0,0)]
 
 example_environment= add_custom_object(initializing_environment, example_walls,wall_value)
@@ -13,7 +14,7 @@ example_environment = add_custom_object(example_environment,example_goal,goal_va
 example_environment = add_custom_object(example_environment,example_start,start_value)
 
 
-
+"""LIke I wrote in logic.py, coordinates_to_q_table is a useless function becuase the datatype of the q table isn't list[int], it's list[list[int]]
 def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,0]) == 0
     assert coordinates_to_q_table_index([1,0]) == 1 + 0 * q_table_width
@@ -25,6 +26,7 @@ def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([10,0]) == -1
     assert coordinates_to_q_table_index([0,11]) == -1
     assert coordinates_to_q_table_index([-5,-50]) == -1
+"""
 
 def test_coordinates_after_moving() -> None:
     example_walls = [(1,0),(4,0), (2,3),(3,0)]
@@ -98,4 +100,9 @@ def test_adjacent_coords() -> None:
 def test_get_reward() -> None:
     assert 1 == 1
     from reward import cell_reward
-    # left off, write tests for this using the example environment I wrote above
+    global example_environment 
+    
+    assert get_reward((0,0),"down", example_environment, example_walls) == (cell_reward["empty"],(1,0),True)
+    assert get_reward((1,2),"up", example_environment,example_walls) == (cell_reward["wall"],(0,2) ,False)
+    assert get_reward((0,1),"left", example_environment,example_walls) == (cell_reward["start"], (0,0),True)
+    assert get_reward((2,0),"right", example_environment,example_walls) == (cell_reward["goal"],(2,1) ,True)

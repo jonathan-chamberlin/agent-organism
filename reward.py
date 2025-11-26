@@ -40,31 +40,23 @@ empty_reward = cell_reward["empty"]
 
 # To save knowledge between runs, I'd store the Q table in a text file using np.save(file,array) and np.load(file). This allows me to use data from previous times I ran the code, instead of the agent having to relearn everything from scratch.'''
 
-def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tuple[int,int]]) -> tuple[float , tuple[int,int], bool]:
+def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tuple[int,int]], walls: list[tuple[int,int]]) -> tuple[int , tuple[int,int], bool]:
     """Takes in the starting coordinates and a direction, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
     
-    Outputs reward as float, new_pos coords as tuple[int,int], and
-    movement_valid as bool 
+    Outputs reward, new_pos coords, and
+    movement_valid 
     """
     
-    from logic import walls
     global cell_reward
     
+    new_adjacent_coords = adjacent_coords(old_pos,direction)
     
-    # So first make a function object_at_coords which takes in coordinates and the grid and tells you what object is at those coordinates.
-    # DONE object_at_coords
+    movement_valid = coordinates_after_moving(old_pos,direction,walls)[1]
     
-    # Then create function adjacent_coordinates which takes in coordinates and a direction, and outputs the coordinates. This is different from coordinates_after_move because this function outputs the next coordinates even if there is a wall or boundary.  
-    # DONE adjacent_coords
+    object_at_adjacent_coords = object_at_coords(new_adjacent_coords, environment)
     
-    # Then call object_at_coords on the output coords of adjacent_coords to get the name of the item.
-    # Using those functions, I'll then be able to lookup the reward value of that cell from cell_reward
-    new_coords = adjacent_coords(old_pos,direction)
+    reward = cell_reward[object_at_adjacent_coords]
     
-    object_at_new_coords = object_at_coords(new_coords, environment)
-    
-    reward = cell_reward[object_at_new_coords]
-    
-    return reward
+    return (reward, new_adjacent_coords, movement_valid) 
     
     
