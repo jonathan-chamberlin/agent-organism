@@ -2,6 +2,18 @@ import numpy as np
 import pytest
 from logic import *
 
+
+initializing_environment = np.full((4,4), empty_value,dtype=int)
+example_walls = [(0,1),(0,2),(0,3)]
+example_goal = [(2,0)]
+example_start = [(0,0)]
+
+example_environment= add_custom_object(initializing_environment, example_walls,wall_value)
+example_environment = add_custom_object(example_environment,example_goal,goal_value)
+example_environment = add_custom_object(example_environment,example_start,start_value)
+
+
+
 def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,0]) == 0
     assert coordinates_to_q_table_index([1,0]) == 1 + 0 * q_table_width
@@ -83,4 +95,5 @@ def test_adjacent_coords() -> None:
     assert adjacent_coords((0,0),"left") == (0,-1)
     assert adjacent_coords((0,0),"right") == (0,1)
 
-# add tests for coordinates_to_q_table_index
+def test_get_reward() -> None:
+    assert 1 == 1

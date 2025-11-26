@@ -48,21 +48,23 @@ def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tup
     """
     
     from logic import walls
+    global cell_reward
     
     
     # So first make a function object_at_coords which takes in coordinates and the grid and tells you what object is at those coordinates.
     # DONE object_at_coords
     
-    # LEFT OFF BELOW
     # Then create function adjacent_coordinates which takes in coordinates and a direction, and outputs the coordinates. This is different from coordinates_after_move because this function outputs the next coordinates even if there is a wall or boundary.  
     # DONE adjacent_coords
     
     # Then call object_at_coords on the output coords of adjacent_coords to get the name of the item.
     # Using those functions, I'll then be able to lookup the reward value of that cell from cell_reward
+    new_coords = adjacent_coords(old_pos,direction)
     
+    object_at_new_coords = object_at_coords(new_coords, environment)
     
-    coords_calc = coordinates_after_moving(old_pos,direction, walls)
-    new_pos = coords_calc[0]
-    movement_valid = coords_calc[1]
+    reward = cell_reward[object_at_new_coords]
+    
+    return reward
     
     
