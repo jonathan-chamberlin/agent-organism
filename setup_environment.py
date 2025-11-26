@@ -15,10 +15,10 @@ pg.display.set_caption("Maze Robot Simulator")
 
 """Drawing one thing at a time
 # draws a wall
-pg.draw.rect(window, wall_color, (0,0,cell_x_length, cell_y_length))
+pg.draw.rect(window, wall_color, (0,0,cell_y_length, cell_x_length))
 
 # draws a empty cell
-pg.draw.rect(window, empty_cell_color, (0,0,cell_x_length, cell_y_length))
+pg.draw.rect(window, empty_cell_color, (0,0,cell_y_length, cell_x_length))
 """
 
 
@@ -40,17 +40,17 @@ def draw_objects(objects: tuple[int,int], object_name: str, object_coloring: map
     
     for cell in objects:
         # convert cell cordinate locations to placement on the window using pixels
-        x_coord = cell[0]
-        y_coord = cell[1]
+        y_coord = cell[0]
+        x_coord = cell[1]
         
-        x_coord_in_pixels = x_coord * cell_x_length + pixel_rendering_offset_x_from_top_left
-        y_coord_in_pixels = y_coord * cell_y_length +pixel_rendering_offset_y_from_top_left
+        y_coord_in_pixels = y_coord * cell_y_length + pixel_rendering_offset_y_from_top_left
+        x_coord_in_pixels = x_coord * cell_x_length +pixel_rendering_offset_x_from_top_left
         
         # finds color of cell from the object_coloring_map
         object_color = object_coloring[object_name]
         
         # draws the cell
-        pg.draw.rect(window, object_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
+        pg.draw.rect(window, object_color, (y_coord_in_pixels,x_coord_in_pixels,cell_y_length, cell_x_length))
         
         """
     TEST. Does <1> produce the same as <2>?
@@ -87,14 +87,14 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     global cell_y_length
     
     # convert cell cordinate locations to placement on the window using pixels
-    x_coord = cell_coordinates[0]
-    y_coord = cell_coordinates[1]
+    y_coord = cell_coordinates[0]
+    x_coord = cell_coordinates[1]
     
-    x_coord_in_pixels = x_coord * cell_x_length + pixel_rendering_offset_x_from_top_left
-    y_coord_in_pixels = y_coord * cell_y_length +pixel_rendering_offset_y_from_top_left
+    y_coord_in_pixels = y_coord * cell_y_length + pixel_rendering_offset_y_from_top_left
+    x_coord_in_pixels = x_coord * cell_x_length +pixel_rendering_offset_x_from_top_left
     
     # draws the cell
-    pg.draw.rect(window, object_color, (x_coord_in_pixels,y_coord_in_pixels,cell_x_length, cell_y_length))
+    pg.draw.rect(window, object_color, (y_coord_in_pixels,x_coord_in_pixels,cell_y_length, cell_x_length))
     
     """TESTS:
     draw_one_object((5,5), "wall", cell_color_map["wall"])
@@ -126,9 +126,10 @@ def draw_background(color: tuple[int,int,int]) -> None:
     """Accepts a color and draws the background in that color."""
     
     global window
-    from logic import window_dimensions
+    from logic import window_x_length
+    from logic import window_y_length
     
-    pg.draw.rect(window, color, (0,0,window_dimensions[0], window_dimensions[1]))
+    pg.draw.rect(window, color, (0,0,window_x_length, window_y_length))
 
 def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, color_for_background) -> None:
         """Accepts a grid, not a one-dimensional tuple. It first draws the background, then draws the whole grid using draw_grid."""

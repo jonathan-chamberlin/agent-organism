@@ -82,3 +82,5 @@ def test_adjacent_coords() -> None:
     assert adjacent_coords((0,0),"up") == (-1,0)
     assert adjacent_coords((0,0),"left") == (0,-1)
     assert adjacent_coords((0,0),"right") == (0,1)
+
+# add tests for coordinates_to_q_table_index

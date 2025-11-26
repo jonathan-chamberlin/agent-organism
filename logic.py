@@ -6,18 +6,20 @@ import pygame as pg
 import math
 
 directions_agent_can_move = 4
-environment_x_length = 10
 environment_y_length = 10
+environment_x_length = 10
 
-cell_x_length = 50
 cell_y_length = 50
+cell_x_length = 50
 # opportunity to improve: the rendering is incorrect when cell_x_length != cell_y_length 
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
 # opportunity to improve: the location of the agent is offset when pixel_rendering_offset_x_from_top_left != pixel_rendering_offset_y_from_top_left 
 
-window_dimensions = (800,700)
+window_x_length = 800
+window_y_length = 700
+window_dimensions = (window_x_length,window_y_length)
 
 background_color = (255,255,255)
 wall_color = (20,20,20)
@@ -56,7 +58,7 @@ goal_value = cell_name_to_value_map["goal"]
 start_value = cell_name_to_value_map["start"]
 empty_value = cell_name_to_value_map["empty"]
 
-empty_maze = np.full((environment_x_length,environment_y_length), empty_value,dtype=int)
+empty_maze = np.full((environment_y_length,environment_x_length), empty_value,dtype=int)
 
 walls = [(5,0), (2,1), (5,1), (7,1), (8,1), (9,1), (0,2), (1,2), (2,2), (5,2), (7,2), (4,3), (5,3), (7,3), (1,4), (2,4), (3,4), (4,4), (7,4), (9,4), (1,5), (6,5), (7,5), (9,5), (1,6), (3,6), (4,6), (5,6), (6,6), (1,7), (8,7), (1,8), (2,8), (3,8), (4,8), (5,8), (6,8), (8,8), (8,9)]
 goals = [(9,9)]
@@ -65,8 +67,9 @@ start = start_list[0]
 
 q_table_width = directions_agent_can_move
 
-q_table = np.zeros((environment_x_length*environment_y_length,directions_agent_can_move), dtype=float)
+q_table = np.zeros((environment_y_length*environment_x_length,directions_agent_can_move), dtype=float)
 
+print(q_table)
 
 
 
@@ -81,24 +84,25 @@ Plan for which functions to create to allow the agent to move across the environ
 
 4. A function that updates the Q-table after learning'''
 
-def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
-    '''A function that converts (x, y) to Q-table row index. If the x and y coordinates are outside the environment's dimensions, the function returns -1'''
+# This is a useless function because the Q table is not stored as a list[int], it's stored as a list[list[int]]
+"""def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
+    '''A function that converts (x, y) to Q-table row index. If the x and y coordinates are outside the environment's dimensions, the function returns -100'''
     
     global q_table_width
     global environment_x_length
     global environment_y_length
     
-    x_coord = coordinates[0]
-    y_coord = coordinates[1]
+    y_coord = coordinates[0]
+    x_coord = coordinates[1]
     
-    if (x_coord >= environment_x_length) or (y_coord >= environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
-        return -1
+    if (y_coord >= environment_y_length) or (x_coord >= environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
+        return -100
     
-    row_index = x_coord + y_coord * q_table_width
+    row_index = y_coord + x_coord * q_table_width
     
     
     return row_index
-
+"""
 '''
 Here I learn how tuples work
 
@@ -118,11 +122,11 @@ def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
     
     for cell in wall_cells:
         #get the x and y coords of the wall
-        x_coord_of_wall = cell[0]
-        y_coord_of_wall = cell[1]
+        y_coord_of_wall = cell[0]
+        x_coord_of_wall = cell[1]
         
         # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid[y_coord_of_wall][x_coord_of_wall] = cell_name_to_value_map["wall"]
+        copied_maze_grid[x_coord_of_wall][y_coord_of_wall] = cell_name_to_value_map["wall"]
     
     
     return copied_maze_grid
@@ -140,11 +144,11 @@ def add_goals(maze_grid, goal_cells: list[tuple]) -> ndarray:
     
     for cell in goal_cells:
         #get the x and y coords of the wall
-        x_coord_of_wall = cell[0]
-        y_coord_of_wall = cell[1]
+        y_coord_of_wall = cell[0]
+        x_coord_of_wall = cell[1]
         
         # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid_with_goals[y_coord_of_wall][x_coord_of_wall] = cell_name_to_value_map["goal"]
+        copied_maze_grid_with_goals[x_coord_of_wall][y_coord_of_wall] = cell_name_to_value_map["goal"]
     
     
     return copied_maze_grid_with_goals
@@ -160,11 +164,11 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     
     for cell in cells_to_put_object_in:
         #get the x and y coords of the wall
-        x_coord = cell[0]
-        y_coord = cell[1]
+        y_coord = cell[0]
+        x_coord = cell[1]
         
         # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid_with_custom_objects[y_coord][x_coord] = chosen_value
+        copied_maze_grid_with_custom_objects[x_coord][y_coord] = chosen_value
     
     
     return copied_maze_grid_with_custom_objects
@@ -190,37 +194,35 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     
     If the movement takes the agent to hit a wall, the function returns the original coordinates and false."""
     
-       
-    global q_table_width
     global environment_x_length
     global environment_y_length
     global direction_map
     
     
     
-    x_coord = coordinates[0]
-    y_coord = coordinates[1]
+    y_coord = coordinates[0]
+    x_coord = coordinates[1]
     output_valid = True
     
     # checking if the inputted coordinates are inside the environment. If they are not, the function outputs the original starting coordinates.
-    if (x_coord > environment_x_length) or (y_coord > environment_y_length) or (x_coord < 0) or (y_coord < 0 ):
+    if (y_coord > environment_y_length) or (x_coord > environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
         output_valid = False
         return (coordinates, output_valid)
     
     # creating new coordinates
     
-    new_x_coord = x_coord + direction_map[direction][0]
-    new_y_coord = y_coord + direction_map[direction][1]
+    new_y_coord = y_coord + direction_map[direction][0]
+    new_x_coord = x_coord + direction_map[direction][1]
     
     # checking if the resulting coordinates are inside the environment. If they are not, the function outputs the original starting coordinates.
-    if (new_x_coord >= environment_x_length) or (new_y_coord >= environment_y_length) or (new_x_coord < 0) or (new_y_coord < 0 ):
+    if (new_y_coord >= environment_y_length) or (new_x_coord >= environment_x_length) or (new_y_coord < 0) or (new_x_coord < 0 ):
         output_valid = False
         return (coordinates, output_valid)
     
     
     # we create the new tuple (different place in memory) representing the new coordinates after the movement.
     
-    new_coords = (new_x_coord, new_y_coord) 
+    new_coords = (new_y_coord, new_x_coord) 
     
     # check if the new coords hit a wall
     if new_coords in walls:
@@ -304,10 +306,10 @@ def object_at_coords(coords: tuple[int,int], grid: tuple[tuple[int,int]]) -> str
     
     global cell_value_to_name_map
     
-    x_coord = coords[0]
-    y_coord = coords[1]
+    y_coord = coords[0]
+    x_coord = coords[1]
     
-    cell_value = grid[y_coord][x_coord]
+    cell_value = grid[x_coord][y_coord]
     
     cell_name = cell_value_to_name_map[cell_value]
     
@@ -321,18 +323,14 @@ def adjacent_coords(start_coords: tuple[int, int], direction: str, ) -> tuple[in
 """
     global direction_map
     
-    x_coord = start_coords[0]
-    y_coord = start_coords[1]
+    y_coord = start_coords[0]
+    x_coord = start_coords[1]
         
-    new_x_coord = x_coord + direction_map[direction][0]
-    new_y_coord = y_coord + direction_map[direction][1]
+    new_y_coord = y_coord + direction_map[direction][0]
+    new_x_coord = x_coord + direction_map[direction][1]
         
-    new_coords = (new_x_coord, new_y_coord) 
+    new_coords = (new_y_coord, new_x_coord) 
 
     return new_coords
 
 
-
-
-
-# Then create function adjacent_coordinates which takes in coordinates and a direction, and outputs the coordinates. 
