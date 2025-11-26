@@ -58,5 +58,5 @@ def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tup
     reward = cell_reward[object_at_adjacent_coords]
     
     return (reward, new_adjacent_coords, movement_valid) 
-    
-    
+
+# LEFT OFF. Create function choose_action explained above. So do Ctrl+F choose_action to find the commented out part above, read it, then build it.
