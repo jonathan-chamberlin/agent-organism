@@ -97,3 +97,5 @@ def test_adjacent_coords() -> None:
 
 def test_get_reward() -> None:
     assert 1 == 1
+    from reward import cell_reward
+    # left off, write tests for this using the example environment I wrote above
