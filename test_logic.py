@@ -22,7 +22,7 @@ def test_coordinates_after_moving() -> None:
     assert coordinates_after_moving((1,1),"left", example_walls) == ((1,1),False)
 
     assert coordinates_after_moving((0,0),"up", example_walls) == ((0,0),False)
-    assert coordinates_after_moving((9,0),"right", example_walls) == ((9,0), False)
+    assert coordinates_after_moving((9,0),"right", example_walls) == ((9,1), True)
      # output_valid == False because the input coordinate is outside the environment
     assert coordinates_after_moving((10,0),"left", example_walls) == ((10,0), False)
     assert coordinates_after_moving((0,10),"up", example_walls) == ((0,10), False)
@@ -76,3 +76,9 @@ def test_object_at_coordinates() -> None:
     object_at_coords((2,0),example_environment) == "empty"
     object_at_coords((0,3),example_environment) == "wall"
     object_at_coords((3,0),example_environment) == "empty"
+
+def test_adjacent_coords() -> None:
+    assert adjacent_coords((0,0),"down") == (1,0)
+    assert adjacent_coords((0,0),"up") == (-1,0)
+    assert adjacent_coords((0,0),"left") == (0,-1)
+    assert adjacent_coords((0,0),"right") == (0,1)

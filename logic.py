@@ -314,6 +314,22 @@ def object_at_coords(coords: tuple[int,int], grid: tuple[tuple[int,int]]) -> str
     return cell_name
 
 
+def adjacent_coords(start_coords: tuple[int, int], direction: str, ) -> tuple[int, int]:
+    """Takes in coordinates and a direction, and outputs the next coordinates.
+    
+    This is different from coordinates_after_move because this function outputs the next coordinates even if there is a wall or boundary.  
+"""
+    global direction_map
+    
+    x_coord = start_coords[0]
+    y_coord = start_coords[1]
+        
+    new_x_coord = x_coord + direction_map[direction][0]
+    new_y_coord = y_coord + direction_map[direction][1]
+        
+    new_coords = (new_x_coord, new_y_coord) 
+
+    return new_coords
 
 
 

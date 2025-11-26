@@ -51,10 +51,12 @@ def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tup
     
     
     # So first make a function object_at_coords which takes in coordinates and the grid and tells you what object is at those coordinates.
-    # DONE object_at_coords()
+    # DONE object_at_coords
     
     # LEFT OFF BELOW
-    # Then create function adjacent_coordinates which takes in coordinates and a direction, and outputs the coordinates. 
+    # Then create function adjacent_coordinates which takes in coordinates and a direction, and outputs the coordinates. This is different from coordinates_after_move because this function outputs the next coordinates even if there is a wall or boundary.  
+    # DONE adjacent_coords
+    
     # Then call object_at_coords on the output coords of adjacent_coords to get the name of the item.
     # Using those functions, I'll then be able to lookup the reward value of that cell from cell_reward
     
