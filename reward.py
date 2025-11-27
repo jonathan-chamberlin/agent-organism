@@ -65,4 +65,14 @@ def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tup
 def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], epsilon: float) -> str: 
     """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random."""
     
+    q_table_index = coordinates_to_q_table_index(current_pos)
     
+    row = q_table[q_table_index]
+    
+    # index of the maximum q value in the row for the inputted coords current_pos
+    action_index = np.argmax(row)
+    
+    optimal_direction = actions[action_index]
+    
+    return optimal_direction
+    # left off now add randomness with epsilon
