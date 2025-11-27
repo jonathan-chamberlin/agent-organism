@@ -72,12 +72,20 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     # index of the maximum q value in the row for the inputted coords current_pos. if multiple directions have the same q value, the function will always return the index of the first instance with that maximum value.
     optimal_action_index = np.argmax(row)
     
-    optimal_direction = actions[optimal_action_index]
+    optimal_action = actions[optimal_action_index]
     
+    # decides if the function will return the optimal_action or another
     pick_optimal = (np.random.random() > epsilon)
     
     if pick_optimal == True:
-        return optimal_direction
+        return optimal_action
     else:
-        return optimal_direction
+        action_indices = range[0,len(actions)]
+        
+        action_indices_without_optimal_action_index = action_indices.pop(optimal_action_index)
+        
+        random_action_not_optimal = random.choice(action_indices_without_optimal_action_index)
+        
+        return random_action_not_optimal
+
         # left off now add randomness with epsilon
