@@ -61,9 +61,12 @@ def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tup
     return (reward, new_adjacent_coords, movement_valid) 
 
 # LEFT OFF. Create function choose_action explained above. So do Ctrl+F choose_action to find the commented out part above, read it, then build it.
+#
+def choose_action_(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], epsilon: float) -> tuple(str,str): 
+    """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random.
 
-def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], epsilon: float) -> str: 
-    """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random."""
+    Returns a tuple where the first string is the optimal action, and the second is an action which was randomly chosen using epsilon the exploration rate.
+    """
     
     q_table_index = coordinates_to_q_table_index(current_pos)
     
@@ -78,14 +81,12 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     pick_optimal = (np.random.random() > epsilon)
     
     if pick_optimal == True:
-        return optimal_action
-    else:
-        action_indices = range[0,len(actions)]
-        
-        action_indices_without_optimal_action_index = action_indices.pop(optimal_action_index)
-        
-        random_action_not_optimal = random.choice(action_indices_without_optimal_action_index)
-        
-        return random_action_not_optimal
-
-        # left off now add randomness with epsilon
+        return (optimal_action, optimal_action)
+    
+    action_indices = range[0,len(actions)]
+    
+    action_indices_without_optimal_action_index = action_indices.pop(optimal_action_index)
+    
+    random_action_not_optimal = random.choice(action_indices_without_optimal_action_index)
+    
+    return (optimal_action,random_action_not_optimal)
