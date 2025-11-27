@@ -13,6 +13,10 @@ direction_map = {
     "remain": (0,0)
     }
 
+actions = list(direction_map.keys())
+
+print(actions)
+
 directions_agent_can_move = len(direction_map)
 environment_y_length = 10
 environment_x_length = 10
@@ -85,8 +89,8 @@ Plan for which functions to create to allow the agent to move across the environ
 
 4. A function that updates the Q-table after learning'''
 
-# This is a useless function because the Q table is not stored as a list[int], it's stored as a list[list[int]]
-"""def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
+
+def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
     '''A function that converts (x, y) to Q-table row index. If the x and y coordinates are outside the environment's dimensions, the function returns -100'''
     
     global q_table_width
@@ -103,7 +107,7 @@ Plan for which functions to create to allow the agent to move across the environ
     
     
     return row_index
-"""
+
 '''
 Here I learn how tuples work
 

@@ -14,19 +14,19 @@ example_environment = add_custom_object(example_environment,example_goal,goal_va
 example_environment = add_custom_object(example_environment,example_start,start_value)
 
 
-"""LIke I wrote in logic.py, coordinates_to_q_table is a useless function becuase the datatype of the q table isn't list[int], it's list[list[int]]
+
 def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,0]) == 0
     assert coordinates_to_q_table_index([1,0]) == 1 + 0 * q_table_width
     assert coordinates_to_q_table_index([0,1]) == 0 + 1 * q_table_width
     assert coordinates_to_q_table_index([5,1]) == 5 + 1 * q_table_width
     assert coordinates_to_q_table_index([5,9]) == 5 + 9 * q_table_width
-    assert coordinates_to_q_table_index([-5,0]) == -1
-    assert coordinates_to_q_table_index([0,-5]) == -1
-    assert coordinates_to_q_table_index([10,0]) == -1
-    assert coordinates_to_q_table_index([0,11]) == -1
-    assert coordinates_to_q_table_index([-5,-50]) == -1
-"""
+    assert coordinates_to_q_table_index([-5,0]) == -100
+    assert coordinates_to_q_table_index([0,-5]) == -100
+    assert coordinates_to_q_table_index([10,0]) == -100
+    assert coordinates_to_q_table_index([0,11]) == -100
+    assert coordinates_to_q_table_index([-5,-50]) == -100
+
 
 def test_coordinates_after_moving() -> None:
     example_walls = [(1,0),(4,0), (2,3),(3,0)]
