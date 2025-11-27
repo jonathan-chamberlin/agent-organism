@@ -5,7 +5,15 @@ import numpy as np
 import pygame as pg
 import math
 
-directions_agent_can_move = 4
+direction_map = {
+    "up": (-1,0),
+    "down":(1,0),
+    "left":(0,-1),
+    "right":(0,1),
+    "remain": (0,0)
+    }
+
+directions_agent_can_move = len(direction_map)
 environment_y_length = 10
 environment_x_length = 10
 
@@ -45,13 +53,6 @@ cell_color_map = {
     "start": (0,255,0)
     }
 
-direction_map = {
-    "up": (-1,0),
-    "down":(1,0),
-    "left":(0,-1),
-    "right":(0,1),
-    "remain": (0,0)
-    }
 
 wall_value = cell_name_to_value_map["wall"]
 goal_value = cell_name_to_value_map["goal"]

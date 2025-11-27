@@ -23,7 +23,7 @@ pg.draw.rect(window, empty_cell_color, (0,0,cell_y_length, cell_x_length))
 
 
 
-# LEFT OFF, now create a function that renders a list of coordinates given a cell type.
+
 
 # the grid is just an array with 0s
 # the grid is updated to include walls and goals, and custom objects
