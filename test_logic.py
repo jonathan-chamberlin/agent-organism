@@ -16,16 +16,17 @@ example_environment = add_custom_object(example_environment,example_start,start_
 
 
 def test_coordinates_to_q_table_index() -> None:
-    assert coordinates_to_q_table_index([0,0],10,10) == 0
-    assert coordinates_to_q_table_index([1,0],10,10) == 1 + 0 * q_table_width
-    assert coordinates_to_q_table_index([0,1],10,10) == 0 + 1 * q_table_width
-    assert coordinates_to_q_table_index([5,1],10,10) == 5 + 1 * q_table_width
-    assert coordinates_to_q_table_index([5,9],10,10) == 5 + 9 * q_table_width
-    assert coordinates_to_q_table_index([-5,0],10,10) == -100
-    assert coordinates_to_q_table_index([0,-5],10,10) == -100
-    assert coordinates_to_q_table_index([10,0],10,10) == -100
-    assert coordinates_to_q_table_index([0,11],10,10) == -100
-    assert coordinates_to_q_table_index([-5,-50],10) == -100
+    test_q_table_width = 4
+    assert coordinates_to_q_table_index([0,0],10,10,test_q_table_width) == 0
+    assert coordinates_to_q_table_index([1,0],10,10,test_q_table_width) == 1 + 0 * test_q_table_width
+    assert coordinates_to_q_table_index([0,1],10,10,test_q_table_width) == 0 + 1 * test_q_table_width
+    assert coordinates_to_q_table_index([5,1],10,10,test_q_table_width) == 5 + 1 * test_q_table_width
+    assert coordinates_to_q_table_index([5,9],10,10,test_q_table_width) == 5 + 9 * test_q_table_width
+    assert coordinates_to_q_table_index([-5,0],10,10, test_q_table_width) == -100
+    assert coordinates_to_q_table_index([0,-5],10,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([10,0],10,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([0,11],10,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([-5,-50],10,10, test_q_table_width) == -100
 
 
 def test_coordinates_after_moving() -> None:
@@ -108,7 +109,7 @@ def test_get_reward() -> None:
     assert get_reward((2,0),"right", example_environment,example_walls) == (cell_reward["goal"],(2,1) ,True)
 
 def test_choose_action() -> None:
-# (current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], epsilon: float) -> tuple(str,str):
+    #def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], environment_x_length: int, environment_y_length, epsilon: float) -> tuple(str,str):
     # this example q table is 3 by 3, so it's domain of coords is (0,0) -> (2,2)
     example_q_table = [
     [0.5, 2.3, -1.2, 3.7, 0.0],
@@ -121,6 +122,9 @@ def test_choose_action() -> None:
     [0.0, 0.0, 1.0, 0.0, 0.0],
     [3.3, 2.2, 1.1, 4.4, 5.5]
 ]
+    example_envionment_x_length = 3
+    example_environment_y_length = 3
+    
     """direction_map = {
     "up": (-1,0),
     "down":(1,0),
@@ -129,3 +133,5 @@ def test_choose_action() -> None:
     "remain": (0,0)
     }"""
     
+    # left off: write tests for choose_action. Start with tests that have epsilon == 0 so the output will be in the form (action,action). After I get that working should I only test to make sure the randomness works the way I expect/
+    assert choose_action((0,0), example_q_table,example_envionment_x_length, example_environment_y_length, 0) == ("right","right")
