@@ -75,7 +75,7 @@ q_table_width = directions_agent_can_move
 q_table = np.zeros((environment_y_length*environment_x_length,directions_agent_can_move), dtype=float)
 
 print(q_table)
-
+print(len(q_table[0]))
 
 
 '''
@@ -90,12 +90,8 @@ Plan for which functions to create to allow the agent to move across the environ
 4. A function that updates the Q-table after learning'''
 
 
-def coordinates_to_q_table_index(coordinates: tuple[int, int]) -> int:
+def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_x_length: int, environment_y_length: int, q_table_width: int) -> int:
     '''A function that converts (x, y) to Q-table row index. If the x and y coordinates are outside the environment's dimensions, the function returns -100'''
-    
-    global q_table_width
-    global environment_x_length
-    global environment_y_length
     
     y_coord = coordinates[0]
     x_coord = coordinates[1]
