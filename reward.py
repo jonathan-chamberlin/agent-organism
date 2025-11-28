@@ -87,11 +87,14 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     if pick_optimal == True:
         return (optimal_action, optimal_action)
     
-    action_indices = range[0,len(actions)]
+    action_indices = list(range(0,len(actions)))
     
-    action_indices_without_optimal_action_index = action_indices.pop(optimal_action_index)
+    # removing the optimal action from action_indicies so the function can output another one.
+    action_indices.pop(optimal_action_index)
     
-    random_action_not_optimal = random.choice(action_indices_without_optimal_action_index)
+    random_action_index_not_optimal = np.random.choice(action_indices)
+    
+    random_action_not_optimal = actions[random_action_index_not_optimal]
     
     return (optimal_action,random_action_not_optimal)
 

@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 from logic import *
 from reward import *
+import random
 
 
 initializing_environment = np.full((4,4), empty_value,dtype=int)
@@ -146,3 +147,6 @@ def test_choose_action() -> None:
     # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in direction_map corresponds to left
     
     # left off: write tests for choose_action. Start with tests that have epsilon == 0 so the output will be in the form (action,action). After I get that working should I only test to make sure the randomness works the way I expect/
+
+for i in range(0,50,1):
+    print(choose_action((2,1), example_q_table,example_envionment_x_length,example_environment_y_length,0.5))
