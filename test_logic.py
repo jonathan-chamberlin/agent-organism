@@ -146,7 +146,45 @@ def test_choose_action() -> None:
     assert choose_action((2,1), example_q_table, example_envionment_x_length,example_environment_y_length,0) == ("left","left")
     # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in direction_map corresponds to left
     
-    # left off: write tests for choose_action. Start with tests that have epsilon == 0 so the output will be in the form (action,action). After I get that working should I only test to make sure the randomness works the way I expect/
+    """Testing randomness of choose_action. 
+    CODE to run in main.py:
 
-for i in range(0,50,1):
-    print(choose_action((2,1), example_q_table,example_envionment_x_length,example_environment_y_length,0.5))
+    from test_logic import *
+
+    for i in range(0,100,1):
+        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_y_length,0.5))
+    print()
+    print()
+    print()
+    
+    for i in range(0,100,1):
+        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_y_length,1))
+
+    ANALYSIS of output:
+    Excellent! Much better distribution now. Let me count both loops for you:
+    First Loop (epsilon = 0.5, 100 iterations)
+    Second position counts:
+
+    'left': 39 times (39%)
+    'remain': 24 times (24%)
+    'right': 19 times (19%)
+    'up': 11 times (11%)
+    'down': 7 times (7%)
+
+    Second Loop (epsilon = 1.0, 100 iterations)
+    Second position counts:
+
+    'remain': 29 times (29%)
+    'down': 26 times (26%)
+    'up': 24 times (24%)
+    'right': 21 times (21%)
+    'left': 0 times (0%)
+
+    Analysis
+    First loop: All 5 actions appear, though there's some variation (39% vs 7%). With only 100 samples, some variation is expected, but the range is wider than ideal. Still, all actions are being selected.
+    Second loop: This is interesting - 'left' never appears in the second position, even though the other 4 actions are distributed fairly evenly (21-29%).
+    What this tells you:
+    In the second loop with epsilon=1.0 (always explore, never exploit), 'left' is excluded from the random selection entirely. But 'left' is the optimal action for position (2,1) in your test.
+    Question for you: Your code removes the optimal action from the pool before randomly selecting. In the second loop, what is the optimal action? Why would that action not appear in the second position?
+    This is actually correct behavior - when exploring, you're randomly choosing from non-optimal actions. The pattern matches what your code is designed to do."""
+
