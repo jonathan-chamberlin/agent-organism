@@ -18,10 +18,10 @@ example_environment = add_custom_object(example_environment,example_start,start_
 def test_coordinates_to_q_table_index() -> None:
     test_q_table_width = 4
     assert coordinates_to_q_table_index([0,0],10,10,test_q_table_width) == 0
-    assert coordinates_to_q_table_index([1,0],10,10,test_q_table_width) == 1 + 0 * test_q_table_width
-    assert coordinates_to_q_table_index([0,1],10,10,test_q_table_width) == 0 + 1 * test_q_table_width
-    assert coordinates_to_q_table_index([5,1],10,10,test_q_table_width) == 5 + 1 * test_q_table_width
-    assert coordinates_to_q_table_index([5,9],10,10,test_q_table_width) == 5 + 9 * test_q_table_width
+    assert coordinates_to_q_table_index([1,0],10,10,test_q_table_width) == 0 + 1 * test_q_table_width
+    assert coordinates_to_q_table_index([0,1],10,10,test_q_table_width) == 1 + 0 * test_q_table_width
+    assert coordinates_to_q_table_index([5,1],10,10,test_q_table_width) == 1 + 5 * test_q_table_width
+    assert coordinates_to_q_table_index([5,9],10,10,test_q_table_width) == 9 + 5 * test_q_table_width
     assert coordinates_to_q_table_index([-5,0],10,10, test_q_table_width) == -100
     assert coordinates_to_q_table_index([0,-5],10,10,test_q_table_width) == -100
     assert coordinates_to_q_table_index([10,0],10,10,test_q_table_width) == -100
@@ -135,4 +135,5 @@ def test_choose_action() -> None:
     
     
     assert choose_action((0,0), example_q_table,example_envionment_x_length, example_environment_y_length, 0) == ("right","right")
+    
     # left off: write tests for choose_action. Start with tests that have epsilon == 0 so the output will be in the form (action,action). After I get that working should I only test to make sure the randomness works the way I expect/
