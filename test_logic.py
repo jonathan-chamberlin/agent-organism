@@ -13,6 +13,19 @@ example_environment= add_custom_object(initializing_environment, example_walls,w
 example_environment = add_custom_object(example_environment,example_goal,goal_value)
 example_environment = add_custom_object(example_environment,example_start,start_value)
 
+example_q_table = [
+    [0.5, 2.3, -1.2, 3.7, 0.0],
+    [1.1, -0.5, 4.2, 0.3, -2.1],
+    [-1.0, 0.0, 0.0, 0.0, 0.0],
+    [5.5, 3.2, 1.8, 4.1, 2.7],
+    [0.0, 0.0, 0.0, 0.0, 0.0],
+    [2.1, 3.5, 1.2, 0.8, 4.0],
+    [-0.5, 1.5, 2.5, 3.5, 0.5],
+    [0.0, 0.0, 1.0, 0.0, 0.0],
+    [3.3, 2.2, 1.1, 4.4, 5.5]]
+example_envionment_x_length = 3
+example_environment_y_length = 3
+
 
 
 def test_coordinates_to_q_table_index() -> None:
@@ -27,6 +40,7 @@ def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([10,0],10,10,test_q_table_width) == -100
     assert coordinates_to_q_table_index([0,11],10,10,test_q_table_width) == -100
     assert coordinates_to_q_table_index([-5,-50],10,10, test_q_table_width) == -100
+    assert coordinates_to_q_table_index([1,2],example_envionment_x_length,example_environment_y_length,len(example_q_table[0])) == 2 + 1 * len(example_q_table[0]) #is 7
 
 
 def test_coordinates_after_moving() -> None:
@@ -111,19 +125,7 @@ def test_get_reward() -> None:
 def test_choose_action() -> None:
     #def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], environment_x_length: int, environment_y_length, epsilon: float) -> tuple(str,str):
     # this example q table is 3 by 3, so it's domain of coords is (0,0) -> (2,2)
-    example_q_table = [
-    [0.5, 2.3, -1.2, 3.7, 0.0],
-    [1.1, -0.5, 4.2, 0.3, -2.1],
-    [-1.0, 0.0, 0.0, 0.0, 0.0],
-    [5.5, 3.2, 1.8, 4.1, 2.7],
-    [0.0, 0.0, 0.0, 0.0, 0.0],
-    [2.1, 3.5, 1.2, 0.8, 4.0],
-    [-0.5, 1.5, 2.5, 3.5, 0.5],
-    [0.0, 0.0, 1.0, 0.0, 0.0],
-    [3.3, 2.2, 1.1, 4.4, 5.5]
-]
-    example_envionment_x_length = 3
-    example_environment_y_length = 3
+    
     
     """direction_map = {
     "up": (-1,0),
