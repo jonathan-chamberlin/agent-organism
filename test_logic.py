@@ -21,13 +21,13 @@ example_q_table = [
     [0.0, 0.0, 0.0, 0.0, 0.0],
     [2.1, 3.5, 1.2, 0.8, 4.0],
     [-0.5, 1.5, 2.5, 3.5, 0.5],
-    [0.0, 0.0, 1.0, 0.0, 0.0],
+    [0.0, 3.0, 5.0, 4.0, 0.5],
     [3.3, 2.2, 1.1, 4.4, 5.5]]
 example_envionment_x_length = 3
 example_environment_y_length = 3
 
 
-
+# update the first input to be a tuple, not a list
 def test_coordinates_to_q_table_index() -> None:
     test_q_table_width = 4
     assert coordinates_to_q_table_index([0,0],10,10,test_q_table_width) == 0
@@ -137,5 +137,7 @@ def test_choose_action() -> None:
     
     
     assert choose_action((0,0), example_q_table,example_envionment_x_length, example_environment_y_length, 0) == ("right","right")
+    assert choose_action((1,2), example_q_table, example_envionment_x_length,example_environment_y_length,0) == ("left","left") 
+    #q table index is 7, so that row is [0.0, 3.0, 5.0, 4.0, 0.5]. The highest value is index 2, which in direction_map corresponds to left
     
     # left off: write tests for choose_action. Start with tests that have epsilon == 0 so the output will be in the form (action,action). After I get that working should I only test to make sure the randomness works the way I expect/
