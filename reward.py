@@ -30,8 +30,8 @@ empty_reward = cell_reward["empty"]
 # DONE. q table starts blank
 # DONE. I use a get_reward function that takes in the starting coordinates and a direction, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
 
-# Then I need a function choose_action that takes in the agent's current coordinates and the whole Q table, and just reads teh Q table and finds which value is the highest, and it has a 90% chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and 10% likely to chose another move at random. This function will use epsilon as an inputs.
-# First I tested the implementation of choose_action while only considering a 0 explore rate. Now I have to add some randomness.
+# DONE. Then I need a function choose_action that takes in the agent's current coordinates and the whole Q table, and just reads teh Q table and finds which value is the highest, and it has a 90% chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and 10% likely to chose another move at random. This function will use epsilon as an inputs.
+# DONE. First I tested the implementation of choose_action while only considering a 0 explore rate. Now I have to add some randomness.
 
 
 # If I want, I call the draw_agent function to render the agent at those new coordinates. 
@@ -98,4 +98,4 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     
     return (optimal_action,random_action_not_optimal)
 
-# 
+# LEFT OFF. Do ctrl+F and paste in update_q_table, because the description of it is above. Then read that description. Then create update_q_table.
