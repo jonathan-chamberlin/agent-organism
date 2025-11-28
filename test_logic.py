@@ -30,18 +30,20 @@ example_environment_y_length = 3
 # update the first input to be a tuple, not a list
 def test_coordinates_to_q_table_index() -> None:
     test_q_table_width = 4
-    assert coordinates_to_q_table_index([0,0],10,10,test_q_table_width) == 0
-    assert coordinates_to_q_table_index([1,0],10,10,test_q_table_width) == 0 + 1 * test_q_table_width
-    assert coordinates_to_q_table_index([0,1],10,10,test_q_table_width) == 1 + 0 * test_q_table_width
-    assert coordinates_to_q_table_index([5,1],10,10,test_q_table_width) == 1 + 5 * test_q_table_width
-    assert coordinates_to_q_table_index([5,9],10,10,test_q_table_width) == 9 + 5 * test_q_table_width
-    assert coordinates_to_q_table_index([-5,0],10,10, test_q_table_width) == -100
-    assert coordinates_to_q_table_index([0,-5],10,10,test_q_table_width) == -100
-    assert coordinates_to_q_table_index([10,0],10,10,test_q_table_width) == -100
-    assert coordinates_to_q_table_index([0,11],10,10,test_q_table_width) == -100
-    assert coordinates_to_q_table_index([-5,-50],10,10, test_q_table_width) == -100
-    assert coordinates_to_q_table_index([1,2],example_envionment_x_length,example_environment_y_length,len(example_q_table[0])) == 2 + 1 * len(example_q_table[0]) #is 7
-
+    test_environment_x_length = 10
+    assert coordinates_to_q_table_index([0,0],test_environment_x_length,10,test_q_table_width) == 0
+    assert coordinates_to_q_table_index([1,0],test_environment_x_length,10,test_q_table_width) == 0 + 1 * test_environment_x_length
+    assert coordinates_to_q_table_index([0,1],test_environment_x_length,10,test_q_table_width) == 1 + 0 * test_environment_x_length
+    assert coordinates_to_q_table_index([5,1],test_environment_x_length,10,test_q_table_width) == 1 + 5 * test_environment_x_length
+    assert coordinates_to_q_table_index([5,9],test_environment_x_length,10,test_q_table_width) == 9 + 5 * test_environment_x_length
+    assert coordinates_to_q_table_index([-5,0],test_environment_x_length,10, test_q_table_width) == -100
+    assert coordinates_to_q_table_index([0,-5],test_environment_x_length,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([10,0],test_environment_x_length,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([0,11],test_environment_x_length,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([-5,-50],test_environment_x_length,10, test_q_table_width) == -100
+    assert coordinates_to_q_table_index([1,2],example_envionment_x_length,example_environment_y_length,0) == 2 + 1 * example_envionment_x_length #is 2 + 1 * 3 = 5
+    assert coordinates_to_q_table_index([2,1],example_envionment_x_length,example_environment_y_length,0) == 1 + 2 * example_envionment_x_length #is 1 + 2 * 3 = 7
+# I already tested choose_action with coords (1,2), now I want to test (2,1) to make sure that they give different answers.
 
 def test_coordinates_after_moving() -> None:
     example_walls = [(1,0),(4,0), (2,3),(3,0)]
@@ -137,7 +139,10 @@ def test_choose_action() -> None:
     
     
     assert choose_action((0,0), example_q_table,example_envionment_x_length, example_environment_y_length, 0) == ("right","right")
-    assert choose_action((1,2), example_q_table, example_envionment_x_length,example_environment_y_length,0) == ("left","left") 
-    #q table index is 7, so that row is [0.0, 3.0, 5.0, 4.0, 0.5]. The highest value is index 2, which in direction_map corresponds to left
+    assert choose_action((1,2), example_q_table, example_envionment_x_length,example_environment_y_length,0) == ("remain","remain") 
+    #q table index is 5, so that q table row is [2.1, 3.5, 1.2, 0.8, 4.0]. The highest value is index 4, which in direction_map corresponds to remain.
+    
+    assert choose_action((2,1), example_q_table, example_envionment_x_length,example_environment_y_length,0) == ("left","left")
+    # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in direction_map corresponds to left
     
     # left off: write tests for choose_action. Start with tests that have epsilon == 0 so the output will be in the form (action,action). After I get that working should I only test to make sure the randomness works the way I expect/

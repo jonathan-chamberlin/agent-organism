@@ -99,10 +99,10 @@ def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_x_len
     if (y_coord >= environment_y_length) or (x_coord >= environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
         return -100
     
-    row_index = x_coord + y_coord * q_table_width
+    q_table_row_index = x_coord + y_coord * environment_x_length
     
     
-    return row_index
+    return q_table_row_index
 
 '''
 Here I learn how tuples work
