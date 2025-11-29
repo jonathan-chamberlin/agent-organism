@@ -99,3 +99,41 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     return (optimal_action,random_action_not_optimal)
 
 # LEFT OFF. Do ctrl+F and paste in update_q_table, because the description of it is above. Then read that description. Then create update_q_table.
+
+
+def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
+    """
+    Updates the Q table.
+    
+    Takes in the coordiates for new_pos even though this can be calcuaed from starting coords and action moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.), and the q table.
+    
+    It calls get_reward to determine the reward for making that move, and uses the Q(state,action) ML formula {{  Q(state, action) = Q(state, action) + α × [reward + γ × max(Q(next_state, all_possible_actions_from_that_state)) - Q(state, action)]  }}, then the function updates the row of the Q table with that reward value.
+    
+    α (alpha) - The learning rate, typically 0.1
+    This controls how much we update based on new information. Think of it as a volume knob:
+
+    α = 1.0: Completely replace old estimate with new information
+    α = 0.1: Gently blend new information into existing estimate (10% new, 90% old)
+    α = 0.0: Don't learn at all (keep old value)
+    
+    """
+    
+    reward_calc = get_reward(old_pos, action,environment,walls)
+    reward = reward_calc[0]
+    movement_valid = reward_calc[2]
+    
+    q_table_width = len(q_table[0])
+    
+    old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_x_length,environment_y_length,q_table_width)
+    new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_x_length,environment_y_length,q_table_width)
+    
+    action_index = actions_list.index(action)
+    
+    old_q_value = q_table[old_pos_q_table_index][action_index]
+    
+    learning_adjustment = alpha * (reward + (gamma * max(q_table[new_pos_q_table_index]) - old_q_value ))
+    
+    new_q_value = old_q_value + learning_adjustment
+    
+    q_table[old_pos_q_table_index][action_index] = new_q_value
+    
