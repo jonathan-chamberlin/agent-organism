@@ -23,12 +23,12 @@ empty_reward = cell_reward["empty"]
 
 # You have three key functions to build:
 # get_reward(old_pos, new_pos, is_valid, environment) - Returns reward number
-# choose_action(current_pos, q_table, epsilon) - Returns direction string
+# choose_action(current_pos, q_table, epsilon) - Returns action string
 # update_q_table(old_pos, action, new_pos, q_table, alpha, gamma) - Modifies q_table
 
 
 # DONE. q table starts blank
-# DONE. I use a get_reward function that takes in the starting coordinates and a direction, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
+# DONE. I use a get_reward function that takes in the starting coordinates and a action, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
 
 # DONE. Then I need a function choose_action that takes in the agent's current coordinates and the whole Q table, and just reads teh Q table and finds which value is the highest, and it has a 90% chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and 10% likely to chose another move at random. This function will use epsilon as an inputs.
 # DONE. First I tested the implementation of choose_action while only considering a 0 explore rate. Now I have to add some randomness.
@@ -36,7 +36,7 @@ empty_reward = cell_reward["empty"]
 
 # If I want, I call the draw_agent function to render the agent at those new coordinates. 
 
-# I need another function update_q_table which takes in a starting coordiate, direction moved from that starting coordinate, and the q table, and the final coordinates (even though this can be calcuaed from starting coords and direction moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.). It calls get_reward to determine the reward for making that move, and uses the Q(state,action) ML formula {{  Q(state, action) = Q(state, action) + α × [reward + γ × max(Q(next_state, all_possible_actions_from_that_state)) - Q(state, action)]  }}, then the function updates the row of the Q table with that reward value.
+# I need another function update_q_table which takes in a starting coordiate, action moved from that starting coordinate, and the q table, and the final coordinates (even though this can be calcuaed from starting coords and action moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.). It calls get_reward to determine the reward for making that move, and uses the Q(state,action) ML formula {{  Q(state, action) = Q(state, action) + α × [reward + γ × max(Q(next_state, all_possible_actions_from_that_state)) - Q(state, action)]  }}, then the function updates the row of the Q table with that reward value.
 
 # Then I have to make a game loop that makes it so multiple simulations happen consecutively, and that subsequent simulations use the prior Q table.
 
@@ -44,8 +44,8 @@ empty_reward = cell_reward["empty"]
 
 # To save knowledge between runs, I'd store the Q table in a text file using np.save(file,array) and np.load(file). This allows me to use data from previous times I ran the code, instead of the agent having to relearn everything from scratch.'''
 
-def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tuple[int,int]], walls: list[tuple[int,int]]) -> tuple[int , tuple[int,int], bool]:
-    """Takes in the starting coordinates and a direction, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
+def get_reward(old_pos: tuple[int,[int]], action: str, environment: tuple[tuple[int,int]], walls: list[tuple[int,int]]) -> tuple[int , tuple[int,int], bool]:
+    """Takes in the starting coordinates and a action, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
     
     Outputs reward, new_pos coords, and
     movement_valid 
@@ -53,9 +53,9 @@ def get_reward(old_pos: tuple[int,[int]], direction: str, environment: tuple[tup
     
     global cell_reward
     
-    new_adjacent_coords = adjacent_coords(old_pos,direction)
+    new_adjacent_coords = adjacent_coords(old_pos,action)
     
-    movement_valid = coordinates_after_moving(old_pos,direction,walls)[1]
+    movement_valid = coordinates_after_moving(old_pos,action,walls)[1]
     
     object_at_adjacent_coords = object_at_coords(new_adjacent_coords, environment)
     
@@ -76,7 +76,7 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     
     row = q_table[q_table_index]
     
-    # index of the maximum q value in the row for the inputted coords current_pos. if multiple directions have the same q value, the function will always return the index of the first instance with that maximum value.
+    # index of the maximum q value in the row for the inputted coords current_pos. if multiple actions have the same q value, the function will always return the index of the first instance with that maximum value.
     optimal_action_index = np.argmax(row)
     
     optimal_action = actions[optimal_action_index]

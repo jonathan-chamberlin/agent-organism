@@ -5,7 +5,7 @@ import numpy as np
 import pygame as pg
 import math
 
-direction_map = {
+action_map = {
     "up": (-1,0),
     "down":(1,0),
     "left":(0,-1),
@@ -13,11 +13,11 @@ direction_map = {
     "remain": (0,0)
     }
 
-actions = list(direction_map.keys())
+actions = list(action_map.keys())
 
 print(actions)
 
-directions_agent_can_move = len(direction_map)
+actions_agent_can_move = len(action_map)
 environment_y_length = 10
 environment_x_length = 10
 
@@ -70,9 +70,9 @@ goals = [(9,9)]
 start_list = [(0,0)]
 start = start_list[0]
 
-q_table_width = directions_agent_can_move
+q_table_width = actions_agent_can_move
 
-q_table = np.zeros((environment_y_length*environment_x_length,directions_agent_can_move), dtype=float)
+q_table = np.zeros((environment_y_length*environment_x_length,actions_agent_can_move), dtype=float)
 
 print(q_table)
 print(len(q_table[0]))
@@ -83,7 +83,7 @@ Plan for which functions to create to allow the agent to move across the environ
 
 1. A function that converts (x, y) to Q-table row index
 
-2. A function that takes current position and direction, returns new position
+2. A function that takes current position and action, returns new position
 
 3. A function that checks if a move is valid (not hitting a wall)
 
@@ -182,8 +182,8 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
     '''
 
-def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
-    """A function that takes current position and direction, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
+def coordinates_after_moving(coordinates: tuple[int, int], action: str, walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
+    """A function that takes current position and action, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
     
     In short, the function returns the new coordinates, but if either the start or next coords are invalid (outside the environment, or if the next coords cause the agent to hit a wall), the the output is the original coordinates and false.
     
@@ -197,7 +197,7 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     
     global environment_x_length
     global environment_y_length
-    global direction_map
+    global action_map
     
     
     
@@ -212,8 +212,8 @@ def coordinates_after_moving(coordinates: tuple[int, int], direction: str, walls
     
     # creating new coordinates
     
-    new_y_coord = y_coord + direction_map[direction][0]
-    new_x_coord = x_coord + direction_map[direction][1]
+    new_y_coord = y_coord + action_map[action][0]
+    new_x_coord = x_coord + action_map[action][1]
     
     # checking if the resulting coordinates are inside the environment. If they are not, the function outputs the original starting coordinates.
     if (new_y_coord >= environment_y_length) or (new_x_coord >= environment_x_length) or (new_y_coord < 0) or (new_x_coord < 0 ):
@@ -247,8 +247,8 @@ def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int
     return center_in_pixels
 
 # This function I have the scaffold but I haven't finished it yet. I need to see how the agent can be moved on the pygame display.
-def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> bool:
-    """Taking in the agent's starting coordinates, and a direction, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall. Returns a boolean of if the move was valid or not. This function draws the agent too, but doesn't render it."""
+def move_agent(starting_coords: tuple[int,int], action_to_move: str) -> bool:
+    """Taking in the agent's starting coordinates, and a action, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall. Returns a boolean of if the move was valid or not. This function draws the agent too, but doesn't render it."""
     
     from setup_environment import window
     global walls
@@ -257,7 +257,7 @@ def move_agent(starting_coords: tuple[int,int], direction_to_move: str) -> bool:
     from setup_environment import agent_height
 
 
-    coords_calc = coordinates_after_moving(starting_coords, direction_to_move, walls)
+    coords_calc = coordinates_after_moving(starting_coords, action_to_move, walls)
     
     final_coords = coords_calc[0]
     movement_valid = coords_calc[1]
@@ -317,18 +317,18 @@ def object_at_coords(coords: tuple[int,int], grid: tuple[tuple[int,int]]) -> str
     return cell_name
 
 
-def adjacent_coords(start_coords: tuple[int, int], direction: str, ) -> tuple[int, int]:
-    """Takes in coordinates and a direction, and outputs the next coordinates.
+def adjacent_coords(start_coords: tuple[int, int], action: str, ) -> tuple[int, int]:
+    """Takes in coordinates and a action, and outputs the next coordinates.
     
     This is different from coordinates_after_move because this function outputs the next coordinates even if there is a wall or boundary.  
 """
-    global direction_map
+    global action_map
     
     y_coord = start_coords[0]
     x_coord = start_coords[1]
         
-    new_y_coord = y_coord + direction_map[direction][0]
-    new_x_coord = x_coord + direction_map[direction][1]
+    new_y_coord = y_coord + action_map[action][0]
+    new_x_coord = x_coord + action_map[action][1]
         
     new_coords = (new_y_coord, new_x_coord) 
 

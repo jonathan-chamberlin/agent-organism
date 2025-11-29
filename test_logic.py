@@ -130,7 +130,7 @@ def test_choose_action() -> None:
     # this example q table is 3 by 3, so it's domain of coords is (0,0) -> (2,2)
     
     
-    """direction_map = {
+    """action_map = {
     "up": (-1,0),
     "down":(1,0),
     "left":(0,-1),
@@ -141,10 +141,10 @@ def test_choose_action() -> None:
     
     assert choose_action((0,0), example_q_table,example_envionment_x_length, example_environment_y_length, 0) == ("right","right")
     assert choose_action((1,2), example_q_table, example_envionment_x_length,example_environment_y_length,0) == ("remain","remain") 
-    #q table index is 5, so that q table row is [2.1, 3.5, 1.2, 0.8, 4.0]. The highest value is index 4, which in direction_map corresponds to remain.
+    #q table index is 5, so that q table row is [2.1, 3.5, 1.2, 0.8, 4.0]. The highest value is index 4, which in action_map corresponds to remain.
     
     assert choose_action((2,1), example_q_table, example_envionment_x_length,example_environment_y_length,0) == ("left","left")
-    # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in direction_map corresponds to left
+    # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in action_map corresponds to left
     
     """Testing randomness of choose_action. 
     CODE to run in main.py:
