@@ -101,9 +101,10 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
 # LEFT OFF. Do ctrl+F and paste in update_q_table, because the description of it is above. Then read that description. Then create update_q_table.
 
 
-def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
+def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> list[tuple[tuple[float,float]], float,int,int, bool]:
     """
     Updates the Q table.
+    Output is a list of the following: new_q_table, new q value, old_pos_q_table_index,new_pos_q_table_index, movement_valid
     
     Takes in the coordiates for new_pos even though this can be calcuaed from starting coords and action moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.), and the q table.
     
@@ -137,3 +138,4 @@ def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int]
     
     q_table[old_pos_q_table_index][action_index] = new_q_value
     
+    return [q_table, new_q_value, old_pos_q_table_index,new_pos_q_table_index, movement_valid]
