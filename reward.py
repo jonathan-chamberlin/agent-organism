@@ -36,7 +36,7 @@ empty_reward = cell_reward["empty"]
 
 # If I want, I call the draw_agent function to render the agent at those new coordinates. 
 
-# I need another function update_q_table which takes in a starting coordiate, action moved from that starting coordinate, and the q table, and the final coordinates (even though this can be calcuaed from starting coords and action moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.). It calls get_reward to determine the reward for making that move, and uses the Q(state,action) ML formula {{  Q(state, action) = Q(state, action) + α × [reward + γ × max(Q(next_state, all_possible_actions_from_that_state)) - Q(state, action)]  }}, then the function updates the row of the Q table with that reward value.
+# DONE.I need another function update_q_table which takes in a starting coordiate, action moved from that starting coordinate, and the q table, and the final coordinates (even though this can be calcuaed from starting coords and action moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.). It calls get_reward to determine the reward for making that move, and uses the Q(state,action) ML formula {{  Q(state, action) = Q(state, action) + α × [reward + γ × max(Q(next_state, all_possible_actions_from_that_state)) - Q(state, action)]  }}, then the function updates the row of the Q table with that reward value.
 
 # Then I have to make a game loop that makes it so multiple simulations happen consecutively, and that subsequent simulations use the prior Q table.
 
@@ -97,9 +97,6 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     random_action_not_optimal = actions[random_action_index_not_optimal]
     
     return (optimal_action,random_action_not_optimal)
-
-# LEFT OFF. Do ctrl+F and paste in update_q_table, because the description of it is above. Then read that description. Then create update_q_table.
-
 
 def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> list[tuple[tuple[float,float]], float,int,int, bool]:
     """
