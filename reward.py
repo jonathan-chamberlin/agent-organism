@@ -35,6 +35,10 @@ empty_reward = cell_reward["empty"]
 
 # DONE.I need another function update_q_table which takes in a starting coordiate, action moved from that starting coordinate, and the q table, and the final coordinates (even though this can be calcuaed from starting coords and action moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.). It calls get_reward to determine the reward for making that move, and uses the Q(state,action) ML formula {{  Q(state, action) = Q(state, action) + α × [reward + γ × max(Q(next_state, all_possible_actions_from_that_state)) - Q(state, action)]  }}, then the function updates the row of the Q table with that reward value.
 
+Modify game_loop_manual, add an input 'rendering': str as an input. It could speed up my simulation. Value of 'pygame' could make it so every frame is rendered on the pygame window. Value of 'print' means that the full environment is printed in the terminal every frame. And 'none' means that the function does all the calculations without printing or rendering anything.
+
+Create game_loop_learning that makes it so the agent moves through the enviornment using choose_action and update_q_table. Each move is stored in a list of moves. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's moves using draw_agent. After all the moves, print the q table.
+
 # Modify function game_loop that makes it so the agent moves through the enviornment using choose_action and update_q_table, and that the agent's moves are rendered using draw_agent. After all the moves, print the q table.
 
 # Modify function game_loop that makes it so multiple simulations happen consecutively, and that subsequent simulations use the updated Q table.
@@ -43,7 +47,7 @@ empty_reward = cell_reward["empty"]
 
 # To save knowledge between runs, I'd store the Q table in a text file using np.save(file,array) and np.load(file). This allows me to use data from previous times I ran the code, instead of the agent having to relearn everything from scratch.
 
-# To game_loop, add an input 'rendering': str as an input. It could speed up my simulation. Value of 'pygame' could make it so every frame is rendered on the pygame window. Value of 'print' means that the full environment is printed in the terminal every frame. And 'none' means that the function does all the calculations without printing or rendering anything.
+
 '''
 
 def get_reward(old_pos: tuple[int,[int]], action: str, environment: tuple[tuple[int,int]], walls: list[tuple[int,int]]) -> tuple[int , tuple[int,int], bool]:
