@@ -33,14 +33,11 @@ empty_reward = cell_reward["empty"]
 # DONE. Then I need a function choose_action that takes in the agent's current coordinates and the whole Q table, and just reads teh Q table and finds which value is the highest, and it has a 90% chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and 10% likely to chose another move at random. This function will use epsilon as an inputs.
 # DONE. First I tested the implementation of choose_action while only considering a 0 explore rate. Now I have to add some randomness.
 
-
-# If I want, I call the draw_agent function to render the agent at those new coordinates. 
-
 # DONE.I need another function update_q_table which takes in a starting coordiate, action moved from that starting coordinate, and the q table, and the final coordinates (even though this can be calcuaed from starting coords and action moved, I'll already have the next coords from using the coordinates_after_moving function, so this will save redundant computation.). It calls get_reward to determine the reward for making that move, and uses the Q(state,action) ML formula {{  Q(state, action) = Q(state, action) + α × [reward + γ × max(Q(next_state, all_possible_actions_from_that_state)) - Q(state, action)]  }}, then the function updates the row of the Q table with that reward value.
 
-# Modify function a game_loop that makes it so the agent moves through it using choose_action and update_q_table, and that the agent's moves are rendered. Then print the q table.
+# Modify function game_loop that makes it so the agent moves through the enviornment using choose_action and update_q_table, and that the agent's moves are rendered using draw_agent. After all the moves, print the q table.
 
-# Modify function a game_loop that makes it so multiple simulations happen consecutively, and that subsequent simulations use the updated Q table.
+# Modify function game_loop that makes it so multiple simulations happen consecutively, and that subsequent simulations use the updated Q table.
 
 # The simulation run ends if the agent hits the goal, or reaches the max number of steps. The ideal path is 30 moves, so my step_cap will be 50.
 

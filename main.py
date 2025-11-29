@@ -8,7 +8,8 @@ moves = ["down","down","down", "right","right", "right","up","up","up","right","
 print(game_loop(full_environment, start, walls, cell_color_map, background_color, moves))
 
 
-# LEFT OFF. Modify function a game_loop that makes it so the agent moves through it using choose_action and update_q_table, and that the agent's moves are rendered. Then print the q table.
+# LEFT OFF. Modify function game_loop that makes it so the agent moves through the enviornment using choose_action and update_q_table, and that the agent's moves are rendered using draw_agent. After all the moves, print the q table.
+
 
 
 render_every_frame: bool
