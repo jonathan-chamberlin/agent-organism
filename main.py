@@ -8,8 +8,10 @@ moves = ["down","down","down", "right","right", "right","up","up","up","right","
 print(game_loop(full_environment, start, walls, cell_color_map, background_color, moves))
 
 
-# Should I use Continous learning? (Q table where the agent calcuates what is the next best position given it's current positionP? Or should I make episode termination on failure (it so if the agent hits a wall he has to restart)?
-# Yes, continous learning with the Q table is better when failures are not catestrophic. It also takes much less time to learn. So I'll use continous learning.
+# LEFT OFF. Modify function a game_loop that makes it so the agent moves through it using choose_action and update_q_table, and that the agent's moves are rendered. Then print the q table.
+
+
+render_every_frame: bool
 
 running = True
 while running:
