@@ -10,7 +10,7 @@ moves = ["down","down","down", "right","right", "right","up","up","up","right","
 
 
 
-print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, moves,"print"))
+print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, moves,"pygame"))
 
 
 # LEFT OFF.
@@ -18,7 +18,6 @@ print(game_loop_manual(full_environment, start, walls, cell_color_map, backgroun
 
 
 
-render_every_frame: bool
 
 running = True
 while running:
