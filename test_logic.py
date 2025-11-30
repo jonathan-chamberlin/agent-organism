@@ -28,6 +28,7 @@ example_envionment_x_length = 3
 example_environment_y_length = 3
 
 
+
 # update the first input to be a tuple, not a list
 def test_coordinates_to_q_table_index() -> None:
     test_q_table_width = 4
@@ -200,3 +201,4 @@ def test_update_q_table() -> None:
     action_index = actions.index("up")
     
     assert example_q_table_updated_1[old_pos_q_table_index][action_index] == expected_new_q_value
+

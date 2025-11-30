@@ -74,6 +74,8 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random.
 
     Returns a tuple where the first string is the optimal action, and the second is an action which was randomly chosen using epsilon the exploration rate.
+    
+    If every value in the q table row is 0, then the agent picks a direction randomly.
     """
     
     q_table_width = len(q_table[0])
@@ -81,6 +83,11 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     q_table_index = coordinates_to_q_table_index(current_pos,environment_x_length, environment_y_length, q_table_width)
     
     row = q_table[q_table_index]
+    
+    # If every value in the q table row is 0, then the agent picks a direction randomly.
+    if np.all(row == 0):
+        randomly_choosen_action = str(np.random.choice(actions))
+        return (randomly_choosen_action,randomly_choosen_action)
     
     # index of the maximum q value in the row for the inputted coords current_pos. if multiple actions have the same q value, the function will always return the index of the first instance with that maximum value.
     optimal_action_index = np.argmax(row)
