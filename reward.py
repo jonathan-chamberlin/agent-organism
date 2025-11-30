@@ -70,7 +70,7 @@ def get_reward(old_pos: tuple[int,[int]], action: str, environment: tuple[tuple[
     return (reward, new_adjacent_coords, movement_valid) 
 
 
-def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], environment_x_length: int, environment_y_length, epsilon: float) -> tuple(str,str): 
+def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], actions_list: list, environment_x_length: int, environment_y_length, epsilon: float) -> tuple(str,str): 
     """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random.
 
     Returns a tuple where the first string is the optimal action, and the second is an action which was randomly chosen using epsilon the exploration rate.
@@ -86,7 +86,7 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], e
     
     # If every value in the q table row is 0, then the agent picks a direction randomly.
     if np.all(row == 0):
-        randomly_choosen_action = str(np.random.choice(actions))
+        randomly_choosen_action = str(np.random.choice(actions_list))
         return (randomly_choosen_action,randomly_choosen_action)
     
     # index of the maximum q value in the row for the inputted coords current_pos. if multiple actions have the same q value, the function will always return the index of the first instance with that maximum value.
@@ -153,8 +153,9 @@ def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int]
 
 # Create game_loop_learning that makes it so the agent moves through the enviornment using choose_action and update_q_table. Each move is stored in a list of moves. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's moves using draw_agent. After all the moves, print the q table.
 
-def game_loop_learning(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: list,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str):
+def game_loop_learning(actions_list: list,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str):
     """Makes it so the agent moves through the enviornment using choose_action and update_q_table. Each move is stored in a list of moves. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's moves using draw_agent. After all the moves, print the q table."""
+    
     
     
     return 0
