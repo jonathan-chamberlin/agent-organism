@@ -137,43 +137,54 @@ def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, 
         draw_background(color_for_background)
         draw_grid(grid, object_coloring)
 
-def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, moves: list[str]) -> list[bool]:
+def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, moves: list[str], rendering: bool) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move nad position, then checks if that next position would be valid, then draws it, and renders it. 
     
     It returns a list of booleans representing what MOVES were valid, NOT positions. So if the agent starts on a valid square, and the first move (index 0) is to an invalid square, then the output of this function will be [False, ...].
     If the agent is on a valid square, and the first move (index 0) is to a valid square, then it's second move (index 1) is to an invalid square, the output of this function will be [True, False, ...]
+    
+    Input 'rendering': str. Value of 'pygame' could make it so every frame is rendered on the pygame window. Value of 'print' means that the agent coords are printed every frame. And 'none' means that the function does all the calculations without printing or rendering anything.
+
     
     Improvement: The data for start and walls is inside the full_environment variable that is inputted into this function, so teh inputs of start and walls are redundant. I could write code to look at the environment input and find which cell has the start_value and store those coords as a tuple, and which cells have the wall_value and store that as a list of tuples, and then use those variables in the code below.
     
     Worse improvement: The full environment is created from the variables of empty_maze, goals, goal_value),walls,wall_value, start_list,start_value. I could input all those things into this game loop function and have it run, but that would be too many inputs.
     """
     
+    rendering_pygame_value = "pygame"
     movement_valid_list = []
 
     agent_coords = start
-    draw_grid_and_background(environment, object_coloring, color_for_background)
-    draw_agent(agent_coords)
-    pg.display.flip()
-    pg.time.delay(delay_in_ms_for_framerate)
+    rendering_print_value = "print"
+    
+    if rendering == rendering_pygame_value:
+        draw_grid_and_background(environment, object_coloring, color_for_background)
+        draw_agent(agent_coords)
+        pg.display.flip()
+        pg.time.delay(delay_in_ms_for_framerate)
 
     for move in moves:
-        # clear and redraw environment
-        draw_grid_and_background(full_environment, cell_color_map, background_color)
+            if rendering == rendering_pygame_value:
+            # clear and redraw environment
+            draw_grid_and_background(full_environment, cell_color_map, background_color)
         # find the next place the agent will go
         coords_calc = coordinates_after_moving(agent_coords,move,walls)
         next_coords = coords_calc[0]
         # determines if that next movement is valid
         movement_valid = coords_calc[1] 
         movement_valid_list.append(movement_valid)
-        # draws agent at the next coordinates
-        draw_agent(next_coords)
-        # renders everything
-        pg.display.flip()
+        if rendering == rendering_print_value:
+            print(next_coords)
+        if rendering == rendering_pygame_value:
+            # draws agent at the next coordinates
+            draw_agent(next_coords)
+            # renders everything
+            pg.display.flip()
         # updates the next coordinates value since the agent is now there
         agent_coords = next_coords
-        # time control for framerate
-        pg.time.delay(delay_in_ms_for_framerate)
-    
+        if rendering == rendering_pygame_value:
+            # time control for framerate
+            pg.time.delay(delay_in_ms_for_framerate)
     return movement_valid_list
 
 
