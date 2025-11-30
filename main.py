@@ -10,7 +10,7 @@ moves = ["down","down","down", "right","right", "right","up","up","up","right","
 
 
 
-print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, moves))
+print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, moves,"print"))
 
 
 # LEFT OFF.

@@ -164,17 +164,21 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         pg.time.delay(delay_in_ms_for_framerate)
 
     for move in moves:
-            if rendering == rendering_pygame_value:
+        if rendering == rendering_pygame_value:
             # clear and redraw environment
             draw_grid_and_background(full_environment, cell_color_map, background_color)
+        
         # find the next place the agent will go
         coords_calc = coordinates_after_moving(agent_coords,move,walls)
         next_coords = coords_calc[0]
+        
         # determines if that next movement is valid
         movement_valid = coords_calc[1] 
         movement_valid_list.append(movement_valid)
+        
         if rendering == rendering_print_value:
             print(next_coords)
+        
         if rendering == rendering_pygame_value:
             # draws agent at the next coordinates
             draw_agent(next_coords)
