@@ -177,6 +177,8 @@ def game_loop_learning(actions_list: list, action_limit: int, environment: tuple
         update_q_table(current_pos, chosen_action, new_pos,actions_list,environment,environment_x_length,environment_y_length,walls,q_table,alpha,gamma)
         
         current_pos = new_pos
+        
+        print(q_table)
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, rendering)
 
