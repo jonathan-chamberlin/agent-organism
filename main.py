@@ -27,4 +27,4 @@ while running:
 
 example_blank_q_table = np.full((4,4), 0,dtype=int)
 for i in range(0,100):
-    print(choose_action((0,0),example_blank_q_table,example_envionment_x_length, example_environment_y_length, 0))
+    print(choose_action((0,0),example_blank_q_table,actions, example_envionment_x_length, example_environment_y_length, 0))

@@ -72,7 +72,7 @@ def get_reward(old_pos: tuple[int,[int]], action: str, environment: tuple[tuple[
     return (reward, new_adjacent_coords, movement_valid) 
 
 
-def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], actions_list: list, environment_x_length: int, environment_y_length, epsilon: float) -> tuple(str,str): 
+def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], actions_list: list, environment_x_length: int, environment_y_length: int, epsilon: float) -> tuple(str,str): 
     """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random.
 
     Returns a tuple where the first string is the optimal action, and the second is an action which was randomly chosen using epsilon the exploration rate.
