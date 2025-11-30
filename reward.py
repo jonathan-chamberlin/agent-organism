@@ -153,5 +153,9 @@ def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int]
 
 # Create game_loop_learning that makes it so the agent moves through the enviornment using choose_action and update_q_table. Each move is stored in a list of moves. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's moves using draw_agent. After all the moves, print the q table.
 
-# def game_loop_learning((old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: list,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float) -> list[tuple[tuple[float,float]], float,int,int, bool]:
+def game_loop_learning(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: list,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str):
+    """Makes it so the agent moves through the enviornment using choose_action and update_q_table. Each move is stored in a list of moves. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's moves using draw_agent. After all the moves, print the q table."""
+    
+    
+    return 0
 
