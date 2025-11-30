@@ -188,6 +188,28 @@ def test_choose_action() -> None:
     In the second loop with epsilon=1.0 (always explore, never exploit), 'left' is excluded from the random selection entirely. But 'left' is the optimal action for position (2,1) in your test.
     Question for you: Your code removes the optimal action from the pool before randomly selecting. In the second loop, what is the optimal action? Why would that action not appear in the second position?
     This is actually correct behavior - when exploring, you're randomly choosing from non-optimal actions. The pattern matches what your code is designed to do."""
+    
+    """
+    TESTING the functionality of if the q table row has all zeros, the function randomly chooses an action instead of just picking the first action listed in the actions list.
+    
+    example_blank_q_table = np.full((4,4), 0,dtype=int)
+    
+    for i in range(0,100):
+        print(choose_action((0,0),example_blank_q_table,example_envionment_x_length, example_environment_y_length, 0))
+        
+    Output synthesized by claude:
+    
+        Counting your 98 total outputs:
+    Breakdown by action:
+
+    'right': 25 times (25.5%)
+    'left': 20 times (20.4%)
+    'down': 18 times (18.4%)
+    'up': 17 times (17.3%)
+    'remain': 18 times (18.4%)
+        
+        
+        """
 
 def test_update_q_table() -> None:
     # def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
