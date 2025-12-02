@@ -49,6 +49,9 @@ Now test game_loop_learning by using the function with all it's inputs
 
 # To save knowledge between runs, I'd store the Q table in a text file using np.save(file,array) and np.load(file). This allows me to use data from previous times I ran the code, instead of the agent having to relearn everything from scratch.
 
+# Make a function get_q_values_at_coordinates(coords: tuple[int,int], q_table) -> list[float]. It outputs gets the q value row for the inputted coordinates. It uses coords_to_q_table_index
+
+# Make a function display_q_values_around_agent. It takes in a bunch of stuff, and uses get_q_values_at_coordinates, then every frame displays the q values around the agent representing the q value for down, right, up, left, remain.
 
 '''
 

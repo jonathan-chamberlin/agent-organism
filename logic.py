@@ -5,11 +5,12 @@ import numpy as np
 import pygame as pg
 import math
 
+# The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 action_map = {
-    "up": (-1,0),
     "down":(1,0),
-    "left":(0,-1),
     "right":(0,1),
+    "up": (-1,0),
+    "left":(0,-1),
     "remain": (0,0)
     }
 
