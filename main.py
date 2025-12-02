@@ -4,13 +4,13 @@ from setup_environment import *
 from test_logic import *
 
 
-moves = ["down","down","down", "right","right", "right","up","up","up","right","right","right","right","right","right","down","down","down","down","down","down","down","left","left","left","down","down","right","right","right"]
+actions_to_execute = ["down","down","down", "right","right", "right","up","up","up","right","right","right","right","right","right","down","down","down","down","down","down","down","left","left","left","down","down","right","right","right"]
 
 
 
 
 
-print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, moves,"pygame"))
+print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, actions_to_execute,"pygame"))
 
 
 # LEFT OFF.
