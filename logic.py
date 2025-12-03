@@ -239,7 +239,7 @@ def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int
     return center_in_pixels
 
 # This function I have the scaffold but I haven't finished it yet. I need to see how the agent can be moved on the pygame display.
-def move_agent(starting_coords: tuple[int,int], action_to_move: str) -> bool:
+def move_agent(starting_coords: tuple[int,int], action_to_move: tuple[int,int], possible_actions: list[tuple[int,int]]) -> bool:
     """Taking in the agent's starting coordinates, and a action, this moves the agent, as long as it makes a valid move, meaning that the agent doesn't exit the environment or hit a wall. Returns a boolean of if the move was valid or not. This function draws the agent too, but doesn't render it."""
     
     from setup_environment import window
@@ -249,7 +249,7 @@ def move_agent(starting_coords: tuple[int,int], action_to_move: str) -> bool:
     from setup_environment import agent_height
 
 
-    coords_calc = coordinates_after_moving(starting_coords, action_to_move, walls)
+    coords_calc = coordinates_after_moving(starting_coords, action_to_move, possible_actions,walls)
     
     final_coords = coords_calc[0]
     movement_valid = coords_calc[1]
@@ -303,18 +303,17 @@ def object_at_coords(coords: tuple[int,int], grid: tuple[tuple[int,int]]) -> str
     return cell_name
 
 
-def adjacent_coords(start_coords: tuple[int, int], action: str, ) -> tuple[int, int]:
+def adjacent_coords(start_coords: tuple[int, int], action: tuple[int,int], ) -> tuple[int, int]:
     """Takes in coordinates and a action, and outputs the next coordinates.
     
     This is different from coordinates_after_move because this function outputs the next coordinates even if there is a wall or boundary.  
 """
-    global action_map
     
     y_coord = start_coords[0]
     x_coord = start_coords[1]
         
-    new_y_coord = y_coord + action_map[action][0]
-    new_x_coord = x_coord + action_map[action][1]
+    new_y_coord = y_coord + action[0]
+    new_x_coord = x_coord + action[1]
         
     new_coords = (new_y_coord, new_x_coord) 
 
