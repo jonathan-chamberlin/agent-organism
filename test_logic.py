@@ -207,12 +207,11 @@ def test_update_q_table() -> None:
     # def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
     q_table_calc = update_q_table((2,2),"up",(1,2),actions, example_environment,example_envionment_x_length,example_environment_y_length,example_walls,example_q_table,0.5,0.1)
     
-    example_q_table_updated_1 = q_table_calc[0]
-    expected_new_q_value = q_table_calc[1]
-    old_pos_q_table_index = q_table_calc[2]
-    new_pos_q_table_index = q_table_calc[3]
+    expected_new_q_value = q_table_calc[0]
+    old_pos_q_table_index = q_table_calc[1]
+    new_pos_q_table_index = q_table_calc[2]
     
     action_index = actions.index("up")
     
-    assert example_q_table_updated_1[old_pos_q_table_index][action_index] == expected_new_q_value
+    assert example_q_table[old_pos_q_table_index][action_index] == expected_new_q_value
 
