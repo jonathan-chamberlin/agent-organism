@@ -49,18 +49,22 @@ def test_coordinates_to_q_table_index() -> None:
 
 def test_coordinates_after_moving() -> None:
     example_walls = [(1,0),(4,0), (2,3),(3,0)]
-    assert coordinates_after_moving((0,0),"down", example_walls) == ((0,0),False)
+    example_possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
+ 
+    assert coordinates_after_moving((0,0),(1,0),example_possible_actions ,example_walls) == ((0,0),False)
     # output_valid == False because agent hits a wall
-    assert coordinates_after_moving((0,0),"right", example_walls) == ((0,1), True)
-    assert coordinates_after_moving((1,1),"left", example_walls) == ((1,1),False)
+    assert coordinates_after_moving((0,0),(0,1), example_possible_actions,example_walls) == ((0,1), True)
+    assert coordinates_after_moving((1,1),(0,-1), example_possible_actions,example_walls) == ((1,1),False)
 
-    assert coordinates_after_moving((0,0),"up", example_walls) == ((0,0),False)
-    assert coordinates_after_moving((9,0),"right", example_walls) == ((9,1), True)
+    assert coordinates_after_moving((0,0),(-1,0), example_possible_actions,example_walls) == ((0,0),False)
+    assert coordinates_after_moving((9,0),(0,1), example_possible_actions,example_walls) == ((9,1), True)
      # output_valid == False because the input coordinate is outside the environment
-    assert coordinates_after_moving((10,0),"left", example_walls) == ((10,0), False)
-    assert coordinates_after_moving((0,10),"up", example_walls) == ((0,10), False)
+    assert coordinates_after_moving((10,0),(0,-1),example_possible_actions, example_walls) == ((10,0), False)
+    assert coordinates_after_moving((0,10),(-1,0), example_possible_actions,example_walls) == ((0,10), False)
     # now testing if it hits walls
-    assert coordinates_after_moving((3,0), "down", example_walls) == ((3,0), False)
+    assert coordinates_after_moving((3,0), (1,0),example_possible_actions, example_walls) == ((3,0), False)
+    # now testing if action is not in possible actions
+    assert coordinates_after_moving((9,0),(0,2), example_possible_actions,example_walls) == ((9,0), False)
 
 def test_add_walls() -> None:
     from logic import wall_value

@@ -5,7 +5,7 @@ import numpy as np
 import pygame as pg
 import math
 
-# The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
+
 action_map = {
     "down":(1,0),
     "right":(0,1),
@@ -16,9 +16,12 @@ action_map = {
 
 actions = list(action_map.keys())
 
+# The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
+possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
+
 print(actions)
 
-actions_agent_can_move = len(action_map)
+actions_agent_can_move = len(possible_actions)
 environment_y_length = 10
 environment_x_length = 10
 
@@ -183,7 +186,7 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
     '''
 
-def coordinates_after_moving(coordinates: tuple[int, int], action: str, walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
+def coordinates_after_moving(coordinates: tuple[int, int], action: tuple[int,int], possible_actions: list[tuple[int,int]],walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
     """A function that takes current position and action, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
     
     In short, the function returns the new coordinates, but if either the start or next coords are invalid (outside the environment, or if the next coords cause the agent to hit a wall), the the output is the original coordinates and false.
@@ -198,41 +201,29 @@ def coordinates_after_moving(coordinates: tuple[int, int], action: str, walls: l
     
     global environment_x_length
     global environment_y_length
-    global action_map
-    
-    
     
     y_coord = coordinates[0]
     x_coord = coordinates[1]
-    output_valid = True
+    output_valid = False
     
-    # checking if the inputted coordinates are inside the environment. If they are not, the function outputs the original starting coordinates.
     if (y_coord > environment_y_length) or (x_coord > environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
-        output_valid = False
         return (coordinates, output_valid)
     
-    # creating new coordinates
+    if not(action in possible_actions):
+        return (coordinates,output_valid)
     
-    new_y_coord = y_coord + action_map[action][0]
-    new_x_coord = x_coord + action_map[action][1]
+    new_y_coord = y_coord + action[0]
+    new_x_coord = x_coord + action[1]
     
-    # checking if the resulting coordinates are inside the environment. If they are not, the function outputs the original starting coordinates.
     if (new_y_coord >= environment_y_length) or (new_x_coord >= environment_x_length) or (new_y_coord < 0) or (new_x_coord < 0 ):
-        output_valid = False
         return (coordinates, output_valid)
-    
-    
-    # we create the new tuple (different place in memory) representing the new coordinates after the movement.
     
     new_coords = (new_y_coord, new_x_coord) 
     
-    # check if the new coords hit a wall
     if new_coords in walls:
-        output_valid = False
         return (coordinates, output_valid)
 
-    # Since the new_coords passed all the checks, we return the new_coords and output_valid (which by this point is still True)
-
+    output_valid = True
     return(new_coords, output_valid)
 
 def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int]:
