@@ -9,7 +9,6 @@ actions_to_execute = ["down","down","down", "right","right", "right","up","up","
 
 
 
-
 print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, actions_to_execute,"pygame"))
 
 
