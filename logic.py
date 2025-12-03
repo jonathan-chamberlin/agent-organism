@@ -284,17 +284,11 @@ def draw_agent(coords: tuple[int,int]) -> bool:
     from setup_environment import agent_width
     from setup_environment import agent_height
 
-    coords_calc = coordinates_after_moving(coords, "remain", walls)
-    
-    coords_to_draw_at = coords_calc[0]
-    movement_valid = coords_calc[1]
-    
-    # now i have to convert the output_in_coords to pixels
-    coords_in_pixels = coords_to_center_of_cell_in_pixels((coords_to_draw_at))
+    coords_in_pixels = coords_to_center_of_cell_in_pixels((coords))
         
     pg.draw.circle(window, agent_color, coords_in_pixels, agent_width, agent_height) 
     
-    return movement_valid
+    return None
 
 # This is the creation of the environment the agent will move through
 environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
