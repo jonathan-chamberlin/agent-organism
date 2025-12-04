@@ -5,21 +5,8 @@ import numpy as np
 import pygame as pg
 import math
 
-
-action_map = {
-    "down":(1,0),
-    "right":(0,1),
-    "up": (-1,0),
-    "left":(0,-1),
-    "remain": (0,0)
-    }
-
-actions = list(action_map.keys())
-
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0),(3,0)]
-
-print(actions)
 
 actions_agent_can_move = len(possible_actions)
 environment_y_length = 10
