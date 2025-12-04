@@ -55,7 +55,7 @@ Now test game_loop_learning by using the function with all it's inputs
 
 '''
 
-def get_reward(old_pos: tuple[int,[int]], action: str, environment: tuple[tuple[int,int]], walls: list[tuple[int,int]]) -> tuple[int , tuple[int,int], bool]:
+def get_reward(old_pos: tuple[int,[int]], action: tuple[int,int], possible_actions: list[tuple[int,int]], environment: tuple[tuple[int,int]], walls: list[tuple[int,int]]) -> tuple[int , tuple[int,int], bool]:
     """Takes in the starting coordinates and a action, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
     
     Outputs reward, new_pos coords, and
@@ -66,7 +66,7 @@ def get_reward(old_pos: tuple[int,[int]], action: str, environment: tuple[tuple[
     
     new_adjacent_coords = adjacent_coords(old_pos,action)
     
-    movement_valid = coordinates_after_moving(old_pos,action,walls)[1]
+    movement_valid = coordinates_after_moving(old_pos,action,possible_actions,walls)[1]
     
     object_at_adjacent_coords = object_at_coords(new_adjacent_coords, environment)
     
@@ -116,7 +116,7 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], a
     
     return (optimal_action,random_action_not_optimal)
 
-def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: list,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> list[float,int,int, bool]:
+def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> list[float,int,int, bool]:
     """
     Updates the Q table.
     Output is a list of the following: new_q_table, new q value, old_pos_q_table_index,new_pos_q_table_index, movement_valid
@@ -134,7 +134,7 @@ def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int]
     
     """
     
-    reward_calc = get_reward(old_pos, action,environment,walls)
+    reward_calc = get_reward(old_pos, action,possible_actions,environment,walls)
     reward = reward_calc[0]
     movement_valid = reward_calc[2]
     
@@ -143,7 +143,7 @@ def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int]
     old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_x_length,environment_y_length,q_table_width)
     new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_x_length,environment_y_length,q_table_width)
     
-    action_index = actions_list.index(action)
+    action_index = possible_actions.index(action)
     
     old_q_value = q_table[old_pos_q_table_index][action_index]
     

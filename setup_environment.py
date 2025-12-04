@@ -137,7 +137,7 @@ def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, 
         draw_background(color_for_background)
         draw_grid(grid, object_coloring)
 
-def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, moves: list[str], rendering: bool) -> list[bool]:
+def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move nad position, then checks if that next position would be valid, then draws it, and renders it. 
     
     It returns a list of booleans representing what MOVES were valid, NOT positions. So if the agent starts on a valid square, and the first move (index 0) is to an invalid square, then the output of this function will be [False, ...].
@@ -163,18 +163,18 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         pg.display.flip()
         pg.time.delay(delay_in_ms_for_framerate)
 
-    for move in moves:
+    for action in actions_to_do:
         if rendering == rendering_pygame_value:
             # clear and redraw environment
             draw_grid_and_background(full_environment, cell_color_map, background_color)
         
         # find the next place the agent will go
-        coords_calc = coordinates_after_moving(agent_coords,move,walls)
+        coords_calc = coordinates_after_moving(agent_coords,action,possible_actions,walls)
         next_coords = coords_calc[0]
         
         # determines if that next movement is valid
-        movement_valid = coords_calc[1] 
-        movement_valid_list.append(movement_valid)
+        action_valid = coords_calc[1] 
+        movement_valid_list.append(action_valid)
         
         if rendering == rendering_print_value:
             print(next_coords)

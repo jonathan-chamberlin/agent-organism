@@ -4,6 +4,8 @@ from logic import *
 from reward import *
 import random
 
+example_possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
+
 
 initializing_environment = np.full((4,4), empty_value,dtype=int)
 example_walls = [(0,2),(0,3)]
@@ -115,20 +117,19 @@ def test_object_at_coordinates() -> None:
     object_at_coords((3,0),example_environment) == "empty"
 
 def test_adjacent_coords() -> None:
-    assert adjacent_coords((0,0),"down") == (1,0)
-    assert adjacent_coords((0,0),"up") == (-1,0)
-    assert adjacent_coords((0,0),"left") == (0,-1)
-    assert adjacent_coords((0,0),"right") == (0,1)
+    assert adjacent_coords((0,0),(1,0)) == (1,0)
+    assert adjacent_coords((0,0),(-1,0)) == (-1,0)
+    assert adjacent_coords((0,0),(0,-1)) == (0,-1)
+    assert adjacent_coords((0,0),(0,1)) == (0,1)
 
 def test_get_reward() -> None:
-    assert 1 == 1
     from reward import cell_reward
     global example_environment 
     
-    assert get_reward((0,0),"down", example_environment, example_walls) == (cell_reward["empty"],(1,0),True)
-    assert get_reward((1,2),"up", example_environment,example_walls) == (cell_reward["wall"],(0,2) ,False)
-    assert get_reward((0,1),"left", example_environment,example_walls) == (cell_reward["start"], (0,0),True)
-    assert get_reward((2,0),"right", example_environment,example_walls) == (cell_reward["goal"],(2,1) ,True)
+    assert get_reward((0,0),(1,0), example_possible_actions,example_environment, example_walls) == (cell_reward["empty"],(1,0),True)
+    assert get_reward((1,2),(-1,0), example_possible_actions,example_environment,example_walls) == (cell_reward["wall"],(0,2) ,False)
+    assert get_reward((0,1),(0,-1), example_possible_actions,example_environment,example_walls) == (cell_reward["start"], (0,0),True)
+    assert get_reward((2,0),(0,1),example_possible_actions, example_environment,example_walls) == (cell_reward["goal"],(2,1) ,True)
 
 def test_choose_action() -> None:
     #def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], environment_x_length: int, environment_y_length, epsilon: float) -> tuple(str,str):
@@ -209,7 +210,7 @@ def test_choose_action() -> None:
 
 def test_update_q_table() -> None:
     # def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
-    q_table_calc = update_q_table((2,2),"up",(1,2),actions, example_environment,example_envionment_x_length,example_environment_y_length,example_walls,example_q_table,0.5,0.1)
+    q_table_calc = update_q_table((2,2),(-1,0),(1,2),example_possible_actions, example_environment,example_envionment_x_length,example_environment_y_length,example_walls,example_q_table,0.5,0.1)
     
     expected_new_q_value = q_table_calc[0]
     old_pos_q_table_index = q_table_calc[1]
