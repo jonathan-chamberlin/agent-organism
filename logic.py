@@ -7,7 +7,7 @@ import math
 
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
-action_limit = 3
+action_limit = 50
 
 actions_agent_can_move = len(possible_actions)
 environment_y_length = 6
@@ -29,7 +29,7 @@ background_color = (255,255,255)
 wall_color = (20,20,20)
 empty_cell_color = (100,100,100)
 
-framerate = 10
+framerate = 30
 delay_in_ms_for_framerate = int((1 / framerate) * 1000)
 
 cell_name_to_value_map = {
@@ -84,13 +84,13 @@ Plan for which functions to create to allow the agent to move across the environ
 def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_x_length: int, environment_y_length: int, q_table_width: int) -> int:
     '''A function that converts (x, y) to Q-table row index. If the x and y coordinates are outside the environment's dimensions, the function returns -100'''
     
-    y_coord = coordinates[0]
-    x_coord = coordinates[1]
+    row_index = coordinates[0]
+    column_index = coordinates[1]
     
-    if (y_coord >= environment_y_length) or (x_coord >= environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
+    if (row_index >= environment_y_length) or (column_index >= environment_x_length) or (row_index < 0) or (column_index < 0 ):
         return -100
     
-    q_table_row_index = x_coord + y_coord * environment_x_length
+    q_table_row_index = column_index + row_index * environment_x_length
     
     
     return q_table_row_index
@@ -237,23 +237,23 @@ def coordinates_after_moving(coordinates: tuple[int, int], action: tuple[int,int
     global environment_x_length
     global environment_y_length
     
-    y_coord = coordinates[0]
-    x_coord = coordinates[1]
+    row_index = coordinates[0]
+    column_index = coordinates[1]
     output_valid = False
     
-    if (y_coord > environment_y_length) or (x_coord > environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
+    if (row_index > environment_y_length) or (column_index > environment_x_length) or (row_index < 0) or (column_index < 0 ):
         return (coordinates, output_valid)
     
     if not(action in possible_actions):
         return (coordinates,output_valid)
     
-    new_y_coord = y_coord + action[0]
-    new_x_coord = x_coord + action[1]
+    new_row_index = row_index + action[0]
+    new_column_index = column_index + action[1]
     
-    if (new_y_coord >= environment_y_length) or (new_x_coord >= environment_x_length) or (new_y_coord < 0) or (new_x_coord < 0 ):
+    if (new_row_index >= environment_y_length) or (new_column_index >= environment_x_length) or (new_row_index < 0) or (new_column_index < 0 ):
         return (coordinates, output_valid)
     
-    new_coords = (new_y_coord, new_x_coord) 
+    new_coords = (new_column_index, new_row_index) 
     
     if new_coords in walls:
         return (coordinates, output_valid)
@@ -268,10 +268,10 @@ def object_at_coords(coords: tuple[int,int], grid: tuple[tuple[int,int]]) -> str
     
     global cell_value_to_name_map
     
-    y_coord = coords[0]
-    x_coord = coords[1]
+    row_index = coords[0]
+    column_index = coords[1]
     
-    cell_value = grid[x_coord][y_coord]
+    cell_value = grid[row_index][column_index]
     
     cell_name = cell_value_to_name_map[cell_value]
     
