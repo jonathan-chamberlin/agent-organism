@@ -40,25 +40,25 @@ def draw_objects(objects: tuple[int,int], object_name: str, object_coloring: map
     
     for cell in objects:
         # convert cell cordinate locations to placement on the window using pixels
-        y_coord = cell[0]
-        x_coord = cell[1]
+        row_index = cell[0]
+        column_index = cell[1]
         
-        y_coord_in_pixels = y_coord * cell_y_length + pixel_rendering_offset_y_from_top_left
-        x_coord_in_pixels = x_coord * cell_x_length +pixel_rendering_offset_x_from_top_left
+        row_position_in_pixels = row_index * cell_y_length + pixel_rendering_offset_y_from_top_left
+        column_position_in_pixels = column_index * cell_x_length +pixel_rendering_offset_x_from_top_left
         
         # finds color of cell from the object_coloring_map
         object_color = object_coloring[object_name]
         
         # draws the cell
-        pg.draw.rect(window, object_color, (y_coord_in_pixels,x_coord_in_pixels,cell_y_length, cell_x_length))
+        pg.draw.rect(window, object_color, (column_position_in_pixels,row_position_in_pixels,cell_y_length, cell_x_length))
         
         """
-    TEST. Does <1> produce the same as <2>?
-    <both>
-    example_walls_to_draw = [(0,0), (3,1),(2,3),(0,9),(9,0),(9,9)]
-    </both>
-    <1>
-    for cell in example_walls_to_draw:
+        TEST. Does <1> produce the same as <2>?
+        <both>
+        example_walls_to_draw = [(0,0), (3,1),(2,3),(0,9),(9,0),(9,9)]
+        </both>
+        <1>
+        for cell in example_walls_to_draw:
         
         # convert cell cordinate locations to placement on the window using pixels
         
@@ -87,14 +87,14 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     global cell_y_length
     
     # convert cell cordinate locations to placement on the window using pixels
-    y_coord = cell_coordinates[0]
-    x_coord = cell_coordinates[1]
+    row_index = cell_coordinates[0]
+    column_index = cell_coordinates[1]
     
-    y_coord_in_pixels = y_coord * cell_y_length + pixel_rendering_offset_y_from_top_left
-    x_coord_in_pixels = x_coord * cell_x_length +pixel_rendering_offset_x_from_top_left
+    row_position_in_pixels = row_index * cell_y_length + pixel_rendering_offset_y_from_top_left
+    column_position_in_pixels = column_index * cell_x_length +pixel_rendering_offset_x_from_top_left
     
     # draws the cell
-    pg.draw.rect(window, object_color, (y_coord_in_pixels,x_coord_in_pixels,cell_y_length, cell_x_length))
+    pg.draw.rect(window, object_color, (column_position_in_pixels,row_position_in_pixels,cell_x_length, cell_y_length))
     
     """TESTS:
     draw_one_object((5,5), "wall", cell_color_map["wall"])

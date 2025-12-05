@@ -75,7 +75,7 @@ def get_reward(old_pos: tuple[int,[int]], action: tuple[int,int], possible_actio
     return (reward, new_adjacent_coords, movement_valid) 
 
 
-def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], possible_actions: list[tuple[int,int]], environment_x_length: int, environment_y_length: int, epsilon: float) -> tuple[tuple[int,int]]: 
+def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], possible_actions: list[tuple[int,int]], environment_column_count: int, environment_row_count: int, epsilon: float) -> tuple[tuple[int,int]]: 
     """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random.
 
     Returns a tuple where the first string is the optimal action, and the second is an action which was randomly chosen using epsilon the exploration rate.
@@ -85,7 +85,7 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], p
     
     q_table_width = len(q_table[0])
     
-    q_table_index = coordinates_to_q_table_index(current_pos,environment_x_length, environment_y_length, q_table_width)
+    q_table_index = coordinates_to_q_table_index(current_pos,environment_column_count, environment_row_count, q_table_width)
     
     row = q_table[q_table_index]
     
@@ -118,7 +118,7 @@ def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], p
     
     return (optimal_action,random_action_not_optimal)
 
-def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tuple[int,int], possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> list[float,int,int, bool]:
+def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tuple[int,int], possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_column_count: int, environment_row_count: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> list[float,int,int, bool]:
     """
     Updates the Q table.
     Output is a list of the following: new_q_table, new q value, old_pos_q_table_index,new_pos_q_table_index, movement_valid
@@ -142,8 +142,8 @@ def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tup
     
     q_table_width = len(q_table[0])
     
-    old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_x_length,environment_y_length,q_table_width)
-    new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_x_length,environment_y_length,q_table_width)
+    old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_column_count,environment_row_count,q_table_width)
+    new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_column_count,environment_row_count,q_table_width)
     
     print(f"Action being looked up: {action}")
     print(f"Possible actions list: {possible_actions}")
@@ -164,7 +164,7 @@ def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tup
 
 # Create game_loop_learning that makes it so the agent moves through the enviornment using choose_action and update_q_table. Each move is stored in a list of moves. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's moves using draw_agent. After all the moves, print the q table.
 
-def game_loop_learning(actions_list: list, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict):
+def game_loop_learning(actions_list: list, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_column_count: int, environment_row_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict):
     """Makes it so the agent moves through the enviornment using choose_action and update_q_table. Each action is stored in a list of actions. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's actions using draw_agent. After all the actions, print the q table. Then, depending on rendering, it renders all actions"""
     
     chosen_actions_list = []
@@ -175,7 +175,7 @@ def game_loop_learning(actions_list: list, action_limit: int, possible_actions: 
         
         print(f"--------------/nThis is action {action_counter}")
         
-        chosen_action = choose_action(current_pos,q_table,possible_actions,environment_x_length,environment_y_length,epsilon)[1]
+        chosen_action = choose_action(current_pos,q_table,possible_actions,environment_column_count,environment_row_count,epsilon)[1]
     
         chosen_actions_list.append(chosen_action)
         print(f"Chosen action: {chosen_action}")
@@ -188,7 +188,7 @@ def game_loop_learning(actions_list: list, action_limit: int, possible_actions: 
     
         reward = get_reward(current_pos,chosen_action,possible_actions,environment,walls)[0]
         
-        update_q_table(current_pos, chosen_action, new_pos,possible_actions,environment,environment_x_length,environment_y_length,walls,q_table,alpha,gamma)
+        update_q_table(current_pos, chosen_action, new_pos,possible_actions,environment,environment_column_count,environment_row_count,walls,q_table,alpha,gamma)
         print(f"Just updated Q table with value {reward}")
         
         current_pos = new_pos

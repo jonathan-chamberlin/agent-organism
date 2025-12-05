@@ -10,8 +10,8 @@ possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 action_limit = 50
 
 actions_agent_can_move = len(possible_actions)
-environment_y_length = 6
-environment_x_length = 12
+environment_row_count = 6
+environment_column_count = 12
 
 cell_y_length = 50
 cell_x_length = 50
@@ -29,7 +29,7 @@ background_color = (255,255,255)
 wall_color = (20,20,20)
 empty_cell_color = (100,100,100)
 
-framerate = 30
+framerate = 10
 delay_in_ms_for_framerate = int((1 / framerate) * 1000)
 
 cell_name_to_value_map = {
@@ -55,7 +55,7 @@ goal_value = cell_name_to_value_map["goal"]
 start_value = cell_name_to_value_map["start"]
 empty_value = cell_name_to_value_map["empty"]
 
-empty_maze = np.full((environment_y_length,environment_x_length), empty_value,dtype=int)
+empty_maze = np.full((environment_row_count,environment_column_count), empty_value,dtype=int)
 
 
 goals = [(3,1)]
@@ -63,7 +63,7 @@ start_list = [(1,1)]
 start = start_list[0]
 
 q_table_width = actions_agent_can_move
-q_table = np.zeros((environment_y_length*environment_x_length,actions_agent_can_move), dtype=float)
+q_table = np.zeros((environment_row_count*environment_column_count,actions_agent_can_move), dtype=float)
 epsilon = 0.3
 alpha = 0.1
 gamma = 0.9
@@ -81,16 +81,16 @@ Plan for which functions to create to allow the agent to move across the environ
 4. A function that updates the Q-table after learning'''
 
 
-def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_x_length: int, environment_y_length: int, q_table_width: int) -> int:
+def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_column_count: int, environment_row_count: int, q_table_width: int) -> int:
     '''A function that converts (x, y) to Q-table row index. If the x and y coordinates are outside the environment's dimensions, the function returns -100'''
     
     row_index = coordinates[0]
     column_index = coordinates[1]
     
-    if (row_index >= environment_y_length) or (column_index >= environment_x_length) or (row_index < 0) or (column_index < 0 ):
+    if (row_index >= environment_row_count) or (column_index >= environment_column_count) or (row_index < 0) or (column_index < 0 ):
         return -100
     
-    q_table_row_index = column_index + row_index * environment_x_length
+    q_table_row_index = column_index + row_index * environment_column_count
     
     
     return q_table_row_index
@@ -113,7 +113,7 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     copied_maze_grid_with_custom_objects = maze_grid.copy()
     
     for cell in cells_to_put_object_in:
-        #get the x and y coords of the wall
+        
         row_index = cell[0]
         column_index = cell[1]
         
@@ -186,19 +186,19 @@ def draw_agent(coords: tuple[int,int]) -> bool:
     return None
 
 
-def add_walls_on_border(grid: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, wall_value: int) -> list[tuple[tuple[int,int]], list[tuple[int,int]]]:
+def add_walls_on_border(grid: tuple[tuple[int,int]], environment_column_count: int, environment_row_count: int, wall_value: int) -> list[tuple[tuple[int,int]], list[tuple[int,int]]]:
     
-    border_cells_top_edge =  [(0, x) for x in range(environment_x_length)]
+    border_cells_top_edge =  [(0, x) for x in range(environment_column_count)]
     # print(f"Border cells on top: {border_cells_top_edge}")
     
-    border_cells_left_edge =  [(x, 0) for x in range(environment_y_length)]
+    border_cells_left_edge =  [(x, 0) for x in range(environment_row_count)]
     # print(f"Border cells on left: {border_cells_left_edge}")
 
     
-    border_cells_bottom_edge =  [(environment_y_length-1, x) for x in range(environment_x_length)]
+    border_cells_bottom_edge =  [(environment_row_count-1, x) for x in range(environment_column_count)]
     # print(f"Border cells on bottom: {border_cells_bottom_edge}")
 
-    border_cells_right_edge =  [(x, environment_x_length-1) for x in range(environment_y_length)]
+    border_cells_right_edge =  [(x, environment_column_count-1) for x in range(environment_row_count)]
     # print(f"Border cells on right: {border_cells_right_edge}")
 
     
@@ -212,10 +212,10 @@ def add_walls_on_border(grid: tuple[tuple[int,int]], environment_x_length: int, 
 
 # This is the creation of the environment the agent will move through
 full_environment = add_custom_object(empty_maze, goals, goal_value)
-add_walls_to_border_calc = add_walls_on_border(full_environment,environment_x_length,environment_y_length,wall_value)
+add_walls_to_border_calc = add_walls_on_border(full_environment,environment_column_count,environment_row_count,wall_value)
 full_environment = add_walls_to_border_calc[0]
 border_cells = add_walls_to_border_calc[1]
-walls = [*border_cells, (4,4)]
+walls = [*border_cells, (1,1),(1,2),(1,3),(1,4),(1,5)]
 # print(f"Walls: {walls}")
 full_environment = add_custom_object(full_environment,walls,wall_value)
 full_environment = add_custom_object(full_environment,start_list,start_value)
@@ -234,14 +234,14 @@ def coordinates_after_moving(coordinates: tuple[int, int], action: tuple[int,int
     
     If the movement takes the agent to hit a wall, the function returns the original coordinates and false."""
     
-    global environment_x_length
-    global environment_y_length
+    global environment_column_count
+    global environment_row_count
     
     row_index = coordinates[0]
     column_index = coordinates[1]
     output_valid = False
     
-    if (row_index > environment_y_length) or (column_index > environment_x_length) or (row_index < 0) or (column_index < 0 ):
+    if (row_index >= environment_row_count) or (column_index >= environment_column_count) or (row_index < 0) or (column_index < 0 ):
         return (coordinates, output_valid)
     
     if not(action in possible_actions):
@@ -250,10 +250,10 @@ def coordinates_after_moving(coordinates: tuple[int, int], action: tuple[int,int
     new_row_index = row_index + action[0]
     new_column_index = column_index + action[1]
     
-    if (new_row_index >= environment_y_length) or (new_column_index >= environment_x_length) or (new_row_index < 0) or (new_column_index < 0 ):
+    if (new_row_index >= environment_row_count) or (new_column_index >= environment_column_count) or (new_row_index < 0) or (new_column_index < 0 ):
         return (coordinates, output_valid)
     
-    new_coords = (new_column_index, new_row_index) 
+    new_coords = (new_row_index, new_column_index) 
     
     if new_coords in walls:
         return (coordinates, output_valid)

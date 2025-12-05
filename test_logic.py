@@ -29,26 +29,26 @@ example_q_table = [
     [0.0, 3.0, 5.0, 4.0, 0.5],
     [3.3, 2.2, 1.1, 4.4, 5.5]]
 example_envionment_x_length = 3
-example_environment_y_length = 3
+example_environment_row_count = 3
 
 
 
 # update the first input to be a tuple, not a list
 def test_coordinates_to_q_table_index() -> None:
     test_q_table_width = 4
-    test_environment_x_length = 10
-    assert coordinates_to_q_table_index([0,0],test_environment_x_length,10,test_q_table_width) == 0
-    assert coordinates_to_q_table_index([1,0],test_environment_x_length,10,test_q_table_width) == 0 + 1 * test_environment_x_length
-    assert coordinates_to_q_table_index([0,1],test_environment_x_length,10,test_q_table_width) == 1 + 0 * test_environment_x_length
-    assert coordinates_to_q_table_index([5,1],test_environment_x_length,10,test_q_table_width) == 1 + 5 * test_environment_x_length
-    assert coordinates_to_q_table_index([5,9],test_environment_x_length,10,test_q_table_width) == 9 + 5 * test_environment_x_length
-    assert coordinates_to_q_table_index([-5,0],test_environment_x_length,10, test_q_table_width) == -100
-    assert coordinates_to_q_table_index([0,-5],test_environment_x_length,10,test_q_table_width) == -100
-    assert coordinates_to_q_table_index([10,0],test_environment_x_length,10,test_q_table_width) == -100
-    assert coordinates_to_q_table_index([0,11],test_environment_x_length,10,test_q_table_width) == -100
-    assert coordinates_to_q_table_index([-5,-50],test_environment_x_length,10, test_q_table_width) == -100
-    assert coordinates_to_q_table_index([1,2],example_envionment_x_length,example_environment_y_length,0) == 2 + 1 * example_envionment_x_length #is 2 + 1 * 3 = 5
-    assert coordinates_to_q_table_index([2,1],example_envionment_x_length,example_environment_y_length,0) == 1 + 2 * example_envionment_x_length #is 1 + 2 * 3 = 7
+    test_environment_column_count = 10
+    assert coordinates_to_q_table_index([0,0],test_environment_column_count,10,test_q_table_width) == 0
+    assert coordinates_to_q_table_index([1,0],test_environment_column_count,10,test_q_table_width) == 0 + 1 * test_environment_column_count
+    assert coordinates_to_q_table_index([0,1],test_environment_column_count,10,test_q_table_width) == 1 + 0 * test_environment_column_count
+    assert coordinates_to_q_table_index([5,1],test_environment_column_count,10,test_q_table_width) == 1 + 5 * test_environment_column_count
+    assert coordinates_to_q_table_index([5,9],test_environment_column_count,10,test_q_table_width) == 9 + 5 * test_environment_column_count
+    assert coordinates_to_q_table_index([-5,0],test_environment_column_count,10, test_q_table_width) == -100
+    assert coordinates_to_q_table_index([0,-5],test_environment_column_count,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([10,0],test_environment_column_count,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([0,11],test_environment_column_count,10,test_q_table_width) == -100
+    assert coordinates_to_q_table_index([-5,-50],test_environment_column_count,10, test_q_table_width) == -100
+    assert coordinates_to_q_table_index([1,2],example_envionment_x_length,example_environment_row_count,0) == 2 + 1 * example_envionment_x_length #is 2 + 1 * 3 = 5
+    assert coordinates_to_q_table_index([2,1],example_envionment_x_length,example_environment_row_count,0) == 1 + 2 * example_envionment_x_length #is 1 + 2 * 3 = 7
 # I already tested choose_action with coords (1,2), now I want to test (2,1) to make sure that they give different answers.
 
 def test_coordinates_after_moving() -> None:
@@ -111,16 +111,16 @@ def test_get_reward() -> None:
     assert get_reward((2,0),(0,1),example_possible_actions, example_environment,example_walls) == (cell_reward["goal"],(2,1) ,True)
 
 def test_choose_action() -> None:
-    #def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], environment_x_length: int, environment_y_length, epsilon: float) -> tuple(str,str):
+    #def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], environment_column_count: int, environment_row_count, epsilon: float) -> tuple(str,str):
     # this example q table is 3 by 3, so it's domain of coords is (0,0) -> (2,2)
     
     
-    assert choose_action((0,0), example_q_table,actions,example_envionment_x_length, example_environment_y_length, 0) == ("left","left")
+    assert choose_action((0,0), example_q_table,actions,example_envionment_x_length, example_environment_row_count, 0) == ("left","left")
     # q table index is 0, so that q table row is [0.5, 2.3, -1.2, 3.7, 0.0]. The highest value is 3.7, so the correct value is right.
-    assert choose_action((1,2), example_q_table,actions, example_envionment_x_length,example_environment_y_length,0) == ("remain","remain") 
+    assert choose_action((1,2), example_q_table,actions, example_envionment_x_length,example_environment_row_count,0) == ("remain","remain") 
     #q table index is 5, so that q table row is [2.1, 3.5, 1.2, 0.8, 4.0]. The highest value is index 4, which in action_map corresponds to remain.
     
-    assert choose_action((2,1), example_q_table, actions,example_envionment_x_length,example_environment_y_length,0) == ("up","up")
+    assert choose_action((2,1), example_q_table, actions,example_envionment_x_length,example_environment_row_count,0) == ("up","up")
     # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in action_map corresponds to left
     
     """Testing randomness of choose_action. 
@@ -129,13 +129,13 @@ def test_choose_action() -> None:
     from test_logic import *
 
     for i in range(0,100,1):
-        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_y_length,0.5))
+        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_row_count,0.5))
     print()
     print()
     print()
     
     for i in range(0,100,1):
-        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_y_length,1))
+        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_row_count,1))
 
     ANALYSIS of output:
     Excellent! Much better distribution now. Let me count both loops for you:
@@ -171,7 +171,7 @@ def test_choose_action() -> None:
     example_blank_q_table = np.full((4,4), 0,dtype=int)
     
     for i in range(0,100):
-        print(choose_action((0,0),example_blank_q_table,example_envionment_x_length, example_environment_y_length, 0))
+        print(choose_action((0,0),example_blank_q_table,example_envionment_x_length, example_environment_row_count, 0))
         
     Output synthesized by claude:
     
@@ -188,8 +188,8 @@ def test_choose_action() -> None:
         """
 
 def test_update_q_table() -> None:
-    # def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
-    q_table_calc = update_q_table((2,2),(-1,0),(1,2),example_possible_actions, example_environment,example_envionment_x_length,example_environment_y_length,example_walls,example_q_table,0.5,0.1)
+    # def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_column_count: int, environment_row_count: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
+    q_table_calc = update_q_table((2,2),(-1,0),(1,2),example_possible_actions, example_environment,example_envionment_x_length,example_environment_row_count,example_walls,example_q_table,0.5,0.1)
     
     expected_new_q_value = q_table_calc[0]
     old_pos_q_table_index = q_table_calc[1]
