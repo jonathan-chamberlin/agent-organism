@@ -102,10 +102,8 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     draw_one_object((4,5), "wall", cell_color_map["wall"])
     """
 
-def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map)-> None:
+def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map,cell_value_to_name_map: dict)-> None:
     """Accepts a grid, not a one-dimensional tuple. For each cell in the grid, it gets the cell's value. From that value, it looks up its name using the object_values map. Using the name, the function looks up the cell's coloring, then draws the object"""
-    
-    global cell_value_to_name_map
     
     row_index = 0
     
@@ -131,13 +129,13 @@ def draw_background(color: tuple[int,int,int]) -> None:
     
     pg.draw.rect(window, color, (0,0,window_x_length, window_y_length))
 
-def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, color_for_background) -> None:
+def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, color_for_background, cell_value_to_name_map: dict) -> None:
         """Accepts a grid, not a one-dimensional tuple. It first draws the background, then draws the whole grid using draw_grid."""
         
         draw_background(color_for_background)
-        draw_grid(grid, object_coloring)
+        draw_grid(grid, object_coloring, cell_value_to_name_map)
 
-def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str) -> list[bool]:
+def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move nad position, then checks if that next position would be valid, then draws it, and renders it. 
     
     It returns a list of booleans representing what MOVES were valid, NOT positions. So if the agent starts on a valid square, and the first move (index 0) is to an invalid square, then the output of this function will be [False, ...].
@@ -158,7 +156,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     rendering_print_value = "print"
     
     if rendering == rendering_pygame_value:
-        draw_grid_and_background(environment, object_coloring, color_for_background)
+        draw_grid_and_background(environment, object_coloring, color_for_background,cell_value_to_name_map)
         draw_agent(agent_coords)
         pg.display.flip()
         pg.time.delay(delay_in_ms_for_framerate)
@@ -166,7 +164,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     for action in actions_to_do:
         if rendering == rendering_pygame_value:
             # clear and redraw environment
-            draw_grid_and_background(full_environment, cell_color_map, background_color)
+            draw_grid_and_background(full_environment, cell_color_map, background_color, cell_value_to_name_map)
         
         # find the next place the agent will go
         coords_calc = coordinates_after_moving(agent_coords,action,possible_actions,walls)
