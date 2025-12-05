@@ -6,7 +6,8 @@ import pygame as pg
 import math
 
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
-possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0),(3,0)]
+possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
+action_limit = 60
 
 actions_agent_can_move = len(possible_actions)
 environment_y_length = 10
@@ -62,11 +63,10 @@ start_list = [(0,0)]
 start = start_list[0]
 
 q_table_width = actions_agent_can_move
-
 q_table = np.zeros((environment_y_length*environment_x_length,actions_agent_can_move), dtype=float)
-
-print(q_table)
-print(len(q_table[0]))
+epsilon = 0.3
+alpha = 0.1
+gamma = 0.9
 
 
 '''

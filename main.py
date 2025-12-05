@@ -4,17 +4,11 @@ from setup_environment import *
 from test_logic import *
 
 
-actions_to_execute = [(3,0), (0,1),(0,1), (0,1),(-1,0),(-1,0),(-1,0),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(1,0),(1,0),(1,0),(1,0),(1,0),(1,0),(1,0),(0,-1),(0,-1),(0,-1),(1,0),(1,0),(0,1),(0,1),(0,1)]
+actions_to_execute = [(1,0),(1,0),(1,0),(0,1),(0,1), (0,1),(-1,0),(-1,0),(-1,0),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(1,0),(1,0),(1,0),(1,0),(1,0),(1,0),(1,0),(0,-1),(0,-1),(0,-1),(1,0),(1,0),(0,1),(0,1),(0,1)]
 
+# print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, actions_to_execute,possible_actions,"pygame"))
 
-
-
-print(game_loop_manual(full_environment, start, walls, cell_color_map, background_color, actions_to_execute,possible_actions,"pygame"))
-
-
-# LEFT OFF.
-# Modify game_loop_manual, add an input 'rendering': str as an input. It could speed up my simulation. Value of 'pygame' could make it so every frame is rendered on the pygame window. Value of 'print' means that the full environment is printed in the terminal every frame. And 'none' means that the function does all the calculations without printing or rendering anything.
-
+game_loop_learning(actions_to_execute,action_limit,possible_actions,  full_environment,environment_x_length,environment_y_length,start,goals,walls,cell_color_map,background_color,q_table,epsilon,alpha,gamma,"pygame")
 
 
 
@@ -24,6 +18,3 @@ while running:
         if event.type == pg.QUIT:
             running = False
 
-example_blank_q_table = np.full((4,4), 0,dtype=int)
-for i in range(0,100):
-    print(choose_action((0,0),example_blank_q_table,actions, example_envionment_x_length, example_environment_y_length, 0))

@@ -6,6 +6,8 @@ import random
 
 example_possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 
+print("random choice")
+print(np.random.choice(["hi","hey","wow","cool"]))
 
 initializing_environment = np.full((4,4), empty_value,dtype=int)
 example_walls = [(0,2),(0,3)]
