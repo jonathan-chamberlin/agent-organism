@@ -11,7 +11,7 @@ cell_reward = {
     "wall": -10,
     "goal": 50,
     "empty": -1,
-    "start": 0 
+    "start": -2
 }
 
 wall_reward = cell_reward["wall"]
@@ -178,7 +178,7 @@ def game_loop_learning(actions_list: list, action_limit: int, possible_actions: 
         chosen_action = choose_action(current_pos,q_table,possible_actions,environment_x_length,environment_y_length,epsilon)[1]
     
         chosen_actions_list.append(chosen_action)
-        print("Chosen action: {chosen_action}")
+        print(f"Chosen action: {chosen_action}")
 
         next_pos_calc = coordinates_after_moving(current_pos, chosen_action, possible_actions,walls)
     
@@ -187,16 +187,16 @@ def game_loop_learning(actions_list: list, action_limit: int, possible_actions: 
         print(f"New position: {new_pos}")
     
         reward = get_reward(current_pos,chosen_action,possible_actions,environment,walls)[0]
-        print(f"Reward: {reward}")
         
         update_q_table(current_pos, chosen_action, new_pos,possible_actions,environment,environment_x_length,environment_y_length,walls,q_table,alpha,gamma)
-        print("Just updated Q table")
+        print(f"Just updated Q table with value {reward}")
         
         current_pos = new_pos
         
         action_counter = action_counter + 1
-        
-    print(q_table)
+    
+    print(f"The actions taken were {chosen_actions_list}")
+    print(f"This is the q table: {q_table}")
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering)
 
