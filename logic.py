@@ -10,7 +10,7 @@ possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 action_limit = 3
 
 actions_agent_can_move = len(possible_actions)
-environment_y_length = 10
+environment_y_length = 8
 environment_x_length = 10
 
 cell_y_length = 50
@@ -57,7 +57,7 @@ empty_value = cell_name_to_value_map["empty"]
 
 empty_maze = np.full((environment_y_length,environment_x_length), empty_value,dtype=int)
 
-walls = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7), (0, 8), (0, 9), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), (1, 9), (2, 9), (3, 9), (4, 9), (5, 9), (6, 9), (7, 9), (8, 9), (9, 9), (9, 1), (9, 2), (9, 3), (9, 4), (9, 5), (9, 6), (9, 7), (9, 8)]
+
 goals = [(8,8)]
 start_list = [(1,1)]
 start = start_list[0]
@@ -173,46 +173,6 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
     '''
 
-def coordinates_after_moving(coordinates: tuple[int, int], action: tuple[int,int], possible_actions: list[tuple[int,int]],walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
-    """A function that takes current position and action, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
-    
-    In short, the function returns the new coordinates, but if either the start or next coords are invalid (outside the environment, or if the next coords cause the agent to hit a wall), the the output is the original coordinates and false.
-    
-    If both the starting and next coorindates are valid, then the output is the next coordinates and true.
-    
-    If the inputted coordinates are outside the environment's borders, the function returns the original coordinates and false.
-    
-    If the movement takes the agent outside the environment, the function returns the original coordinates and false.
-    
-    If the movement takes the agent to hit a wall, the function returns the original coordinates and false."""
-    
-    global environment_x_length
-    global environment_y_length
-    
-    y_coord = coordinates[0]
-    x_coord = coordinates[1]
-    output_valid = False
-    
-    if (y_coord > environment_y_length) or (x_coord > environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
-        return (coordinates, output_valid)
-    
-    if not(action in possible_actions):
-        return (coordinates,output_valid)
-    
-    new_y_coord = y_coord + action[0]
-    new_x_coord = x_coord + action[1]
-    
-    if (new_y_coord >= environment_y_length) or (new_x_coord >= environment_x_length) or (new_y_coord < 0) or (new_x_coord < 0 ):
-        return (coordinates, output_valid)
-    
-    new_coords = (new_y_coord, new_x_coord) 
-    
-    if new_coords in walls:
-        return (coordinates, output_valid)
-
-    output_valid = True
-    return(new_coords, output_valid)
-
 def coords_to_center_of_cell_in_pixels(coords: tuple[int, int]) -> tuple[int,int]:
     """This is used for drawing objects at the center of a cell. Takes in coordinates of the cell, and return the location in pixels of the cell's center"""
     
@@ -268,10 +228,81 @@ def draw_agent(coords: tuple[int,int]) -> bool:
     
     return None
 
+
+def add_walls_on_border(grid: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, wall_value: int) -> list[tuple[tuple[int,int]], list[tuple[int,int]]]:
+    
+    border_cells_top_edge =  [(x, 0) for x in range(environment_x_length)]
+    # print(f"Border cells on top: {border_cells_top_edge}")
+    
+    border_cells_left_edge =  [(0, x) for x in range(environment_y_length)]
+    # print(f"Border cells on left: {border_cells_left_edge}")
+
+    
+    border_cells_bottom_edge =  [(environment_y_length-1, x) for x in range(environment_x_length)]
+    # print(f"Border cells on bottom: {border_cells_bottom_edge}")
+
+    border_cells_right_edge =  [(x, environment_x_length-1) for x in range(environment_y_length)]
+    # print(f"Border cells on right: {border_cells_right_edge}")
+
+    
+    border_cells = (border_cells_left_edge+ border_cells_right_edge+ border_cells_bottom_edge+ border_cells_top_edge)
+    
+    # print(f"All border cells: {border_cells}")
+
+    grid = add_custom_object(grid, border_cells, wall_value)
+    
+    return (grid,border_cells)
+
 # This is the creation of the environment the agent will move through
-environemnt_with_walls_and_goals = add_custom_object(add_custom_object(empty_maze, goals, goal_value),walls,wall_value)
-full_environment = add_custom_object(environemnt_with_walls_and_goals,start_list,start_value)
+full_environment = add_custom_object(empty_maze, goals, goal_value)
+full_environment = add_custom_object(full_environment,start_list,start_value)
+add_walls_to_border_calc = add_walls_on_border(full_environment,environment_x_length,environment_y_length,wall_value)
+full_environment = add_walls_to_border_calc[0]
+border_cells = add_walls_to_border_calc[1]
+walls = [*border_cells, (4,4)]
+# print(f"Walls: {walls}")
+full_environment = add_custom_object(full_environment,walls,wall_value)
 print(full_environment)
+
+def coordinates_after_moving(coordinates: tuple[int, int], action: tuple[int,int], possible_actions: list[tuple[int,int]],walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:
+    """A function that takes current position and action, returns a tuple. The first item of the tuple is the new position as a tuple of (x,y), and the second item in that tuple is whether or not it's a valid move, meaning if the agent hits a wall or exists the environment. 
+    
+    In short, the function returns the new coordinates, but if either the start or next coords are invalid (outside the environment, or if the next coords cause the agent to hit a wall), the the output is the original coordinates and false.
+    
+    If both the starting and next coorindates are valid, then the output is the next coordinates and true.
+    
+    If the inputted coordinates are outside the environment's borders, the function returns the original coordinates and false.
+    
+    If the movement takes the agent outside the environment, the function returns the original coordinates and false.
+    
+    If the movement takes the agent to hit a wall, the function returns the original coordinates and false."""
+    
+    global environment_x_length
+    global environment_y_length
+    
+    y_coord = coordinates[0]
+    x_coord = coordinates[1]
+    output_valid = False
+    
+    if (y_coord > environment_y_length) or (x_coord > environment_x_length) or (y_coord < 0) or (x_coord < 0 ):
+        return (coordinates, output_valid)
+    
+    if not(action in possible_actions):
+        return (coordinates,output_valid)
+    
+    new_y_coord = y_coord + action[0]
+    new_x_coord = x_coord + action[1]
+    
+    if (new_y_coord >= environment_y_length) or (new_x_coord >= environment_x_length) or (new_y_coord < 0) or (new_x_coord < 0 ):
+        return (coordinates, output_valid)
+    
+    new_coords = (new_y_coord, new_x_coord) 
+    
+    if new_coords in walls:
+        return (coordinates, output_valid)
+
+    output_valid = True
+    return(new_coords, output_valid)
 
 # So first make a function object_at_coords which takes in coordinates and the grid and tells you what object is at those coordinates.
 
