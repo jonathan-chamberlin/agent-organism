@@ -201,5 +201,3 @@ def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_a
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map)
 
     return None
-
-# LEFT OFF Now test game_loop_learning_one_run by using the function with all it's inputs
