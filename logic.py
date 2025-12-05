@@ -21,8 +21,8 @@ pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
 # opportunity to improve: the location of the agent is offset when pixel_rendering_offset_x_from_top_left != pixel_rendering_offset_y_from_top_left 
 
-window_x_length = 800
-window_y_length = 700
+window_x_length = 1100
+window_y_length = 900
 window_dimensions = (window_x_length,window_y_length)
 
 background_color = (255,255,255)
