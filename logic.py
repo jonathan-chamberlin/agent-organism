@@ -10,8 +10,8 @@ possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 action_limit = 3
 
 actions_agent_can_move = len(possible_actions)
-environment_y_length = 10
-environment_x_length = 10
+environment_y_length = 6
+environment_x_length = 12
 
 cell_y_length = 50
 cell_x_length = 50
@@ -58,7 +58,7 @@ empty_value = cell_name_to_value_map["empty"]
 empty_maze = np.full((environment_y_length,environment_x_length), empty_value,dtype=int)
 
 
-goals = [(8,8)]
+goals = [(3,1)]
 start_list = [(1,1)]
 start = start_list[0]
 
@@ -102,51 +102,9 @@ print([5,5] + [0,1])
 # results in [5,5,0,1]
 '''
 
-def add_walls(maze_grid, wall_cells: list[tuple]) -> ndarray:
-    """Takes in a list of cells in the form a a tuple. The cells are in the form (x_coord, y_coord). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to wall_value.
-    
-    Because of aliasing, this will not modify whatever maze_grid is inputted.
-    """
-    global cell_name_to_value_map
-    
-    # This makes sure that the orignal maze_grid isn't changed in memory.
-    copied_maze_grid = maze_grid.copy()
-    
-    for cell in wall_cells:
-        #get the x and y coords of the wall
-        y_coord_of_wall = cell[0]
-        x_coord_of_wall = cell[1]
-        
-        # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid[x_coord_of_wall][y_coord_of_wall] = cell_name_to_value_map["wall"]
-    
-    
-    return copied_maze_grid
-
-def add_goals(maze_grid, goal_cells: list[tuple]) -> ndarray:
-    """Takes in a list of cells in the form a a tuple. The cells are in the form (x_coord, y_coord). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to goal_value.
-    
-    Because of aliasing, this will not modify whatever maze_grid is inputted.
-    """
-    
-    global cell_name_to_value_map
-    
-    # This makes sure that the orignal maze_grid isn't changed in memory.
-    copied_maze_grid_with_goals = maze_grid.copy()
-    
-    for cell in goal_cells:
-        #get the x and y coords of the wall
-        y_coord_of_wall = cell[0]
-        x_coord_of_wall = cell[1]
-        
-        # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid_with_goals[x_coord_of_wall][y_coord_of_wall] = cell_name_to_value_map["goal"]
-    
-    
-    return copied_maze_grid_with_goals
 
 def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_value) -> ndarray:
-    """Takes in a list of cells in the form a a tuple. The cells are in the form (x_coord, y_coord). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to chosen_value.
+    """Takes in a list of cells in the form a a tuple. The cells are in the form (row index, column index). The output is a modification of the maze array where every cell in list of wall cells sets the value of the maze to chosen_value.
     
     Because of aliasing, this will not modify whatever maze_grid is inputted.
     """
@@ -156,12 +114,11 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     
     for cell in cells_to_put_object_in:
         #get the x and y coords of the wall
-        y_coord = cell[0]
-        x_coord = cell[1]
+        row_index = cell[0]
+        column_index = cell[1]
         
         # now go into the maze_grid and find the place in it that is in the same place as the wall. Then set that equal to the wall_value
-        copied_maze_grid_with_custom_objects[x_coord][y_coord] = chosen_value
-    
+        copied_maze_grid_with_custom_objects[row_index][column_index] = chosen_value
     
     return copied_maze_grid_with_custom_objects
 
@@ -231,10 +188,10 @@ def draw_agent(coords: tuple[int,int]) -> bool:
 
 def add_walls_on_border(grid: tuple[tuple[int,int]], environment_x_length: int, environment_y_length: int, wall_value: int) -> list[tuple[tuple[int,int]], list[tuple[int,int]]]:
     
-    border_cells_top_edge =  [(x, 0) for x in range(environment_x_length)]
+    border_cells_top_edge =  [(0, x) for x in range(environment_x_length)]
     # print(f"Border cells on top: {border_cells_top_edge}")
     
-    border_cells_left_edge =  [(0, x) for x in range(environment_y_length)]
+    border_cells_left_edge =  [(x, 0) for x in range(environment_y_length)]
     # print(f"Border cells on left: {border_cells_left_edge}")
 
     
@@ -255,13 +212,13 @@ def add_walls_on_border(grid: tuple[tuple[int,int]], environment_x_length: int, 
 
 # This is the creation of the environment the agent will move through
 full_environment = add_custom_object(empty_maze, goals, goal_value)
-full_environment = add_custom_object(full_environment,start_list,start_value)
 add_walls_to_border_calc = add_walls_on_border(full_environment,environment_x_length,environment_y_length,wall_value)
 full_environment = add_walls_to_border_calc[0]
 border_cells = add_walls_to_border_calc[1]
 walls = [*border_cells, (4,4)]
 # print(f"Walls: {walls}")
 full_environment = add_custom_object(full_environment,walls,wall_value)
+full_environment = add_custom_object(full_environment,start_list,start_value)
 print(full_environment)
 
 def coordinates_after_moving(coordinates: tuple[int, int], action: tuple[int,int], possible_actions: list[tuple[int,int]],walls: list[tuple[int,int]]) -> tuple[tuple[int, int],bool]:

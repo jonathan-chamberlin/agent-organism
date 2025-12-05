@@ -70,29 +70,6 @@ def test_coordinates_after_moving() -> None:
     # now testing if action is not in possible actions
     assert coordinates_after_moving((9,0),(0,2), example_possible_actions,example_walls) == ((9,0), False)
 
-def test_add_walls() -> None:
-    from logic import wall_value
-    example_maze = np.zeros((2,2), dtype=int)
-    example_walls_1 = [(0,0)]
-    example_walls_2 = [(0,0), (1,0)]
-    example_walls_3 = [(0,0), (1,0), (0,1)]
-    example_walls_4 = [(0,0), (1,0), (0,1), (1,1)]
-    assert np.array_equal(add_walls(example_maze, example_walls_1), [[wall_value,0],[0,0]])
-    assert np.array_equal(add_walls(example_maze, example_walls_2), [[wall_value,wall_value],[0,0]])
-    assert np.array_equal(add_walls(example_maze, example_walls_3), [[wall_value,wall_value],[wall_value,0]])
-    assert np.array_equal(add_walls(example_maze, example_walls_4), [[wall_value,wall_value],[wall_value,wall_value]])
-    
-def test_add_goals() -> None:
-    example_maze = np.zeros((2,2), dtype=int)
-    example_goals_1 = [(0,0)]
-    example_goals_2 = [(0,0), (1,0)]
-    example_goals_3 = [(0,0), (1,0), (0,1)]
-    example_goals_4 = [(0,0), (1,0), (0,1), (1,1)]
-    assert np.array_equal(add_goals(example_maze, example_goals_1), [[goal_value,0],[0,0]])
-    assert np.array_equal(add_goals(example_maze, example_goals_2), [[goal_value,goal_value],[0,0]])
-    assert np.array_equal(add_goals(example_maze, example_goals_3), [[goal_value,goal_value],[goal_value,0]])
-    assert np.array_equal(add_goals(example_maze, example_goals_4), [[goal_value,goal_value],[goal_value,goal_value]])
-
 def test_add_custom_object() -> None:
     example_maze = np.zeros((2,2), dtype=int)
     example_chosen_value = 5
