@@ -169,25 +169,34 @@ def game_loop_learning(actions_list: list, action_limit: int, possible_actions: 
     
     chosen_actions_list = []
     current_pos = start
+    action_counter = 0
     
     for action in range(0,action_limit):
+        
+        print(f"--------------/nThis is action {action_counter}")
         
         chosen_action = choose_action(current_pos,q_table,possible_actions,environment_x_length,environment_y_length,epsilon)[1]
     
         chosen_actions_list.append(chosen_action)
+        print("Chosen action: {chosen_action}")
 
         next_pos_calc = coordinates_after_moving(current_pos, chosen_action, possible_actions,walls)
     
         new_pos = next_pos_calc[0]
         movement_valid = next_pos_calc[1]
+        print(f"New position: {new_pos}")
     
         reward = get_reward(current_pos,chosen_action,possible_actions,environment,walls)[0]
+        print(f"Reward: {reward}")
         
         update_q_table(current_pos, chosen_action, new_pos,possible_actions,environment,environment_x_length,environment_y_length,walls,q_table,alpha,gamma)
+        print("Just updated Q table")
         
         current_pos = new_pos
         
-        print(q_table)
+        action_counter = action_counter + 1
+        
+    print(q_table)
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering)
 
