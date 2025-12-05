@@ -7,7 +7,7 @@ import math
 
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
-action_limit = 50
+action_limit = 20
 
 actions_agent_can_move = len(possible_actions)
 environment_row_count = 6
