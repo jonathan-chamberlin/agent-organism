@@ -10,7 +10,7 @@ possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 action_limit = 3
 
 actions_agent_can_move = len(possible_actions)
-environment_y_length = 8
+environment_y_length = 10
 environment_x_length = 10
 
 cell_y_length = 50
