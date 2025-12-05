@@ -187,6 +187,11 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         if rendering == rendering_pygame_value:
             # time control for framerate
             pg.time.delay(delay_in_ms_for_framerate)
+    
+    # Stop light
+    if rendering == rendering_pygame_value:
+        pg.draw.rect(window,(255,0,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,0.4*cell_x_length,0.4*cell_y_length))
+        pg.display.flip()
     return movement_valid_list
 
 
