@@ -5,19 +5,20 @@ import math
 
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
-action_limit = 40
-actions_to_execute = [(1,0)]
+actions_to_execute = [(1,0)] #only when you want to have the agent execture a list of predetermined actions, you would plug this into game_loop_manual
 
-actions_agent_can_move = len(possible_actions)
+action_limit = 300
+framerate = 60
+
 environment_row_count = 10
 environment_column_count = 5
 
-cell_y_length = 50
-cell_x_length = 50
-
-goals = [(3,1)]
+goals = [(3,1),(5,2)]
 start_list = [(1,1)]
 walls_input = [(1,1),(1,2),(1,3),(1,4)]
+
+cell_y_length = 50
+cell_x_length = 50
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
@@ -29,8 +30,6 @@ window_y_length = 900
 background_color = (255,255,255)
 wall_color = (20,20,20)
 empty_cell_color = (100,100,100)
-
-framerate = 10
 
 cell_name_to_value_map = {
     "wall": -2,

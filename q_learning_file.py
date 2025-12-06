@@ -4,6 +4,8 @@ import random
 import numpy as np
 import math
 
+actions_agent_can_move = len(possible_actions)
+
 q_table_width = actions_agent_can_move
 q_table = np.zeros((environment_row_count*environment_column_count,actions_agent_can_move), dtype=float)
 
@@ -115,11 +117,11 @@ def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tup
     old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_column_count,environment_row_count,q_table_width)
     new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_column_count,environment_row_count,q_table_width)
     
-    print(f"Action being looked up: {action}")
-    print(f"Possible actions list: {possible_actions}")
-    print(f"Trying to find index...")
+    # print(f"Action being looked up: {action}")
+    # print(f"Possible actions list: {possible_actions}")
+    # print(f"Trying to find index...")
     action_index = possible_actions.index(action)
-    print(f"Found index: {action_index}")
+    # print(f"Found index: {action_index}")
     
     old_q_value = q_table[old_pos_q_table_index][action_index]
     

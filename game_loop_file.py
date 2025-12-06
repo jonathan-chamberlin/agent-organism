@@ -97,7 +97,7 @@ def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_a
         action_counter = action_counter + 1
     
     print(f"The actions taken were {chosen_actions_list}")
-    print(f"This is the q table: {q_table}")
+    print(f"This is the q table: {np.round(q_table,2)}")
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map)
 
