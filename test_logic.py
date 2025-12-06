@@ -1,8 +1,13 @@
 import numpy as np
 import pytest
-from logic import *
-from reward import *
 import random
+from inputs_file import *
+from coords_and_movement_file import *
+from environment_file import *
+from rendering_file import *
+from q_learning_file import *
+from game_loop_file import *
+from test_logic import *
 
 example_possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 
@@ -54,7 +59,7 @@ def test_coordinates_to_q_table_index() -> None:
 def test_coordinates_after_moving() -> None:
     example_walls = [(1,0),(4,0), (2,3),(3,0)]
     example_possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
- 
+
     assert coordinates_after_moving((0,0),(1,0),example_possible_actions ,example_walls) == ((0,0),False)
     # output_valid == False because agent hits a wall
     assert coordinates_after_moving((0,0),(0,1), example_possible_actions,example_walls) == ((0,1), True)
