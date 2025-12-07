@@ -28,7 +28,6 @@ window_y_length = 900
 
 agent_color = (0,0,255)
 background_color = (255,255,255)
-wall_color = (20,20,20)
 
 cell_name_to_value_map = {
     "wall": -2,
