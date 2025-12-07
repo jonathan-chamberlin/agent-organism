@@ -7,7 +7,7 @@ import math
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execture a list of predetermined actions, you would plug this into game_loop_manual
 
-action_limit = 300
+action_limit = 60
 framerate = 60
 
 environment_row_count = 10
@@ -17,8 +17,8 @@ goals = [(3,1),(5,2)]
 start_list = [(1,1)]
 walls_input = [(1,1),(1,2),(1,3),(1,4)]
 
-cell_y_length = 50
-cell_x_length = 50
+cell_y_length = 40
+cell_x_length = 40
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
