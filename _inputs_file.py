@@ -10,15 +10,15 @@ actions_to_execute = [(1,0)] #only when you want to have the agent execture a li
 action_limit = 60
 framerate = 60
 
-environment_row_count = 10
-environment_column_count = 5
+environment_row_count = 50
+environment_column_count = 40
 
 goals = [(3,1),(5,2)]
 start_list = [(1,1)]
 walls_input = [(1,1),(1,2),(1,3),(1,4)]
 
-cell_y_length = 40
-cell_x_length = 40
+cell_y_length = 15
+cell_x_length = 15
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
