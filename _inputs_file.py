@@ -12,13 +12,12 @@ framerate = 60
 
 environment_row_count = 50
 environment_column_count = 40
+cell_y_length = 15
+cell_x_length = 15
 
 goals = [(3,1),(5,2)]
 start_list = [(1,1)]
 walls_input = [(1,1),(1,2),(1,3),(1,4)]
-
-cell_y_length = 15
-cell_x_length = 15
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
@@ -27,9 +26,9 @@ pixel_rendering_offset_y_from_top_left = 50
 window_x_length = 1100
 window_y_length = 900
 
+agent_color = (0,0,255)
 background_color = (255,255,255)
 wall_color = (20,20,20)
-empty_cell_color = (100,100,100)
 
 cell_name_to_value_map = {
     "wall": -2,
@@ -56,4 +55,4 @@ cell_reward = {
     "start": -2
 }
 
-agent_color = (0,0,255)
+# 
