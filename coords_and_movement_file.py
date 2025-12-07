@@ -98,3 +98,16 @@ def move_agent(starting_coords: tuple[int,int], action_to_move: tuple[int,int], 
     
     return movement_valid
 
+def agent_stays_inside_environment(starting_coords: tuple[int,int], action_to_move: tuple[int,int], environment_row_count: int, environment_column_count: int) -> bool:
+    """Given a starting position and an action, the function returns true if the agent's new position would be inside the environment, and false if outside the environment."""
+    
+    row_index = starting_coords[0]
+    column_index = starting_coords[1]
+    
+    new_row_index = row_index + action_to_move[0]
+    new_column_index = column_index + action_to_move[1]
+    
+    if (new_row_index >= environment_row_count) or (new_column_index >=environment_column_count) or (new_row_index < 0) or (new_column_index < 0):
+        return False
+    
+    return True

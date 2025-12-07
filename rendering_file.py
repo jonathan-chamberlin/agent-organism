@@ -95,7 +95,7 @@ def draw_agent(coords: tuple[int,int]) -> bool:
     </1>
     
     <2> 
-    draw_objects(example_walls_to_draw,"wall",cell_color_map)
+    draw_objects(example_walls_to_draw,"wall",color_map)
     </2>
     
     """
@@ -119,9 +119,9 @@ def draw_one_object(cell_coordinates: tuple[int,int], cell_type: str, object_col
     pg.draw.rect(window, object_color, (column_position_in_pixels,row_position_in_pixels,cell_x_length, cell_y_length))
     
     """TESTS:
-    draw_one_object((5,5), "wall", cell_color_map["wall"])
-    draw_one_object((6,6), "wall", cell_color_map["wall"])
-    draw_one_object((4,5), "wall", cell_color_map["wall"])
+    draw_one_object((5,5), "wall", color_map["wall"])
+    draw_one_object((6,6), "wall", color_map["wall"])
+    draw_one_object((4,5), "wall", color_map["wall"])
     """
 
 def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map,cell_value_to_name_map: dict)-> None:
@@ -157,3 +157,9 @@ def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, 
         draw_background(color_for_background)
         draw_grid(grid, object_coloring, cell_value_to_name_map)
 
+def display_q_values_around_agent(s) -> None:
+    """For each possible_action that leads to a valid move inside the environment, the function draws the q value from executing that action on the next cell"""
+    
+    # check which possible_actions lead to a move inside the environment (create agent_stays_inside_environment)
+    
+    # for the valid possible_actions

@@ -35,7 +35,7 @@ cell_name_to_value_map = {
     "start": 1
 }
 
-cell_color_map = {
+color_map = {
     "wall": (30,30,30),
     "goal": (255,215,0),
     "empty": (100,100,100),

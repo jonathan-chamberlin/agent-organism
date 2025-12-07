@@ -11,6 +11,13 @@ from test_logic import *
 
 example_possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 
+example_cell_reward = {
+    "wall": -10,
+    "goal": 50,
+    "empty": -1,
+    "start": -2
+}
+
 initializing_environment = np.full((4,4), empty_value,dtype=int)
 example_walls = [(0,2),(0,3)]
 example_goal = [(2,1)]
@@ -30,8 +37,8 @@ example_q_table = [
     [-0.5, 1.5, 2.5, 3.5, 0.5],
     [0.0, 3.0, 5.0, 4.0, 0.5],
     [3.3, 2.2, 1.1, 4.4, 5.5]]
-example_envionment_x_length = 3
-example_environment_row_count = 3
+example_envionment_row_count = 3
+example_environment_column_count = 3
 
 
 
@@ -49,8 +56,8 @@ def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([10,0],test_environment_column_count,10,test_q_table_width) == -100
     assert coordinates_to_q_table_index([0,11],test_environment_column_count,10,test_q_table_width) == -100
     assert coordinates_to_q_table_index([-5,-50],test_environment_column_count,10, test_q_table_width) == -100
-    assert coordinates_to_q_table_index([1,2],example_envionment_x_length,example_environment_row_count,0) == 2 + 1 * example_envionment_x_length #is 2 + 1 * 3 = 5
-    assert coordinates_to_q_table_index([2,1],example_envionment_x_length,example_environment_row_count,0) == 1 + 2 * example_envionment_x_length #is 1 + 2 * 3 = 7
+    assert coordinates_to_q_table_index([1,2],example_envionment_row_count,example_environment_column_count,0) == 2 + 1 * example_envionment_row_count #is 2 + 1 * 3 = 5
+    assert coordinates_to_q_table_index([2,1],example_envionment_row_count,example_environment_column_count,0) == 1 + 2 * example_envionment_row_count #is 1 + 2 * 3 = 7
 # I already tested choose_action with coords (1,2), now I want to test (2,1) to make sure that they give different answers.
 
 def test_coordinates_after_moving() -> None:
@@ -80,7 +87,7 @@ def test_add_custom_object() -> None:
     example_object_3 = [(0,0), (1,0), (0,1)]
     example_object_4 = [(0,0), (1,0), (0,1), (1,1)]
     assert np.array_equal(add_custom_object(example_maze, example_object_1, example_chosen_value), [[example_chosen_value,0],[0,0]])
-    assert np.array_equal(add_custom_object(example_maze, example_object_2, example_chosen_value), [[example_chosen_value,example_chosen_value],[0,0]])
+    assert np.array_equal(add_custom_object(example_maze, example_object_2, example_chosen_value), [[example_chosen_value,0],[example_chosen_value,0]])
     assert np.array_equal(add_custom_object(example_maze, example_object_3,example_chosen_value), [[example_chosen_value,example_chosen_value],[example_chosen_value,0]])
     assert np.array_equal(add_custom_object(example_maze, example_object_4,example_chosen_value), [[example_chosen_value,example_chosen_value],[example_chosen_value,example_chosen_value]])
 
@@ -104,25 +111,24 @@ def test_adjacent_coords() -> None:
     assert adjacent_coords((0,0),(0,1)) == (0,1)
 
 def test_get_reward() -> None:
-    from reward import cell_reward
     global example_environment 
     
-    assert get_reward((0,0),(1,0), example_possible_actions,example_environment, example_walls) == (cell_reward["empty"],(1,0),True)
-    assert get_reward((1,2),(-1,0), example_possible_actions,example_environment,example_walls) == (cell_reward["wall"],(0,2) ,False)
-    assert get_reward((0,1),(0,-1), example_possible_actions,example_environment,example_walls) == (cell_reward["start"], (0,0),True)
-    assert get_reward((2,0),(0,1),example_possible_actions, example_environment,example_walls) == (cell_reward["goal"],(2,1) ,True)
+    assert get_reward((0,0),(1,0), example_possible_actions,example_environment, example_walls, example_cell_reward) == (cell_reward["empty"],(1,0),True)
+    assert get_reward((1,2),(-1,0), example_possible_actions,example_environment,example_walls, example_cell_reward) == (cell_reward["wall"],(0,2) ,False)
+    assert get_reward((0,1),(0,-1), example_possible_actions,example_environment,example_walls, example_cell_reward) == (cell_reward["start"], (0,0),True)
+    assert get_reward((2,0),(0,1),example_possible_actions, example_environment,example_walls, example_cell_reward) == (cell_reward["goal"],(2,1) ,True)
 
 def test_choose_action() -> None:
     #def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], environment_column_count: int, environment_row_count, epsilon: float) -> tuple(str,str):
     # this example q table is 3 by 3, so it's domain of coords is (0,0) -> (2,2)
     
     
-    assert choose_action((0,0), example_q_table,actions,example_envionment_x_length, example_environment_row_count, 0) == ("left","left")
+    assert choose_action((0,0), example_q_table,example_possible_actions,example_envionment_row_count, example_environment_column_count, 0) == ((0,-1),(0,-1))
     # q table index is 0, so that q table row is [0.5, 2.3, -1.2, 3.7, 0.0]. The highest value is 3.7, so the correct value is right.
-    assert choose_action((1,2), example_q_table,actions, example_envionment_x_length,example_environment_row_count,0) == ("remain","remain") 
+    assert choose_action((1,2), example_q_table,example_possible_actions, example_envionment_row_count,example_environment_column_count,0) == ((0,0),(0,0)) 
     #q table index is 5, so that q table row is [2.1, 3.5, 1.2, 0.8, 4.0]. The highest value is index 4, which in action_map corresponds to remain.
     
-    assert choose_action((2,1), example_q_table, actions,example_envionment_x_length,example_environment_row_count,0) == ("up","up")
+    assert choose_action((2,1), example_q_table, example_possible_actions,example_envionment_row_count,example_environment_column_count,0) == ((-1,0),(-1,0))
     # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in action_map corresponds to left
     
     """Testing randomness of choose_action. 
@@ -131,13 +137,13 @@ def test_choose_action() -> None:
     from test_logic import *
 
     for i in range(0,100,1):
-        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_row_count,0.5))
+        print(choose_action((2,1),example_q_table,example_envionment_row_count,example_environment_column_count,0.5))
     print()
     print()
     print()
     
     for i in range(0,100,1):
-        print(choose_action((2,1),example_q_table,example_envionment_x_length,example_environment_row_count,1))
+        print(choose_action((2,1),example_q_table,example_envionment_row_count,example_environment_column_count,1))
 
     ANALYSIS of output:
     Excellent! Much better distribution now. Let me count both loops for you:
@@ -167,13 +173,12 @@ def test_choose_action() -> None:
     Question for you: Your code removes the optimal action from the pool before randomly selecting. In the second loop, what is the optimal action? Why would that action not appear in the second position?
     This is actually correct behavior - when exploring, you're randomly choosing from non-optimal actions. The pattern matches what your code is designed to do."""
     
-    """
-    TESTING the functionality of if the q table row has all zeros, the function randomly chooses an action instead of just picking the first action listed in the actions list.
+    """TESTING the functionality of if the q table row has all zeros, the function randomly chooses an action instead of just picking the first action listed in the actions list.
     
     example_blank_q_table = np.full((4,4), 0,dtype=int)
     
     for i in range(0,100):
-        print(choose_action((0,0),example_blank_q_table,example_envionment_x_length, example_environment_row_count, 0))
+        print(choose_action((0,0),example_blank_q_table,example_envionment_row_count, example_environment_column_count, 0))
         
     Output synthesized by claude:
     
@@ -187,17 +192,24 @@ def test_choose_action() -> None:
     'remain': 18 times (18.4%)
         
         
-        """
+    """
 
 def test_update_q_table() -> None:
     # def update_q_table(old_pos: tuple[int,int], action: str, new_pos: tuple[int,int], actions_list: dict,environment: tuple[tuple[int,int]], environment_column_count: int, environment_row_count: int, walls: list[tuple[int,int]], q_table: tuple[tuple[int,int]], alpha:float, gamma: float) -> None:
-    q_table_calc = update_q_table((2,2),(-1,0),(1,2),example_possible_actions, example_environment,example_envionment_x_length,example_environment_row_count,example_walls,example_q_table,0.5,0.1)
+    q_table_calc = update_q_table((2,2),(-1,0),(1,2),example_possible_actions, example_environment,example_envionment_row_count,example_environment_column_count,example_walls,example_q_table,0.5,0.1, example_cell_reward)
     
     expected_new_q_value = q_table_calc[0]
     old_pos_q_table_index = q_table_calc[1]
     new_pos_q_table_index = q_table_calc[2]
     
-    action_index = actions.index("up")
+    action_index = example_possible_actions.index((-1,0))
     
     assert example_q_table[old_pos_q_table_index][action_index] == expected_new_q_value
 
+def test_agent_stays_inside_environment() -> None:
+    #valid starting position & valid new position
+    assert agent_stays_inside_environment((0,0),(0,-1),example_envionment_row_count, example_environment_column_count) == False
+    # valid starting position and invalid new position
+    assert agent_stays_inside_environment((0,0),(0,1),example_envionment_row_count, example_environment_column_count) == True
+    # valid starting position and new position is on left edge
+    assert agent_stays_inside_environment((2,0),(1,0),example_envionment_row_count,example_environment_column_count) == False
