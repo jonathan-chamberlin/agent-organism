@@ -5,7 +5,7 @@ import math
 
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
-actions_to_execute = [(1,0)] #only when you want to have the agent execture a list of predetermined actions, you would plug this into game_loop_manual
+actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
 action_limit = 60
 framerate = 60
@@ -21,7 +21,6 @@ walls_input = [(1,1),(1,2),(1,3),(1,4)]
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
-# opportunity to improve: the location of the agent is offset when pixel_rendering_offset_x_from_top_left != pixel_rendering_offset_y_from_top_left 
 
 window_x_length = 1100
 window_y_length = 900
@@ -54,4 +53,3 @@ cell_reward = {
     "start": -2
 }
 
-# 
