@@ -9,8 +9,6 @@ empty_value = cell_name_to_value_map["empty"]
 
 empty_maze = np.full((environment_row_count,environment_column_count), empty_value,dtype=int)
 
-
-
 start = start_list[0]
 
 def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_value) -> ndarray:
@@ -70,7 +68,6 @@ add_walls_to_border_calc = add_walls_on_border(full_environment,environment_colu
 full_environment = add_walls_to_border_calc[0]
 border_cells = add_walls_to_border_calc[1]
 walls = [*border_cells, *walls_input]
-# print(f"Walls: {walls}")
 full_environment = add_custom_object(full_environment,walls,wall_value)
 full_environment = add_custom_object(full_environment,start_list,start_value)
 print(full_environment)
