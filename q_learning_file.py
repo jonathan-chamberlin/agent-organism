@@ -1,4 +1,4 @@
-from inputs_file import *
+from _inputs_file import *
 from coords_and_movement_file import *
 import random
 import numpy as np

@@ -1,4 +1,4 @@
-from inputs_file import *
+from _inputs_file import *
 import numpy as np
 import math
 

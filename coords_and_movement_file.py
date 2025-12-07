@@ -1,4 +1,4 @@
-from inputs_file import *
+from _inputs_file import *
 from rendering_file import cell_value_to_name_map
 
 def adjacent_coords(start_coords: tuple[int, int], action: tuple[int,int], ) -> tuple[int, int]:

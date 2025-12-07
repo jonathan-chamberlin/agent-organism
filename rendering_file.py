@@ -1,4 +1,4 @@
-from inputs_file import *
+from _inputs_file import *
 import pytest
 import numpy as np
 import pygame as pg
@@ -65,7 +65,7 @@ def draw_agent(coords: tuple[int,int]) -> bool:
     """Taking in the agent's starting coordinates, this draws the agent at those coordinates. Returns a boolean of if the move was valid or not, meaning if the coordinates are outside the environment or on top of a wall. This function draws the agent too, but doesn't render it."""
     
     global window
-    from inputs_file import agent_color
+    from _inputs_file import agent_color
     global agent_width
     global agent_height
 
@@ -146,8 +146,8 @@ def draw_background(color: tuple[int,int,int]) -> None:
     """Accepts a color and draws the background in that color."""
     
     global window
-    from inputs_file import window_x_length
-    from inputs_file import window_y_length
+    from _inputs_file import window_x_length
+    from _inputs_file import window_y_length
     
     pg.draw.rect(window, color, (0,0,window_x_length, window_y_length))
 
