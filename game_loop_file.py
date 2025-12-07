@@ -4,6 +4,7 @@ from rendering_file import *
 from coords_and_movement_file import *
 from q_learning_file import *
 
+np.set_printoptions(precision=2, suppress=True)
 
 def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move and position, then checks if that next position would be valid, then draws it, and renders it. 
@@ -97,7 +98,7 @@ def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_a
         action_counter = action_counter + 1
     
     print(f"The actions taken were {chosen_actions_list}")
-    print(f"This is the q table: {np.round(q_table,2)}")
+    print(f"This is the q table: {q_table}")
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map)
 
