@@ -19,7 +19,7 @@ def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_row_c
     row_index = coordinates[0]
     column_index = coordinates[1]
     
-    print(f"Converting coords {coordinates}: row={row_index}, col={column_index}, checking against rows={environment_row_count}, cols={environment_column_count}")
+    # print(f"Converting coords {coordinates}: row={row_index}, col={column_index}, checking against rows={environment_row_count}, cols={environment_column_count}")
     
     
     if (row_index >= environment_row_count) or (column_index >= environment_column_count) or (row_index < 0) or (column_index < 0 ):
@@ -118,12 +118,12 @@ def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tup
     q_table_width = len(q_table[0])
     
     
-    print(f"Trying to update: old_pos={old_pos}, new_pos={new_pos}")
+    # print(f"Trying to update: old_pos={old_pos}, new_pos={new_pos}")
     
     old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_row_count,environment_column_count,q_table_width)
     new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_row_count,environment_column_count,q_table_width)
     
-    print(f"old_post_q_table_index: {old_pos_q_table_index}. New pos Q-table index: {new_pos_q_table_index}")
+    # print(f"old_post_q_table_index: {old_pos_q_table_index}. New pos Q-table index: {new_pos_q_table_index}")
     
     # print(f"Action being looked up: {action}")
     # print(f"Possible actions list: {possible_actions}")

@@ -23,43 +23,32 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
 
     agent_coords = start
     rendering_print_value = "print"
-    
-    if rendering == rendering_pygame_value:
-        draw_grid_and_background(environment, object_coloring, color_for_background,cell_value_to_name_map)
-        draw_agent(agent_coords)
-        display_q_values_around_agent(start,possible_actions,environment_row_count,environment_column_count,q_table)
-        pg.display.flip()
-        pg.time.delay(delay_in_ms_for_framerate)
 
     for action in actions_to_do:
-        if rendering == rendering_pygame_value:
-            # clear and redraw environment
-            draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
-            
-            #If you want to add constant text that stays rendered the entire simulation, put it here.
-            
-            
-            
+        draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
         
-        # find the next place the agent will go
+        draw_agent(agent_coords)
+        
+        q_value_list = display_q_values_around_agent(agent_coords,possible_actions,environment_row_count,environment_column_count,q_table)
+        
+        print(f"Current coordinates: {agent_coords}. q_value_list: {q_value_list}")
+        
         coords_calc = coordinates_after_moving(agent_coords,action,possible_actions,walls)
-        next_coords = coords_calc[0]
         
-        # determines if that next movement is valid
+        next_coords = coords_calc[0]
+        print(f"Next agent will go to {next_coords}")
+        
         action_valid = coords_calc[1] 
         movement_valid_list.append(action_valid)
         
-        if rendering == rendering_print_value:
-            print(next_coords)
+        pg.display.flip()
+        pg.time.delay(delay_in_ms_for_framerate)
+
         
-        if rendering == rendering_pygame_value:
-            draw_agent(next_coords)
-            display_q_values_around_agent(next_coords,possible_actions,environment_row_count,environment_column_count,q_table)
-            pg.display.flip()
-        # updates the next coordinates value since the agent is now there
+        
+        
+        
         agent_coords = next_coords
-        if rendering == rendering_pygame_value:
-            pg.time.delay(delay_in_ms_for_framerate)
     
     # Stop light
     if rendering == rendering_pygame_value:
