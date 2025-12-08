@@ -1,5 +1,4 @@
 from _inputs_file import *
-from coords_and_movement_file import *
 import random
 import numpy as np
 import math
@@ -14,7 +13,7 @@ goal_reward = cell_reward["goal"]
 start_reward = cell_reward["start"]
 empty_reward = cell_reward["empty"]
 
-def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_column_count: int, environment_row_count: int, q_table_width: int) -> int:
+def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_row_count: int, environment_column_count: int, q_table_width: int) -> int:
     '''A function that converts (x, y) to Q-table row index. If the x and y coordinates are outside the environment's dimensions, the function returns -100'''
     
     row_index = coordinates[0]
@@ -34,6 +33,9 @@ def get_reward(old_pos: tuple[int,[int]], action: tuple[int,int], possible_actio
     Outputs reward, new_pos coords, and
     movement_valid 
     """
+    from coords_and_movement_file import adjacent_coords
+    from coords_and_movement_file import coordinates_after_moving
+    from coords_and_movement_file import object_at_coords
     
     new_adjacent_coords = adjacent_coords(old_pos,action)
     

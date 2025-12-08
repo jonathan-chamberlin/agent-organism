@@ -3,8 +3,11 @@ import pytest
 import numpy as np
 import pygame as pg
 import math
+from coords_and_movement_file import *
+from q_learning_file import coordinates_to_q_table_index
 
 pg.init()
+Font = pg.font.Font(None, int(cell_x_length*0.9))
 
 agent_width = int(math.floor(0.5* cell_x_length))
 agent_height = int(math.floor(0.5* cell_y_length))
@@ -131,14 +134,14 @@ def draw_grid(grid: tuple[tuple[int,int]], object_coloring: map,cell_value_to_na
     
     
     for row in grid:
-        cell_index = 0
+        column_index = 0
         for cell in row:
             cell_value = cell
             cell_name = cell_value_to_name_map[cell_value]
             cell_color = object_coloring[cell_name]
-            draw_one_object((row_index, cell_index),cell_name,cell_color)
+            draw_one_object((row_index, column_index),cell_name,cell_color)
             
-            cell_index = cell_index + 1
+            column_index = column_index + 1
         
         row_index = row_index + 1
 
@@ -157,9 +160,34 @@ def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, 
         draw_background(color_for_background)
         draw_grid(grid, object_coloring, cell_value_to_name_map)
 
-def display_q_values_around_agent(s) -> None:
+def display_q_values_around_agent(agent_coords: tuple[int,int], action: tuple[int,int], possible_actions: list[tuple[int,int]], environment_row_count: int,environment_column,count:int, q_table: tuple[tuple[float]]) -> None:
     """For each possible_action that leads to a valid move inside the environment, the function draws the q value from executing that action on the next cell"""
     
     # check which possible_actions lead to a move inside the environment (create agent_stays_inside_environment)
+    drawable_actions = []
+    for action in possible_actions:
+        if agent_stays_inside_environment(agent_coords,action,environment_row_count,environment_column_count) == True:
+            drawable_actions.append(action)
     
+    # For each drawable_action, find the coords of the new position that the agent would end up at if the agent took it.
+    for action in drawable_actions:
+        next_coords = adjacent_coords(agent_coords,action)
+    
+        # Then convert those to pixel coordinates
+        next_pixel_coords = coords_to_center_of_cell_in_pixels(next_coords)
+        
+        # Then lookup the q_table value for that action at that agent_position
+        q_table_width = len(q_table[0])
+        q_table_value_index = coordinates_to_q_table_index(next_coords,environment_row_count,environment_column_count,q_table_width)
+        action_index = possible_actions.index(action)
+        q_value_to_display = q_table[q_table_value_index][action_index]
+    # Then draw that q value on those pixel coordinates.
+
+        
+    
+
     # for the valid possible_actions
+
+
+Font.render("Hello World", True, (200,200,200),(0,0,0))
+pg.display.flip()
