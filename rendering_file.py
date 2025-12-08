@@ -9,6 +9,8 @@ from q_learning_file import coordinates_to_q_table_index
 pg.init()
 Font = pg.font.Font(None, int(cell_x_length*0.9))
 
+
+
 agent_width = int(math.floor(0.5* cell_x_length))
 agent_height = int(math.floor(0.5* cell_y_length))
 
@@ -160,8 +162,11 @@ def draw_grid_and_background(grid: tuple[tuple[int,int]], object_coloring: map, 
         draw_background(color_for_background)
         draw_grid(grid, object_coloring, cell_value_to_name_map)
 
-def display_q_values_around_agent(agent_coords: tuple[int,int], action: tuple[int,int], possible_actions: list[tuple[int,int]], environment_row_count: int,environment_column,count:int, q_table: tuple[tuple[float]]) -> None:
+def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions: list[tuple[int,int]], environment_row_count: int,environment_column_count:int, q_table: tuple[tuple[float]]) -> None:
     """For each possible_action that leads to a valid move inside the environment, the function draws the q value from executing that action on the next cell"""
+    
+    from coords_and_movement_file import agent_stays_inside_environment
+    from coords_and_movement_file import adjacent_coords
     
     # check which possible_actions lead to a move inside the environment (create agent_stays_inside_environment)
     drawable_actions = []
@@ -180,14 +185,16 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], action: tuple[in
         q_table_width = len(q_table[0])
         q_table_value_index = coordinates_to_q_table_index(next_coords,environment_row_count,environment_column_count,q_table_width)
         action_index = possible_actions.index(action)
-        q_value_to_display = q_table[q_table_value_index][action_index]
-    # Then draw that q value on those pixel coordinates.
-
+        q_value_to_display = round(q_table[q_table_value_index][action_index],2)
+        # Then draw that q value on those pixel coordinates.
+        q_value_text = Font.render(str(q_value_to_display), True, (200,200,200),(0,0,0))
+        window.blit(text,next_pixel_coords)
         
     
 
     # for the valid possible_actions
 
 
-Font.render("Hello World", True, (200,200,200),(0,0,0))
+text = Font.render("Hello World", True, (200,200,200),(0,0,0))
+window.blit(text,(50,50))
 pg.display.flip()

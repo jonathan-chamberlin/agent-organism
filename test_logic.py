@@ -40,8 +40,6 @@ example_q_table = [
 example_envionment_row_count = 3
 example_environment_column_count = 3
 
-
-
 # update the first input to be a tuple, not a list
 def test_coordinates_to_q_table_index() -> None:
     test_q_table_width = 4
@@ -127,10 +125,10 @@ def test_choose_action() -> None:
     # q table index is 0, so that q table row is [0.5, 2.3, -1.2, 3.7, 0.0]. The highest value is 3.7, so the correct value is right.
     assert choose_action((1,2), example_q_table,example_possible_actions, example_envionment_row_count,example_environment_column_count,0) == ((0,0),(0,0)) 
     #q table index is 5, so that q table row is [2.1, 3.5, 1.2, 0.8, 4.0]. The highest value is index 4, which in action_map corresponds to remain.
-    
+
     assert choose_action((2,1), example_q_table, example_possible_actions,example_envionment_row_count,example_environment_column_count,0) == ((-1,0),(-1,0))
     # q table index is 7, so that q table row is [0.0, 3.0, 5.0, 4.0, 0.5].The highest value is at index 2, which in action_map corresponds to left
-    
+
     """Testing randomness of choose_action. 
     CODE to run in main.py:
 
@@ -141,7 +139,7 @@ def test_choose_action() -> None:
     print()
     print()
     print()
-    
+
     for i in range(0,100,1):
         print(choose_action((2,1),example_q_table,example_envionment_row_count,example_environment_column_count,1))
 
@@ -172,16 +170,16 @@ def test_choose_action() -> None:
     In the second loop with epsilon=1.0 (always explore, never exploit), 'left' is excluded from the random selection entirely. But 'left' is the optimal action for position (2,1) in your test.
     Question for you: Your code removes the optimal action from the pool before randomly selecting. In the second loop, what is the optimal action? Why would that action not appear in the second position?
     This is actually correct behavior - when exploring, you're randomly choosing from non-optimal actions. The pattern matches what your code is designed to do."""
-    
+
     """TESTING the functionality of if the q table row has all zeros, the function randomly chooses an action instead of just picking the first action listed in the actions list.
-    
+
     example_blank_q_table = np.full((4,4), 0,dtype=int)
-    
+
     for i in range(0,100):
         print(choose_action((0,0),example_blank_q_table,example_envionment_row_count, example_environment_column_count, 0))
         
     Output synthesized by claude:
-    
+
         Counting your 98 total outputs:
     Breakdown by action:
 
@@ -207,6 +205,7 @@ def test_update_q_table() -> None:
     assert example_q_table[old_pos_q_table_index][action_index] == expected_new_q_value
 
 def test_agent_stays_inside_environment() -> None:
+    from coords_and_movement_file import agent_stays_inside_environment
     #valid starting position & valid new position
     assert agent_stays_inside_environment((0,0),(0,-1),example_envionment_row_count, example_environment_column_count) == False
     # valid starting position and invalid new position

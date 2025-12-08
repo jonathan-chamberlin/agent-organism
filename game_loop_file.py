@@ -6,7 +6,7 @@ from q_learning_file import *
 
 np.set_printoptions(precision=2, suppress=True)
 
-def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict) -> list[bool]:
+def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict, q_table: tuple[tuple[float]]) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move and position, then checks if that next position would be valid, then draws it, and renders it. 
     
     It returns a list of booleans representing what MOVES were valid, NOT positions. So if the agent starts on a valid square, and the first move (index 0) is to an invalid square, then the output of this function will be [False, ...].
@@ -14,11 +14,9 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     
     Input 'rendering': str. Value of 'pygame' could make it so every frame is rendered on the pygame window. Value of 'print' means that the agent coords are printed every frame. And 'none' means that the function does all the calculations without printing or rendering anything.
 
-    
     Improvement: The data for start and walls is inside the full_environment variable that is inputted into this function, so teh inputs of start and walls are redundant. I could write code to look at the environment input and find which cell has the start_value and store those coords as a tuple, and which cells have the wall_value and store that as a list of tuples, and then use those variables in the code below.
-    
-    Worse improvement: The full environment is created from the variables of empty_maze, goals, goal_value),walls,wall_value, start_list,start_value. I could input all those things into this game loop function and have it run, but that would be too many inputs.
     """
+    from rendering_file import display_q_values_around_agent
     
     rendering_pygame_value = "pygame"
     movement_valid_list = []
@@ -29,6 +27,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     if rendering == rendering_pygame_value:
         draw_grid_and_background(environment, object_coloring, color_for_background,cell_value_to_name_map)
         draw_agent(agent_coords)
+        display_q_values_around_agent(start,possible_actions,environment_row_count,environment_column_count,q_table)
         pg.display.flip()
         pg.time.delay(delay_in_ms_for_framerate)
 
@@ -36,6 +35,11 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         if rendering == rendering_pygame_value:
             # clear and redraw environment
             draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
+            
+            #If you want to add constant text that stays rendered the entire simulation, put it here.
+            
+            
+            
         
         # find the next place the agent will go
         coords_calc = coordinates_after_moving(agent_coords,action,possible_actions,walls)
@@ -49,14 +53,12 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
             print(next_coords)
         
         if rendering == rendering_pygame_value:
-            # draws agent at the next coordinates
             draw_agent(next_coords)
-            # renders everything
+            display_q_values_around_agent(next_coords,possible_actions,environment_row_count,environment_column_count,q_table)
             pg.display.flip()
         # updates the next coordinates value since the agent is now there
         agent_coords = next_coords
         if rendering == rendering_pygame_value:
-            # time control for framerate
             pg.time.delay(delay_in_ms_for_framerate)
     
     # Stop light
@@ -99,6 +101,6 @@ def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_a
     print(f"The actions taken were {chosen_actions_list}")
     print(f"This is the q table: {q_table}")
     
-    game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map)
+    game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map,q_table)
 
     return None
