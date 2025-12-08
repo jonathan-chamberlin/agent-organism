@@ -187,7 +187,11 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
         
         # Then draw that q value on those pixel coordinates.
         q_value_text = Font.render(str(q_value_to_display), True, (200,200,200),(0,0,0))
-        window.blit(q_value_text,next_pixel_coords)
+        q_value_rect = q_value_text.get_rect()
+        
+        q_value_rect.center = next_pixel_coords
+        
+        window.blit(q_value_text, q_value_rect)
         
     
 
