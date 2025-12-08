@@ -19,6 +19,9 @@ def coordinates_to_q_table_index(coordinates: tuple[int, int], environment_row_c
     row_index = coordinates[0]
     column_index = coordinates[1]
     
+    print(f"Converting coords {coordinates}: row={row_index}, col={column_index}, checking against rows={environment_row_count}, cols={environment_column_count}")
+    
+    
     if (row_index >= environment_row_count) or (column_index >= environment_column_count) or (row_index < 0) or (column_index < 0 ):
         return -100
     
@@ -47,7 +50,7 @@ def get_reward(old_pos: tuple[int,[int]], action: tuple[int,int], possible_actio
     
     return (reward, new_adjacent_coords, movement_valid) 
 
-def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], possible_actions: list[tuple[int,int]], environment_column_count: int, environment_row_count: int, epsilon: float) -> tuple[tuple[int,int]]: 
+def choose_action(current_pos: tuple(int,int), q_table: tuple[tuple[int,int]], possible_actions: list[tuple[int,int]], environment_row_count: int, environment_column_count: int, epsilon: float) -> tuple[tuple[int,int]]: 
     """takes in the agent's current coordinates and the whole Q table, and just reads thh Q table and finds which value is the highest, and it has a 1-epsilon chance of picking the move with the highest q value (this is the explotation rate, or 1-epsilon, where epsilon is the exploration rate), and an epsilon likely to chose another move at random.
 
     Returns a tuple where the first string is the optimal action, and the second is an action which was randomly chosen using epsilon the exploration rate.
@@ -114,8 +117,13 @@ def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tup
     
     q_table_width = len(q_table[0])
     
-    old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_column_count,environment_row_count,q_table_width)
-    new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_column_count,environment_row_count,q_table_width)
+    
+    print(f"Trying to update: old_pos={old_pos}, new_pos={new_pos}")
+    
+    old_pos_q_table_index = coordinates_to_q_table_index(old_pos,environment_row_count,environment_column_count,q_table_width)
+    new_pos_q_table_index = coordinates_to_q_table_index(new_pos,environment_row_count,environment_column_count,q_table_width)
+    
+    print(f"old_post_q_table_index: {old_pos_q_table_index}. New pos Q-table index: {new_pos_q_table_index}")
     
     # print(f"Action being looked up: {action}")
     # print(f"Possible actions list: {possible_actions}")

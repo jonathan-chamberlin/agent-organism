@@ -67,7 +67,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         pg.display.flip()
     return movement_valid_list
 
-def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_column_count: int, environment_row_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict):
+def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict):
     """Makes it so the agent moves through the enviornment using choose_action and update_q_table. Each action is stored in a list of actions. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's actions using draw_agent. After all the actions, print the q table. Then, depending on rendering, it renders all actions"""
     
     chosen_actions_list = []
@@ -78,7 +78,7 @@ def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_a
         
         print(f"--------------/nThis is action {action_counter}")
         
-        chosen_action = choose_action(current_pos,q_table,possible_actions,environment_column_count,environment_row_count,epsilon)[1]
+        chosen_action = choose_action(current_pos,q_table,possible_actions,environment_row_count,environment_column_count,epsilon)[1]
     
         chosen_actions_list.append(chosen_action)
         print(f"Chosen action: {chosen_action}")
@@ -91,7 +91,7 @@ def game_loop_learning_one_run(actions_list: list, action_limit: int, possible_a
     
         reward = get_reward(current_pos,chosen_action,possible_actions,environment,walls, cell_reward)[0]
         
-        update_q_table(current_pos, chosen_action, new_pos,possible_actions,environment,environment_column_count,environment_row_count,walls,q_table,alpha,gamma,cell_reward)
+        update_q_table(current_pos, chosen_action, new_pos,possible_actions,environment,environment_row_count,environment_column_count,walls,q_table,alpha,gamma,cell_reward)
         print(f"Just updated Q table with value {reward}")
         
         current_pos = new_pos

@@ -6,8 +6,6 @@ import math
 from coords_and_movement_file import *
 from q_learning_file import coordinates_to_q_table_index
 
-pg.init()
-Font = pg.font.Font(None, int(cell_x_length*0.9))
 
 
 
@@ -186,15 +184,16 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
         q_table_value_index = coordinates_to_q_table_index(next_coords,environment_row_count,environment_column_count,q_table_width)
         action_index = possible_actions.index(action)
         q_value_to_display = round(q_table[q_table_value_index][action_index],2)
+        
         # Then draw that q value on those pixel coordinates.
         q_value_text = Font.render(str(q_value_to_display), True, (200,200,200),(0,0,0))
-        window.blit(text,next_pixel_coords)
+        window.blit(q_value_text,next_pixel_coords)
         
     
 
     # for the valid possible_actions
 
 
-text = Font.render("Hello World", True, (200,200,200),(0,0,0))
-window.blit(text,(50,50))
-pg.display.flip()
+# text = Font.render("Hello World", True, (200,200,200),(0,0,0))
+# window.blit(text,(50,50))
+# pg.display.flip()

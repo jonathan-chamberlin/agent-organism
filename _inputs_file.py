@@ -2,22 +2,26 @@ import pytest
 import numpy as np
 import pygame as pg
 import math
+pg.init()
+
 
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
-action_limit = 60
-framerate = 60
+action_limit = 100
+framerate = 10
 
-environment_row_count = 50
-environment_column_count = 40
-cell_y_length = 15
-cell_x_length = 15
+environment_row_count = 6
+environment_column_count = 4
+cell_y_length = 50
+cell_x_length = 50
 
-goals = [(3,1),(5,2)]
+goals = [(3,1)]
 start_list = [(1,1)]
-walls_input = [(1,1),(1,2),(1,3),(1,4)]
+walls_input = []
+
+Font = pg.font.Font(None, int(cell_x_length*0.5))
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
