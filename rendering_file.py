@@ -200,6 +200,6 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
 
     # for the valid possible_actions
 
-def display_run_number(run_number: int, pixel_rendering_offset_x_from_top_left: int, pixel_rendering_offset_y_from_top_left: int, pixel_coords, font) -> None:
+def display_run_and_action_number(run_number: int, pixel_rendering_offset_x_from_top_left: int, pixel_rendering_offset_y_from_top_left: int, pixel_coords, font) -> None:
     
     return None
