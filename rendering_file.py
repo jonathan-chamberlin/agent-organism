@@ -19,8 +19,6 @@ pg.display.set_caption("Maze Robot Simulator")
 
 delay_in_ms_for_framerate = int((1 / framerate) * 1000)
 
-cell_value_to_name_map = {value: key for key, value in cell_name_to_value_map.items()}
-
 """Drawing one thing at a time
 # draws a wall
 pg.draw.rect(window, wall_color, (0,0,cell_y_length, cell_x_length))

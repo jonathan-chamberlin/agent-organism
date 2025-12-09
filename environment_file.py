@@ -2,6 +2,8 @@ from _inputs_file import *
 import numpy as np
 import math
 
+
+
 wall_value = cell_name_to_value_map["wall"]
 goal_value = cell_name_to_value_map["goal"]
 start_value = cell_name_to_value_map["start"]
