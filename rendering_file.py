@@ -200,7 +200,6 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
 
     # for the valid possible_actions
 
-
-# text = Font.render("Hello World", True, (200,200,200),(0,0,0))
-# window.blit(text,(50,50))
-# pg.display.flip()
+def display_run_number(run_number: int, pixel_rendering_offset_x_from_top_left: int, pixel_rendering_offset_y_from_top_left: int, pixel_coords, font) -> None:
+    
+    return None
