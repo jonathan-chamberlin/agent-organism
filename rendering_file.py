@@ -183,7 +183,7 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
         
         # Then lookup the q_table value for that action at that agent_position
         q_table_width = len(q_table[0])
-        q_table_value_index = coordinates_to_q_table_index(next_coords,environment_row_count,environment_column_count,q_table_width)
+        q_table_value_index = coordinates_to_q_table_index(agent_coords,environment_row_count,environment_column_count,q_table_width)
         action_index = possible_actions.index(action)
         q_value_to_display = round(q_table[q_table_value_index][action_index],2)
         
