@@ -38,6 +38,9 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
                 
         display_message_and_value("Total Reward for Run: ",total_reward_for_run, (-0.5, environment_column_count))
         
+        action_index = actions_to_do.index(action)
+        display_message_and_value("Reward for this action:",list_of_rewards_for_each_action[action_index], (0,environment_column_count))
+        
         # print(f"Current coordinates: {agent_coords}. q_value_list: {q_value_list}")
         
         coords_calc = coordinates_after_moving(agent_coords,action,possible_actions,walls)
