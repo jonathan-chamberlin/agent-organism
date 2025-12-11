@@ -25,6 +25,8 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     agent_coords = start
     rendering_print_value = "print"
     action_index = 0
+    total_reward_for_run = np.sum(list_of_rewards_for_each_action)
+
 
     for action in actions_to_do:
         draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
@@ -33,9 +35,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         draw_agent(agent_coords)
         
         q_value_list = display_q_values_around_agent(agent_coords,possible_actions,environment_row_count,environment_column_count,q_table)
-        
-        total_reward_for_run = np.sum(list_of_rewards_for_each_action)
-        
+                
         display_message_and_value("Total Reward for Run: ",total_reward_for_run, (-0.5, environment_column_count))
         
         # print(f"Current coordinates: {agent_coords}. q_value_list: {q_value_list}")
