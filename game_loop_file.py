@@ -34,6 +34,8 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         
         q_value_list = display_q_values_around_agent(agent_coords,possible_actions,environment_row_count,environment_column_count,q_table)
         
+        display_message_and_value("Hello World: ",10, (0, environment_column_count))
+        
         # print(f"Current coordinates: {agent_coords}. q_value_list: {q_value_list}")
         
         coords_calc = coordinates_after_moving(agent_coords,action,possible_actions,walls)

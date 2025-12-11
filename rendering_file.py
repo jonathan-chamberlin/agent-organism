@@ -218,6 +218,18 @@ def display_run_and_action_index(run_index: int, action_index, coords_to_display
         
     return None
 
-def display_message_and_value(value: float, message: str, coords_to_display_message) -> None:
+def display_message_and_value(message: str, value: float, coords_to_display_message) -> None:
     
-    return 0
+    return_message_and_value = f"{message}{value}"
+    
+    return_message_text = Font.render(return_message_and_value, True, (200,200,200),(0,0,0))
+    
+    return_message_rect = return_message_text.get_rect()
+    
+    pixel_coords = coords_to_center_of_cell_in_pixels(coords_to_display_message)
+    
+    return_message_rect.bottomleft = pixel_coords
+        
+    window.blit(return_message_text, return_message_rect)
+    
+    return None
