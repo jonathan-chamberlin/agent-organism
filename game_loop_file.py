@@ -34,7 +34,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         
         q_value_list = display_q_values_around_agent(agent_coords,possible_actions,environment_row_count,environment_column_count,q_table)
         
-        display_message_and_value("Hello World: ",10, (0, environment_column_count))
+        display_message_and_value("Hello World: ",10, (-0.5, environment_column_count))
         
         # print(f"Current coordinates: {agent_coords}. q_value_list: {q_value_list}")
         
@@ -103,6 +103,7 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs)
 
     print(f"total_reward_gotten: {total_reward_gotten}")
+    
     return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action)
 
 def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict, coords_of_run_action_indexs: tuple[int,int]):
@@ -110,14 +111,18 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
     
     run_index = 0
     list_of_rewards_gotten = []
+    array_of_rewards_for_all_runs = []
     
     for i in range(0,runs):
         
-        reward_gotten = game_loop_learning_one_run(action_limit, possible_actions,environment, environment_row_count, environment_column_count, start,goals,walls,object_coloring,color_for_background,q_table,epsilon,alpha,gamma,rendering,cell_value_to_name_map,cell_reward, run_index, coords_of_run_action_indexs)[2]
+        calculation = game_loop_learning_one_run(action_limit, possible_actions,environment, environment_row_count, environment_column_count, start,goals,walls,object_coloring,color_for_background,q_table,epsilon,alpha,gamma,rendering,cell_value_to_name_map,cell_reward, run_index, coords_of_run_action_indexs)
         
-        list_of_rewards_gotten.append(reward_gotten)
-
+        
+        reward_gotten_for_run = calculation[2]
+        list_of_rewards_for_actions = calculation[3]
+        
+        array_of_rewards_for_all_runs.append(list_of_rewards_for_actions)
         run_index = run_index + 1
 
-    print(list_of_rewards_gotten)
-    return None
+    print(array_of_rewards_for_all_runs)
+    return array_of_rewards_for_all_runs
