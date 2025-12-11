@@ -9,9 +9,9 @@ pg.init()
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0), (1,1),(1,-1),(-1,1),(-1,-1)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
-runs = 5
-action_limit = 50
-framerate = 50
+runs = 20
+action_limit = 75
+framerate = 60
 
 environment_row_count = 14
 environment_column_count = 14
@@ -32,7 +32,7 @@ cell_x_length = 50
 
 epsilon = 0.2
 alpha = 0.1
-gamma = 0.1
+gamma = 0.95 #Discount factor. Reward future rewards x% as much as rewards now
 
 Font = pg.font.Font(None, int(cell_x_length*0.5))
 
