@@ -6,7 +6,7 @@ from q_learning_file import *
 
 np.set_printoptions(precision=2, suppress=True)
 
-def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict, q_table: tuple[tuple[float]], run_index: int, coords_of_run_action_indexs: tuple[int,int]) -> list[bool]:
+def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict, q_table: tuple[tuple[float]], run_index: int, coords_of_run_action_message: tuple[int,int]) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move and position, then checks if that next position would be valid, then draws it, and renders it. 
     
     It returns a list of booleans representing what MOVES were valid, NOT positions. So if the agent starts on a valid square, and the first move (index 0) is to an invalid square, then the output of this function will be [False, ...].
@@ -28,8 +28,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
 
     for action in actions_to_do:
         draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
-        action_run_message_coords_in_pixels = coords_to_center_of_cell_in_pixels(coords_of_run_action_indexs)
-        display_run_and_action_index(run_index,action_index, pixel_rendering_offset_x_from_top_left,pixel_rendering_offset_y_from_top_left, action_run_message_coords_in_pixels, Font)
+        display_run_and_action_index(run_index,action_index, pixel_rendering_offset_x_from_top_left,pixel_rendering_offset_y_from_top_left, coords_of_run_action_message, Font)
         
         draw_agent(agent_coords)
         
