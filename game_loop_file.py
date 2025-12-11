@@ -6,7 +6,7 @@ from q_learning_file import *
 
 np.set_printoptions(precision=2, suppress=True)
 
-def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict, q_table: tuple[tuple[float]], run_index: int, coords_of_run_action_message: tuple[int,int]) -> list[bool]:
+def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict, q_table: tuple[tuple[float]], run_index: int, coords_of_run_action_message: tuple[int,int], list_of_rewards_for_each_action: list[float]) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move and position, then checks if that next position would be valid, then draws it, and renders it. 
     
     It returns a list of booleans representing what MOVES were valid, NOT positions. So if the agent starts on a valid square, and the first move (index 0) is to an invalid square, then the output of this function will be [False, ...].
@@ -34,7 +34,9 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         
         q_value_list = display_q_values_around_agent(agent_coords,possible_actions,environment_row_count,environment_column_count,q_table)
         
-        display_message_and_value("Hello World: ",10, (-0.5, environment_column_count))
+        total_reward_for_run = np.sum(list_of_rewards_for_each_action)
+        
+        display_message_and_value("Total Reward for Run: ",total_reward_for_run, (-0.5, environment_column_count))
         
         # print(f"Current coordinates: {agent_coords}. q_value_list: {q_value_list}")
         
@@ -100,7 +102,7 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     # print(f"The actions taken were {chosen_actions_list}")
     # print(f"This is the q table: {q_table}")
     
-    game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs)
+    game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs, list_of_rewards_for_each_action)
 
     print(f"total_reward_gotten: {total_reward_gotten}")
     
