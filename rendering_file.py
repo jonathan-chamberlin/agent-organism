@@ -200,17 +200,17 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
 
     # for the valid possible_actions
 
-def display_run_and_action_number(run_number: int, action_number, pixel_rendering_offset_x_from_top_left: int, pixel_rendering_offset_y_from_top_left: int, pixel_coords, font) -> None:
+def display_run_and_action_index(run_index: int, action_index, pixel_rendering_offset_x_from_top_left: int, pixel_rendering_offset_y_from_top_left: int, pixel_coords, font) -> None:
     
-    return_message_run = f"run_number: {run_number}"
-    return_message_action = f"action_number: {action_number}"
+    return_message_run = f"run_index: {run_index}"
+    return_message_action = f"action_index: {action_index}"
     
     return_message = f"{return_message_run} {return_message_action}"
     
     return_message_text = Font.render(return_message, True, (200,200,200),(0,0,0))
     return_message_rect = return_message_text.get_rect()
         
-    return_message_rect.center = pixel_coords
+    return_message_rect.bottomleft = pixel_coords
         
     window.blit(return_message_text, return_message_rect)
         

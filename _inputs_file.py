@@ -9,7 +9,7 @@ pg.init()
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
-runs = 2
+runs = 10
 action_limit = 25
 framerate = 25
 
@@ -38,7 +38,7 @@ Font = pg.font.Font(None, int(cell_x_length*0.5))
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
-coords_of_run_action_numbers = (0,0)
+coords_of_run_action_message = (0,0)
 
 window_x_length = 1100
 window_y_length = 900
