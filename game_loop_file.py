@@ -56,13 +56,14 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         pg.display.flip()
     return movement_valid_list
 
-def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int]) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float]:
+def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int]) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float, list[float]]:
     """Makes it so the agent moves through the enviornment using choose_action and update_q_table. Each action is stored in a list of actions. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's actions using draw_agent. After all the actions, print the q table. Then, depending on rendering, it renders all actions"""
     
     chosen_actions_list = []
     current_pos = start
     action_counter = 0
-    reward_gotten = 0
+    total_reward_gotten = 0
+    list_of_rewards_for_each_action = []
     
     for action in range(0,action_limit):
         
@@ -81,8 +82,9 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     
         reward = get_reward(current_pos,chosen_action,possible_actions,environment,walls, cell_reward)[0]
         
-        reward_gotten= reward_gotten + reward
-    
+        list_of_rewards_for_each_action.append(reward)
+        
+
         
         update_q_table(current_pos, chosen_action, new_pos,possible_actions,environment,environment_row_count,environment_column_count,walls,q_table,alpha,gamma,cell_reward)
         # print(f"Just updated Q table with value {reward}")
@@ -91,14 +93,15 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
         
         action_counter = action_counter + 1
 
+    total_reward_gotten = np.sum(list_of_rewards_for_each_action)
     
     # print(f"The actions taken were {chosen_actions_list}")
     # print(f"This is the q table: {q_table}")
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs)
 
-    print(f"reward_gotten: {reward_gotten}")
-    return (chosen_actions_list, q_table, reward_gotten)
+    print(f"total_reward_gotten: {total_reward_gotten}")
+    return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action)
 
 def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict, coords_of_run_action_indexs: tuple[int,int]):
     """Exectutes game_loop_learning_one_run multiple times, based on the number of runs"""
