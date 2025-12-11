@@ -104,15 +104,15 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
     """Exectutes game_loop_learning_one_run multiple times, based on the number of runs"""
     
     run_index = 0
-    rewards_gotten = []
+    list_of_rewards_gotten = []
     
     for i in range(0,runs):
         
         reward_gotten = game_loop_learning_one_run(action_limit, possible_actions,environment, environment_row_count, environment_column_count, start,goals,walls,object_coloring,color_for_background,q_table,epsilon,alpha,gamma,rendering,cell_value_to_name_map,cell_reward, run_index, coords_of_run_action_indexs)[2]
         
-        rewards_gotten.append(rewards_gotten)
+        list_of_rewards_gotten.append(reward_gotten)
 
         run_index = run_index + 1
 
-    print(rewards_gotten)
+    print(list_of_rewards_gotten)
     return None
