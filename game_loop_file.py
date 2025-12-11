@@ -28,7 +28,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
 
     for action in actions_to_do:
         draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
-        display_run_and_action_index(run_index,action_index, pixel_rendering_offset_x_from_top_left,pixel_rendering_offset_y_from_top_left, coords_of_run_action_message, Font)
+        display_run_and_action_index(run_index,action_index, coords_of_run_action_message, Font)
         
         draw_agent(agent_coords)
         

@@ -200,7 +200,7 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
 
     # for the valid possible_actions
 
-def display_run_and_action_index(run_index: int, action_index, pixel_rendering_offset_x_from_top_left: int, pixel_rendering_offset_y_from_top_left: int, coords_to_display:tuple[int,int], font) -> None:
+def display_run_and_action_index(run_index: int, action_index, coords_to_display:tuple[int,int], font) -> None:
     
     return_message_run = f"run_index: {run_index}"
     return_message_action = f"action_index: {action_index}"
@@ -218,3 +218,6 @@ def display_run_and_action_index(run_index: int, action_index, pixel_rendering_o
         
     return None
 
+def display_message_and_value(value: float, message: str, coords_to_display_message) -> None:
+    
+    return 0
