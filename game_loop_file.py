@@ -106,7 +106,7 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs, list_of_rewards_for_each_action)
 
-    print(f"total_reward_gotten: {total_reward_gotten}")
+    # print(f"total_reward_gotten: {total_reward_gotten}")
     
     return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action)
 
@@ -128,5 +128,4 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
         array_of_rewards_for_all_runs.append(list_of_rewards_for_actions)
         run_index = run_index + 1
 
-    print(array_of_rewards_for_all_runs)
-    return array_of_rewards_for_all_runs
+    return (q_table, array_of_rewards_for_all_runs)

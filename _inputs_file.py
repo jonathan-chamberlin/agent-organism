@@ -9,7 +9,7 @@ pg.init()
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0), (1,1),(1,-1),(-1,1),(-1,-1)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
-runs = 20
+runs = 5
 action_limit = 75
 framerate = 60
 
