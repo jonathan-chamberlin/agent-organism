@@ -40,11 +40,11 @@ pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50
 coords_of_run_action_message = (0,0)
 
-window_x_length = 1100
+window_x_length = 1300
 window_y_length = 900
 
 agent_color = (0,0,255)
-background_color = (255,255,255)
+background_color = (0,0,0)
 
 cell_name_to_value_map = {
     "wall": 3,
