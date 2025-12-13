@@ -169,7 +169,7 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
     q_value_list =[]
     precision_two_digit = 2
     precision_three_digit= 3
-    precision_four_or_more_digits = 2
+    precision_four_or_more_digits = 1
     
     
     # For each possible_action, find the coords of the new position that the agent would end up at if the agent took it.
