@@ -135,7 +135,8 @@ def update_q_table(old_pos: tuple[int,int], action: tuple[int,int], new_pos: tup
     
     learning_adjustment = alpha * (reward + (gamma * max(q_table[new_pos_q_table_index]) - old_q_value ))
     
-    new_q_value = old_q_value + learning_adjustment
+    # if the q value every gets greater than about 10^308 aka 2^1023 aka 1<<1023, the agent can no longer move.
+    new_q_value = min(old_q_value + learning_adjustment, 1<<1022)
     
     q_table[old_pos_q_table_index][action_index] = new_q_value
     
