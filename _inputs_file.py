@@ -10,9 +10,12 @@ possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0), (1,1),(1,-1),(-1,1),(-1,-1
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
 runs = 500
-run_indexes_to_render = [497,498,499]
 action_limit = 50
 framerate = 25
+
+last_three_runs = [runs-3,runs-2,runs-1]
+run_indexes_to_render = last_three_runs
+
 
 environment_row_count = 12
 environment_column_count = 12
