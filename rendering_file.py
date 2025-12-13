@@ -199,7 +199,13 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
         q_value_text = Font.render(str(q_value_to_display), True, (200,200,200),(0,0,0))
         q_value_rect = q_value_text.get_rect()
         
-        q_value_rect.center = next_pixel_coords
+        # Here i make it so they don't overlap
+        if action[1] == 0:
+            q_value_rect.center = next_pixel_coords
+        elif action[1] <0:
+            q_value_rect.midright = next_pixel_coords
+        else: 
+            q_value_rect.midleft = next_pixel_coords
         
         window.blit(q_value_text, q_value_rect)
         

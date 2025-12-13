@@ -14,13 +14,13 @@ run_indexes_to_render = [497,498,499]
 action_limit = 50
 framerate = 25
 
-environment_row_count = 13
-environment_column_count = 13
+environment_row_count = 12
+environment_column_count = 12
 
 
-goals = [(9,9)]
+goals = [(10,10)]
 start_list = [(1,1)]
-walls_input = [(2,2),(2,3),(3,2), (10,10),(9,10),(8,10),(7,10),(6,10),(5,10),(4,10),(11,10)]
+walls_input = [(2,2),(2,3),(3,2)]
 
 cell_y_length = 50
 cell_x_length = 50
