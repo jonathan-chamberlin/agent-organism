@@ -9,24 +9,24 @@ pg.init()
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0), (1,1),(1,-1),(-1,1),(-1,-1)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
-runs = 500
-action_limit = 50
-framerate = 25
+runs = 1000
+action_limit = 150
+framerate = 60
 
 last_three_runs = [runs-3,runs-2,runs-1]
 run_indexes_to_render = last_three_runs
 
 
-environment_row_count = 12
-environment_column_count = 12
+environment_row_count = 25
+environment_column_count = 25
 
 
-goals = [(10,10)]
+goals = [(4,23),(2,23),(3,22)]
 start_list = [(1,1)]
 walls_input = [(2,2),(2,3),(3,2)]
 
-cell_y_length = 50
-cell_x_length = 50
+cell_y_length = 25
+cell_x_length = 25
 
 # Test environment
 # environment_row_count = 6
