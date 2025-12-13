@@ -111,16 +111,15 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
         action_index_agent_first_touched_goal = None
 
     
-    print(f"Run_index: {run_index}. Action index agent first touched goal: {action_index_agent_first_touched_goal}")
-    print(f"The rewards for each action were {list_of_rewards_for_each_action}")
+    # print(f"Run_index: {run_index}. Action index agent first touched goal: {action_index_agent_first_touched_goal}")
+    # print(f"The rewards for each action were {list_of_rewards_for_each_action}")
+    
     # print(f"The actions taken were {chosen_actions_list}")
     # print(f"This is the q table: {q_table}")
     
     game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,rendering, cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs, list_of_rewards_for_each_action,runs)
 
     # print(f"total_reward_gotten: {total_reward_gotten}")
-    
-    
     
     return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action, action_index_agent_first_touched_goal)
 
