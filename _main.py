@@ -10,6 +10,10 @@ from test_logic import *
 
 game_loop_learning_multiple_runs(runs, action_limit,possible_actions,  full_environment,environment_column_count,environment_row_count,start,goals,walls,color_map,background_color,q_table,epsilon,alpha,gamma,"pygame", cell_value_to_name_map, cell_reward, coords_of_run_action_message)
 
+print(f"Cell_name_to_value_map: {cell_name_to_value_map}")
+print(f"Expect cell_name_to_value_map['goal'] to be ")
+
+
 running = True
 while running:
     for event in pg.event.get():

@@ -65,7 +65,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         pg.display.flip()
     return movement_valid_list
 
-def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int], runs: int) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float, list[float]]:
+def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int], runs: int) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float, list[float], int]:
     """Makes it so the agent moves through the enviornment using choose_action and update_q_table. Each action is stored in a list of actions. After all those calculations are done, if rendering = 'pygame', the function calls game_loop_manual using that list of moves to render the agent's actions using draw_agent. After all the actions, print the q table. Then, depending on rendering, it renders all actions"""
     
     chosen_actions_list = []
@@ -91,6 +91,7 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     
         reward = get_reward(current_pos,chosen_action,possible_actions,environment,walls, cell_reward)[0]
         
+        
         list_of_rewards_for_each_action.append(reward)
         
 
@@ -104,6 +105,14 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
 
     total_reward_gotten = np.sum(list_of_rewards_for_each_action)
     
+    try:
+        action_index_agent_first_touched_goal = list_of_rewards_for_each_action.index(cell_reward["goal"])
+    except ValueError:
+        action_index_agent_first_touched_goal = None
+
+    
+    print(f"Run_index: {run_index}. Action index agent first touched goal: {action_index_agent_first_touched_goal}")
+    print(f"The rewards for each action were {list_of_rewards_for_each_action}")
     # print(f"The actions taken were {chosen_actions_list}")
     # print(f"This is the q table: {q_table}")
     
@@ -111,7 +120,9 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
 
     # print(f"total_reward_gotten: {total_reward_gotten}")
     
-    return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action)
+    
+    
+    return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action, action_index_agent_first_touched_goal)
 
 def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, rendering: str, cell_value_to_name_map: dict, cell_reward:dict, coords_of_run_action_indexs: tuple[int,int]):
     """Exectutes game_loop_learning_one_run multiple times, based on the number of runs"""
@@ -127,6 +138,9 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
         
         reward_gotten_for_run = calculation[2]
         list_of_rewards_for_actions = calculation[3]
+        
+        action_index_agent_first_touched_goal = calculation[4]
+        
         
         array_of_rewards_for_all_runs.append(list_of_rewards_for_actions)
         run_index = run_index + 1

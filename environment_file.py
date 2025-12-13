@@ -72,5 +72,5 @@ border_cells = add_walls_to_border_calc[1]
 walls = [*border_cells, *walls_input]
 full_environment = add_custom_object(full_environment,walls,wall_value)
 full_environment = add_custom_object(full_environment,start_list,start_value)
-print(full_environment)
+# print(full_environment)
 
