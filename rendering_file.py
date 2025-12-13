@@ -167,6 +167,11 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
     # check which possible_actions lead to a move inside the environment (create agent_stays_inside_environment)
     
     q_value_list =[]
+    precision_two_digit = 2
+    precision_three_digit= 3
+    precision_four_or_more_digits = 2
+    
+    
     # For each possible_action, find the coords of the new position that the agent would end up at if the agent took it.
     for action in possible_actions:
         next_coords = adjacent_coords(agent_coords,action)
@@ -182,10 +187,13 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
         
         q_value_list.append(relevant_q_value)
         
-        # if abs(relevant_q_value)
-        
-        q_value_to_display = f"{relevant_q_value:g}"
-        
+        # displaying the q_value rounded so it doesn't clutter the screen
+        if abs(relevant_q_value) > 1000:
+            q_value_to_display = f"{relevant_q_value:.{precision_four_or_more_digits}e}"
+        elif abs(relevant_q_value) > 100:
+            q_value_to_display = f"{relevant_q_value:.{precision_three_digit}f}"
+        else:
+            q_value_to_display = f"{relevant_q_value:.{precision_two_digit}f}"
         
         # Then draw that q value on those pixel coordinates.
         q_value_text = Font.render(str(q_value_to_display), True, (200,200,200),(0,0,0))

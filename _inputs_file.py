@@ -9,14 +9,14 @@ pg.init()
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0), (1,1),(1,-1),(-1,1),(-1,-1)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
-runs = 100
-action_limit = 30
+runs = 500
+run_indexes_to_render = [497,498,499]
+action_limit = 50
 framerate = 25
 
-environment_row_count = 12
-environment_column_count = 12
+environment_row_count = 13
+environment_column_count = 13
 
-run_indexes_to_render = [97,98,99]
 
 goals = [(9,9)]
 start_list = [(1,1)]
