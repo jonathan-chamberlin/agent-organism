@@ -37,7 +37,7 @@ cell_x_length = 25
 
 epsilon = 0.01
 alpha = 0.1
-gamma = 2 #Discount factor. Reward future rewards x% as much as rewards now
+gamma = 1.2 #Discount factor. Reward future rewards x% as much as rewards now
 
 Font = pg.font.Font(None, int(cell_x_length*0.5))
 
