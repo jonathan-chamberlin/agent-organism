@@ -4,29 +4,35 @@ import pygame as pg
 import math
 pg.init()
 
-
 # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
 possible_actions = [(1,0), (0,1),(-1,0),(0,-1),(0,0), (1,1),(1,-1),(-1,1),(-1,-1)]
 actions_to_execute = [(1,0)] #only when you want to have the agent execute a list of predetermined actions, you would plug this into game_loop_manual
 
 runs = 1000
-action_limit = 150
+action_limit = 200
 framerate = 60
 
-last_three_runs = [runs-3,runs-2,runs-1]
-run_indexes_to_render = last_three_runs
+
+run_indexes_to_render = [*range(runs-3,runs-1)]
 
 
-environment_row_count = 25
-environment_column_count = 25
+
+# setting custom environemnts
+if True: 
+    environment_row_count = 30
+    environment_column_count = 30
+    cell_y_length = 25
+    cell_x_length = 25
+    walls_input = [(2,2),(2,3),(3,2)]
+    goals = [(28,28),(27,28),(26,28)]
+    start_list = [(1,1)]
 
 
-goals = [(4,23),(2,23),(3,22)]
-start_list = [(1,1)]
-walls_input = [(2,2),(2,3),(3,2)]
+# custom wall layouts. Set them equal to walls_input to activate them
 
-cell_y_length = 25
-cell_x_length = 25
+
+
+
 
 # Test environment
 # environment_row_count = 6
@@ -37,7 +43,7 @@ cell_x_length = 25
 
 epsilon = 0.01
 alpha = 0.1
-gamma = 1.2 #Discount factor. Reward future rewards x% as much as rewards now
+gamma = 0.99 #Discount factor. Reward future rewards x% as much as rewards now
 
 Font = pg.font.Font(None, int(cell_x_length*0.5))
 
@@ -66,10 +72,10 @@ color_map = {
     }
 
 cell_reward = {
-    "wall": -20,
-    "goal": 50,
-    "empty": -10,
-    "start": -2
+    "wall": -2,
+    "goal": 5,
+    "empty": -1,
+    "start": -1
 }
 
 cell_value_to_name_map = {value: key for key, value in cell_name_to_value_map.items()}

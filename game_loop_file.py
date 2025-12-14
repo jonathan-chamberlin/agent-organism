@@ -61,7 +61,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     
     # Stop light
     if rendering == rendering_pygame_value:
-        pg.draw.rect(window,(255,0,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,0.4*cell_x_length,0.4*cell_y_length))
+        pg.draw.rect(window,(255,165,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,0.4*cell_x_length,0.4*cell_y_length))
         pg.display.flip()
     return movement_valid_list
 
@@ -145,4 +145,9 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
         array_of_rewards_for_all_runs.append(list_of_rewards_for_actions)
         run_index = run_index + 1
 
+    # stoplight representing end of simulation rendering
+    if run_indexes_to_render != []:
+        pg.draw.rect(window,(255,0,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,0.8*cell_x_length,0.8*cell_y_length))
+        pg.display.flip()
+    
     return (q_table, array_of_rewards_for_all_runs)
