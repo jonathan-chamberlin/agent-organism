@@ -6,7 +6,11 @@ from q_learning_file import *
 from game_loop_file import *
 from test_logic import *
 
-game_loop_learning_multiple_runs(runs, action_limit,possible_actions,  full_environment,environment_column_count,environment_row_count,start,goals,walls,color_map,background_color,q_table,epsilon,alpha,gamma,run_indexes_to_render, cell_value_to_name_map, cell_reward, coords_of_run_action_message)
+long_calc = game_loop_learning_multiple_runs(runs, action_limit,possible_actions,  full_environment,environment_column_count,environment_row_count,start,goals,walls,color_map,background_color,q_table,epsilon,alpha,gamma,run_indexes_to_render, cell_value_to_name_map, cell_reward, coords_of_run_action_message)
+
+# print(f"Q table: {long_calc[0]}")
+# print(f"array_of_rewards_for_all_runs: {long_calc[1]}")
+print(f"list_of_action_index_agent_first_touched_goal: {long_calc[2]}")
 
 running = True
 while running:

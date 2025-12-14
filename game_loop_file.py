@@ -119,8 +119,6 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     
     if (run_index in run_indexes_to_render):
         game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,"pygame", cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs, list_of_rewards_for_each_action,runs)
-
-    # print(f"total_reward_gotten: {total_reward_gotten}")
     
     return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action, action_index_agent_first_touched_goal)
 
@@ -130,6 +128,7 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
     run_index = 0
     list_of_rewards_gotten = []
     array_of_rewards_for_all_runs = []
+    list_of_action_index_agent_first_touched_goal =[]
     
     for i in range(0,runs):
         
@@ -139,10 +138,11 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
         reward_gotten_for_run = calculation[2]
         list_of_rewards_for_actions = calculation[3]
         
-        action_index_agent_first_touched_goal = calculation[4]
-        
+        list_of_action_index_agent_first_touched_goal.append(calculation[4])
+
         
         array_of_rewards_for_all_runs.append(list_of_rewards_for_actions)
+        
         run_index = run_index + 1
 
     # stoplight representing end of simulation rendering
@@ -150,4 +150,4 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
         pg.draw.rect(window,(255,0,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,0.8*cell_x_length,0.8*cell_y_length))
         pg.display.flip()
     
-    return (q_table, array_of_rewards_for_all_runs)
+    return (q_table, array_of_rewards_for_all_runs, list_of_action_index_agent_first_touched_goal)
