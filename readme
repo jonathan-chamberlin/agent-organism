@@ -1,5 +1,0 @@
-Throughout this whole project, the coordinates are in the format (row, column). I call row the x-coordinate, and column the y-coordinate.
-
-The function add_custom_object puts objects at coordinates differently from the way other functions do. For most functions, the coordinate tuples are in the form (row index, column index). But for add_custom_objects, it gets coordinates via (column index, row index).
-
-If you get this error, it's because you're trying to put an object outside the environment. "IndexError: index 5 is out of bounds for axis 0 with size 5"
