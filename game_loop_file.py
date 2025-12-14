@@ -59,9 +59,10 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         agent_coords = next_coords
         action_index = action_index + 1
     
-    # Stop light
+    # loading message (formerly stop light)
     if rendering == rendering_pygame_value:
         pg.draw.rect(window,(255,165,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,0.3*cell_x_length,0.3*cell_y_length))
+        display_message_and_value("Loading next run...","", (-0.8,0))
         pg.display.flip()
     return movement_valid_list
 
@@ -148,6 +149,7 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
     # stop light representing end of simulation rendering
     if run_indexes_to_render != []:
         pg.draw.rect(window,(255,0,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,1*cell_x_length,1*cell_y_length))
+        display_message_and_value("Simulation Done","", (-0.8,0))
         pg.display.flip()
     
     return (q_table, array_of_rewards_for_all_runs, list_of_action_index_agent_first_touched_goal)

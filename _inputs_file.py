@@ -57,8 +57,8 @@ if simulation_option == 1:
     (7,13), (8,13), (9,13),
     (13,3), (13,4),(9,8)] 
 if simulation_option == 2:
-    runs = 2000
-    run_indexes_to_render = [0,1000,1999]
+    runs = 1000
+    run_indexes_to_render = [0,25,200,500,999]
     
     action_limit = 300
     environment_row_count = 30
