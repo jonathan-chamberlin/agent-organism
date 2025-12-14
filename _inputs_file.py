@@ -58,7 +58,7 @@ if simulation_option == 1:
     (13,3), (13,4),(9,8)] 
 if simulation_option == 2:
     runs = 2000
-    run_indexes_to_render = [0,500, 1000,1500, 1999]
+    run_indexes_to_render = [0,1000,1999]
     
     action_limit = 300
     environment_row_count = 30
@@ -139,7 +139,8 @@ epsilon = 0.01
 alpha = 0.1
 gamma = 0.99 #Discount factor. Reward future rewards x% as much as rewards now
 
-Font = pg.font.Font(None, int(cell_x_length*0.5))
+Font = pg.font.Font(None, int(cell_x_length*0.9))
+Font_q_values = pg.font.Font(None, int(cell_x_length*0.5))
 
 pixel_rendering_offset_x_from_top_left = 50
 pixel_rendering_offset_y_from_top_left = 50

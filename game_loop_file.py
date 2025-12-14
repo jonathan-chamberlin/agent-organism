@@ -36,11 +36,11 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         
         q_value_list = display_q_values_around_agent(agent_coords,possible_actions,environment_row_count,environment_column_count,q_table)
         
-        display_message_and_value("Number of Runs: ",runs, (-0.5,environment_column_count))
+        display_message_and_value("Number of Runs: ",runs, coords_to_display_message=(0,environment_column_count))
         
-        display_message_and_value("Total Reward for Run: ",total_reward_for_run, (0, environment_column_count))
+        display_message_and_value("Total Reward for Run: ",total_reward_for_run, coords_to_display_message=(1, environment_column_count))
 
-        display_message_and_value("Reward for this action: ",list_of_rewards_for_each_action[action_index], (0.5,environment_column_count))
+        display_message_and_value("Reward for this action: ",list_of_rewards_for_each_action[action_index], coords_to_display_message=(2,environment_column_count))
         
         
         # print(f"Current coordinates: {agent_coords}. q_value_list: {q_value_list}")

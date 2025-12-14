@@ -196,7 +196,7 @@ def display_q_values_around_agent(agent_coords: tuple[int,int], possible_actions
             q_value_to_display = f"{relevant_q_value:.{precision_two_digit}f}"
         
         # Then draw that q value on those pixel coordinates.
-        q_value_text = Font.render(str(q_value_to_display), True, (200,200,200),(0,0,0))
+        q_value_text = Font_q_values.render(str(q_value_to_display), True, (200,200,200),(0,0,0))
         q_value_rect = q_value_text.get_rect()
         
         # Here i make it so they don't overlap
