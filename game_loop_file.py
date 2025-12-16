@@ -4,7 +4,10 @@ from rendering_file import *
 from coords_and_movement_file import *
 from q_learning_file import *
 import os
+import glob
+import imageio
 from datetime import datetime
+
 
 
 
@@ -23,9 +26,11 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     from rendering_file import display_q_values_around_agent
     from rendering_file import display_run_and_action_index
     
-    frame_dir = f"frames {datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
-    os.makedirs(frame_dir, exist_ok=True)
-    frame_count = 0
+    if recording == True:
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        frame_dir = f"frames {now}"
+        os.makedirs(frame_dir, exist_ok=True)
+        frame_count = 0
     
     rendering_pygame_value = "pygame"
     movement_valid_list = []
@@ -66,8 +71,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         if recording == True:
             filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
             filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
-            pg.image.save(window, filename)
-            pg.time.delay(delay_in_ms_for_framerate)
+            pg.image.save(window, f"agent_maze_video_{now}")
             frame_count += 1
         
         agent_coords = next_coords
@@ -77,7 +81,24 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     if rendering == rendering_pygame_value:
         pg.draw.rect(window,(255,165,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,0.3*cell_x_length,0.3*cell_y_length))
         display_message_and_value("Loading next run...","", (-0.8,0))
+        
+        pg.time.delay(framerate)
         pg.display.flip()
+    
+    if recording == True:
+        import imageio
+        import glob
+        
+        frames_path = os.path.join(frame_dir, "frame_*.png")
+        frames = sorted(glob.glob(frames_path))
+        
+        video_path = f"{frame_dir}/maze_run.mp4"
+        with imageio.get_writer(video_path, fps=30, codec='libx264') as writer:  # Adjust fps
+            for frame_file in frames:
+                image = imageio.imread(frame_file)
+                writer.append_data(image)
+        
+        print(f"Video saved: {video_path}")
     return movement_valid_list
 
 def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, run_indexes_to_render: list[int], cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int], runs: int, recording: bool) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float, list[float], int]:
