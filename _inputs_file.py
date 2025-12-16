@@ -129,7 +129,7 @@ if simulation_option == 2:
 
 if simulation_option == 3: 
     run_indexes_to_render = [0,1]
-    framerate = 5
+    framerate = 20
     runs = 2
     action_limit = 10
     environment_row_count = 6
