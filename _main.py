@@ -17,22 +17,13 @@ list_of_action_index_agent_first_touched_goal= long_calc[2]
 print(f"list_of_action_index_agent_first_touched_goal: {list_of_action_index_agent_first_touched_goal}")
 
 
-cleaned_list_of_action_index_agent_first_touched_goal = []
-for number_of_moves in list_of_action_index_agent_first_touched_goal:
-    if number_of_moves == None:
-        number_of_moves = np.nan
-    cleaned_list_of_action_index_agent_first_touched_goal.append(number_of_moves)
 
 all_run_indices = range(0,runs)
-plt.bar(all_run_indices, cleaned_list_of_action_index_agent_first_touched_goal)
+plt.figure(figsize=(14,5))
+plt.bar(all_run_indices, list_of_action_index_agent_first_touched_goal)
 plt.xlabel("Run index")
 plt.ylabel("How many moves it took agent to reach goal")
 plt.title("Run Index vs. How many moves it took agent to reach goal")
-
-print(cleaned_list_of_action_index_agent_first_touched_goal)
-# cleaned_list_of_action_index_agent_first_touched_goal[~np.isnan(cleaned_list_of_action_index_agent_first_touched_goal)]
-# print(cleaned_list_of_action_index_agent_first_touched_goal)
-
 plt.show()
 
 running = True
