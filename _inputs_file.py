@@ -11,6 +11,7 @@ actions_to_execute = [(1,0)] #only when you want to have the agent execute a lis
 
 
 simulation_option = 2
+recording = True
 
 # setting custom environemnts
 if simulation_option == 0: 
@@ -59,9 +60,9 @@ if simulation_option == 1:
     (7,13), (8,13), (9,13),
     (13,3), (13,4),(9,8)] 
 if simulation_option == 2:
-    framerate = 300
-    runs = 1000
-    run_indexes_to_render = [0,999]
+    framerate = 100
+    runs = 1
+    run_indexes_to_render = [0]
     
     action_limit = 400
     environment_row_count = 25

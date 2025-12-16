@@ -10,7 +10,7 @@ from datetime import datetime
 
 np.set_printoptions(precision=2, suppress=True)
 
-def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict, q_table: tuple[tuple[float]], run_index: int, coords_of_run_action_message: tuple[int,int], list_of_rewards_for_each_action: list[float], runs:int) -> list[bool]:
+def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], walls: list[tuple(int,int)], object_coloring: map, color_for_background, actions_to_do: list[tuple[int,int]], possible_actions: list[tuple[int,int]],rendering: str, cell_value_to_name_map: dict, q_table: tuple[tuple[float]], run_index: int, coords_of_run_action_message: tuple[int,int], list_of_rewards_for_each_action: list[float], runs:int,recording: bool) -> list[bool]:
     """Takes in a bunch of inputs, and for every move it draws the full environment (grid and background), then draws the agent, then calculates its next move and position, then checks if that next position would be valid, then draws it, and renders it. 
     
     It returns a list of booleans representing what MOVES were valid, NOT positions. So if the agent starts on a valid square, and the first move (index 0) is to an invalid square, then the output of this function will be [False, ...].
@@ -62,11 +62,14 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         movement_valid_list.append(action_valid)
         
         pg.display.flip()
-        filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
-        filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
-        pg.image.save(window, filename)
-        pg.time.delay(delay_in_ms_for_framerate)
-        frame_count += 1
+        
+        if recording == True:
+            filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
+            filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
+            pg.image.save(window, filename)
+            pg.time.delay(delay_in_ms_for_framerate)
+            frame_count += 1
+        
         agent_coords = next_coords
         action_index = action_index + 1
     
@@ -77,7 +80,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         pg.display.flip()
     return movement_valid_list
 
-def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, run_indexes_to_render: list[int], cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int], runs: int) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float, list[float], int]:
+def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, run_indexes_to_render: list[int], cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int], runs: int, recording: bool) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float, list[float], int]:
     """Makes it so the agent moves through the enviornment using choose_action and update_q_table. Each action is stored in a list of actions."""
     
     chosen_actions_list = []
@@ -130,11 +133,11 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     # print(f"This is the q table: {q_table}")
     
     if (run_index in run_indexes_to_render):
-        game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,"pygame", cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs, list_of_rewards_for_each_action,runs)
+        game_loop_manual(environment,start,walls,object_coloring, color_for_background, chosen_actions_list, possible_actions,"pygame", cell_value_to_name_map,q_table, run_index,coords_of_run_action_indexs, list_of_rewards_for_each_action,runs, recording)
     
     return (chosen_actions_list, q_table, total_reward_gotten,list_of_rewards_for_each_action, action_index_agent_first_touched_goal)
 
-def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, run_indexes_to_render: list[int], cell_value_to_name_map: dict, cell_reward:dict, coords_of_run_action_indexs: tuple[int,int]):
+def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, run_indexes_to_render: list[int], cell_value_to_name_map: dict, cell_reward:dict, coords_of_run_action_indexs: tuple[int,int],recording: bool):
     """Exectutes game_loop_learning_one_run multiple times, based on the number of runs"""
     
     run_index = 0
@@ -144,7 +147,7 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
     
     for i in range(0,runs):
         
-        calculation = game_loop_learning_one_run(action_limit, possible_actions,environment, environment_row_count, environment_column_count, start,goals,walls,object_coloring,color_for_background,q_table,epsilon,alpha,gamma,run_indexes_to_render,cell_value_to_name_map,cell_reward, run_index, coords_of_run_action_indexs,runs)
+        calculation = game_loop_learning_one_run(action_limit, possible_actions,environment, environment_row_count, environment_column_count, start,goals,walls,object_coloring,color_for_background,q_table,epsilon,alpha,gamma,run_indexes_to_render,cell_value_to_name_map,cell_reward, run_index, coords_of_run_action_indexs,runs,recording)
         
         chosen_actions_list = calculation[0]
         reward_gotten_for_run = calculation[2]
