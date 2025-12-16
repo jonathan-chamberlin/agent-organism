@@ -109,7 +109,7 @@ def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[i
     try:
         action_index_agent_first_touched_goal = list_of_rewards_for_each_action.index(cell_reward["goal"])
     except ValueError:
-        action_index_agent_first_touched_goal = None
+        action_index_agent_first_touched_goal = np.nan
 
     
     # print(f"Run_index: {run_index}. Action index agent first touched goal: {action_index_agent_first_touched_goal}")
