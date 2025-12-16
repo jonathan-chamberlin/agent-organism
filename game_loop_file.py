@@ -3,6 +3,10 @@ from environment_file import *
 from rendering_file import *
 from coords_and_movement_file import *
 from q_learning_file import *
+import os
+from datetime import datetime
+
+
 
 np.set_printoptions(precision=2, suppress=True)
 
@@ -18,6 +22,10 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     """
     from rendering_file import display_q_values_around_agent
     from rendering_file import display_run_and_action_index
+    
+    frame_dir = f"frames {datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
+    os.makedirs(frame_dir, exist_ok=True)
+    frame_count = 0
     
     rendering_pygame_value = "pygame"
     movement_valid_list = []
@@ -54,8 +62,11 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         movement_valid_list.append(action_valid)
         
         pg.display.flip()
+        filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
+        filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
+        pg.image.save(window, filename)
         pg.time.delay(delay_in_ms_for_framerate)
-        
+        frame_count += 1
         agent_coords = next_coords
         action_index = action_index + 1
     
