@@ -112,7 +112,7 @@ This creates a highly constrained navigation challenge with narrow passages and 
 
 **Demo Video:**
 
-[🎥 **Watch Full Demo Video**](documentation/maze_run.mp4)
+🎥 **Watch Full Demo Video**
 
 *Video showing agent's learning progression from Run 1 (random exploration) to Run 1000 (optimized navigation)*
 
