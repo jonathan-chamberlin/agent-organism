@@ -32,14 +32,6 @@ def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_val
     
     return copied_maze_grid_with_custom_objects
 
-    '''By seeing that this evaluates to true, it's clear that add_custom_object is a generalized application of add_walls and add_gaols
-    print(np.array_equal((add_walls(add_goals(maze,goals),walls)),add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value)))
-
-    print(add_walls(add_goals(maze,goals),walls))
-
-    print(add_custom_object(add_custom_object(maze, goals, goal_value),walls,wall_value))
-    '''
-
 def add_walls_on_border(grid: tuple[tuple[int,int]], environment_column_count: int, environment_row_count: int, wall_value: int) -> list[tuple[tuple[int,int]], list[tuple[int,int]]]:
     
     border_cells_top_edge =  [(0, x) for x in range(environment_column_count)]

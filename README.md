@@ -269,20 +269,42 @@ The Q-value capping at 2^1022 prevents floating-point overflow that was discover
 
 **Generalized Object Creation:**
 ```python
-# Instead of separate add_walls(), add_goals(), add_obstacles()
-def add_custom_object(maze, coords_list, cell_value):
+def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_value):
     """
     Generic function for placing any object type in environment.
-    Enables adding new terrain (mud, ice, traps) with zero code changes.
+    Enables adding new terrain (walls, goals, mud, ice, traps) with zero code changes.
+    
+    Takes in a list of cells as tuples in the form (row_index, column_index).
+    Returns a modified maze array where specified cells are set to chosen_value.
+    
+    Key Design Decision: Creates a copy to prevent aliasing issues.
+    The original maze_grid is not modified in memory.
     """
-    for coord in coords_list:
-        maze[coord] = cell_value
-    return maze
+    # Prevent aliasing - ensure original maze_grid isn't modified
+    copied_maze_grid_with_custom_objects = maze_grid.copy()
+    
+    for cell in cells_to_put_object_in:
+        row_index = cell[0]
+        column_index = cell[1]
+        
+        # Set the cell to the chosen value (wall, goal, etc.)
+        copied_maze_grid_with_custom_objects[row_index][column_index] = chosen_value
+    
+    return copied_maze_grid_with_custom_objects
 
-# Powers all specific functions:
-add_walls = lambda maze, walls: add_custom_object(maze, walls, WALL_VALUE)
-add_goals = lambda maze, goals: add_custom_object(maze, goals, GOAL_VALUE)
+# Powers all specific object placement functions:
+# add_walls(), add_goals(), add_obstacles() all use this generic implementation
+# Example usage:
+#   walls_added = add_custom_object(maze, wall_coords, WALL_VALUE)
+#   goals_added = add_custom_object(maze, goal_coords, GOAL_VALUE)
 ```
+
+**Benefits:**
+- **Single source of truth:** One function handles all object placement logic
+- **Easy extensibility:** Add new terrain types (mud, ice) by just passing different values
+- **No code duplication:** Walls, goals, obstacles all use the same implementation
+- **Memory safety:** Copy operation prevents unintended side effects from aliasing
+- **Type flexibility:** `chosen_value` can be any integer representing any cell type
 
 **Vector-Based Movement:**
 ```python
