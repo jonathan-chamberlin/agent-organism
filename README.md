@@ -13,6 +13,12 @@
 
 An autonomous agent that learns to navigate complex mazes through pure reinforcement learning, implementing **Q-learning from scratch without pre-built ML frameworks**. This project demonstrates deep understanding of RL fundamentals by building the entire learning pipeline—from the Bellman equation to real-time visualization—using only NumPy and core Python libraries.
 
+**Demo Video:**
+
+🎥 **Watch Full Demo Video**
+
+*Video showing agent's learning progression from Run 1 (random exploration) to Run 1000 (optimized navigation)*
+
 ### Key Achievement
 After 1000 training runs through a highly constrained maze (53.6% wall density), the agent achieves **100% success rate** with an average navigation time of **133 ± 60 moves**, demonstrating robust convergence and effective exploration-exploitation balance.
 
