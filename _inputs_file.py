@@ -60,11 +60,11 @@ if simulation_option == 1:
     (7,13), (8,13), (9,13),
     (13,3), (13,4),(9,8)] 
 if simulation_option == 2:
-    framerate = 300
-    runs = 500
-    run_indexes_to_render = [0,499]
+    framerate = 1000
+    runs = 1000
+    run_indexes_to_render = [0,250,500,999]
     
-    action_limit = 100
+    action_limit = 400
     environment_row_count = 25
     environment_column_count = 25
     cell_y_length = 30

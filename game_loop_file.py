@@ -42,7 +42,6 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
 
 
     for action in actions_to_do:   
-        pg.event.get()
         
         draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
         display_run_and_action_index(run_index,action_index, coords_of_run_action_message, Font)
@@ -85,6 +84,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         
         pg.time.delay(framerate)
         pg.display.flip()
+        pg.event.pump()
         
         
     return movement_valid_list
