@@ -73,7 +73,7 @@ This creates a highly constrained navigation challenge with narrow passages and 
 
 ### Learning Progression
 
-![Convergence Graph](https://github.com/jonathan-chamberlin/agent-organism/raw/main/run_index_vs_moves.png)
+![Convergence Graph](https://github.com/jonathan-chamberlin/agent-organism/raw/main/run_index_vs_moves_to_reach_goal.png)
 *Run Index vs. Moves to Goal - Note the dramatic improvement around Run 500*
 
 **Training Timeline:**
