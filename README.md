@@ -141,14 +141,8 @@ def update_q_table(old_pos, action, new_pos, possible_actions, environment,
     Key Design Decision: new_pos passed explicitly (not recalculated)
     Rationale: Already computed in physics step before this function call.
                Prevents redundant calculation every frame → significant 
-               performance gain (called 400 times per run × 1000 runs = 400,000 times)
+               performance gain (called 400 times per run × 1000 runs = 400,000 times)"""
     
-    α (alpha) - Learning rate, typically 0.1
-    Controls how much we update based on new information:
-    - α = 1.0: Completely replace old estimate with new information
-    - α = 0.1: Gently blend (10% new, 90% old)
-    - α = 0.0: Don't learn at all
-    """
     # Get reward for this action
     reward_calc = get_reward(old_pos, action, possible_actions, 
                             environment, walls, cell_reward)
