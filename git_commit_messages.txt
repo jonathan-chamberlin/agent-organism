@@ -1,0 +1,259 @@
+fa2049d (HEAD -> main, origin/main) changed ordering of simulation_options
+df3491c have good 32 second demo video, a plot showing run index vs moves it took agent to reach goal, and a list of the values used to create that chart as a text file
+cb03b1a okay finally fixed keyboard interupt error by clearing pygame events after the game loop delay, not before
+55beafc video and frames for multiple runs are now saving in one folder and creating one video
+57e5f6c okay actually solved keyboard interupt error by putting clearing pygame events via pg.event.get() at the beginning of the loop in game_loop_manual
+6fdf5f5 had to move pg.events.get() again so i didn't get keyboard interupt error
+95abbac fixed keyboard intetup but which occured because i wasn't clearing the pygame events que
+f7d0665 realized bug, the videos save but it saves a different video and folder for each run
+c8ee761 video of run successfully saves
+6b06743 left off
+3de7148 left off making it so the frames can be recorded
+13ff96c i learned the simulation runs much slower if saving every frame as a file. I just added an input to game_loop_learning_multiple_runs called recording where if false it doesn't record. If recording is True, then every frame is saved to a folder. having recording on is much slower than having it off. but when i use the frames to construct a video, i can just use the simulation_option framerate to make it look normal speed
+ce29187 i have it where game loop manual now saves every pygame frame so i can eventually make it into a video
+6da7769 made plot wider so you can see detail more easily
+072d484 made it so the formatting of list_of first action index agent hit goal,  when agent doesn't hit goal ,value is nan instead of None
+a9b04a3 now displays a plot of action index vs number of moves it took agent to reach goal
+1a56516 new example environment
+b2b6240 initialized new environment
+b7590ba deleted old info from readme, starting that file from scratch. Also deleted readme file because the simulation ran fast enough without needing any memory, even though i planned on implementing it
+5ee6ffb added document with all git commits up to this point
+9d0471f increased density of maze. changed some inputs so it shows how the agent learns over time
+46a4a46 Added messages to stop lights. Now if another run is rendering, there is a message "Loading next run" that appears. Once the simulation is done, there is a different message "simulation done"
+d98ab23 made the font bigger, and made a different font for q values which stays the same size
+66926ed yay it works! The agent can find the goal in a large 25 by 25, dense maze
+6ea3201 created a big 25*25 maze where the agent could get to the goal
+f8a03af agent successfully learned to go through a maze super quick! I have it do 400 runs, and i render these so i can see it's progress run_indexes_to_render = [0,50,100,150,200,250,300,350, 399]
+1395003 Made it so game_loop_multiple runs outputs a list of the action index where the agent first hits a goal. it also prints to the terminal, so you can see how the agent often doesn't hit the goal, and after a while it knows that path and gets to the goal in the same number of moves +-2
+d9a1f1d to _inputs_file, I made present environments where you just have to change which environment branch has if true:, and for the ones you don't want set them to if false:
+4245b9c added bigger stop light when whole simulation is done
+8860a89 inputs
+949d1cb Interesting, it looks like that bug would only happen if gamma = {1.2,2}, since I saw no issue when gamma = {0.9, 1,1.05}. With that I did 1000 runs, so perhaps there is a threshold where the q values hit the limit of 4.5*10^307, then all the q values become the same, and the agent moves around back and forth. So the solution is to make it so none of the q values could come close to that limit by changing the update_q_table function somehow to produce an asymtote.
+40532bd found bug. When i did 1000 runs, sometimes the agent would get to a cell where every options had the same q value of about 4.5e+407and the agent just gets stuck going in a circle. How can i make it so these q values don’t blow up so fast? Maybe use some kind of logarithm? Or some sort of function to magnify the differences between values? Or use math to create an asymtote below 4.5*10^407.
+0f48ceb added varialbe last_three_runs so i can easily just change the runs and the simulation will render the last 3 runs, since that's what i've been using a lot
+154b63f For display_q_values_around_agent, if the possible_move is at all to the left, have the pixel coords mark the right of the rect. If the possible move is to the right, have the pixel coords make the left of the rect. This formats the display_q_values so they dont overlap and you can read them
+7b08023 further improved display_q_values_around_agent by making numbers greater than 1000 be displayed in exponential notation with only 1 decimal, limiting the screen space they takeup
+4efe50c found bug where the agent cna't move if a q value exceeds something like 10^308. So I'll change that. I made it so the q value can never go more than 2^1022
+ab71b19 improved rendering of display_q_values_around_agent so they take up much less space on the screen and don' t show so much precision
+7ab300e improving display_q_values_around_agent because the numbers are getting so big they cover each other
+3ab880a interesting behavior. since now there is more punishment from the empty cells (-10) than the strat (-2) the agent would stay on the start cell, probably because the goal is so far away
+7833fdd i increased the punishment of empty cells (from -1 to -10, and for walls (-10 to -20) and it made the agent go in a much straighter path torwards the goal
+b42a860 expirimenting with large numbers of runs and adding some walls
+8f3155e Great feature. made it so i can do al the calculations within game_loop_learning_multiple_runs but only render a list of them
+0c48e55 commenting out print messages from testing
+ecb1ffb Now in game_loop_learning_one_run we output the action index where the agent first touches the goal. if did not touch goal, returns None
+083ff44 expanded window and changed background to black
+180e6b4 inputs
+a7b9343 Added a display to show the total number of runs that a simulation will calcualte and or display.
+b3bbf4a formatting
+1e3aa1a Getting ready for big refactoring of letting the agent draw on memories from previous runs by storing the q table in a previous file. created memory file. created scaffold for reset_memory, which will eventually be able to delete the stored q_table files
+727a8be formatting
+e048b82 modified gamma to prioritize future rewards
+812c8b9 gave agent possible moves of diagonals. Also made environemnt bigger
+329e139 formatting
+a47e215 waiting
+fca257f fixed bug where the reward for a current action wasn't displaying properly. it's because i misunderstood how the .index worked
+2d56bbc made it so game_loop_manual displays the reward for the action it takes
+d5e3543 removed a summation from a for loop and put it outside the loop to save time
+a372c81 modified game_loop_manual to now display the reward for that run
+15fbf00 made it so game_loop_learning_multiple runs now returns an array of all rewards for each action across multiple runs
+4b21089 display_message_and_value correctly displays numbers and values, and i put it in game_loop_manual
+ddeb40c changed some inputs
+ea8998d created scaffold of display_message_and_value. Also removed unaccessed input from display_run_and_action_index
+80f914c made it so game loop learning one run now outputs the entire list of rewards gotten for each action
+ac773b5 made it so game_loop_learning_multiple_runs now has access to all rewards from each run and prints a list of them
+3d8ca42 made it so the game_loop_learning_one_run successfully returns the reward_gotten
+083ebe0 undid my change of game_loop_manual
+58ccb23 made it so output of game_loop_manual is a tuple so i can now output other stuff
+cd1c91f refactored the display run action index function so it accepts coordinates to display the message, not pixel coordinates
+9471c26 display_run_and_action_index is now displayed the the correct spot
+62c5426 display run and action number word, i just need to display it in a different position
+1095f7d Made it so game_loop_learning_one_run outputs chosen_actions_list and q_table
+7e3ff28 changed some inputs
+b1f4cfa formatting
+c887e2d make signature of display_run_number
+28b4d5a confirmed that game_loop_learning_multiple_runs does update the same q table between runs
+7494879 game_loop_learning_multiple_runs makes it so multiple runs happen back to bakc. Now i need to check if the q table updates between runs
+d87dae1 removed and unused arguement from game_loop_learning_one_run
+ec0e662 display_q_values correctly displays the q values for the next move
+9707539 inputs changing
+ec70884 Trying to fix bug where the q values are not displaying in the right order. I refactored game_loop_learning_one_run so the w values were displayed in the correct order. But now i think the q values are not being updated properly
+d04e3f5 Made it so q_values are displayed before every move!
+bdba77e Fixed bug where in the q learning functions the row count and column count values were mistakenly swapped
+e8f3ef4 text follows the agent using display_q_values_around_agent
+c48bcbb fixed bug of circular imports, so i put the relavent imports inside the functions that needed to call other functions from different files instead of having the imports at the top of the file
+79deb75 Created new function agent_stays_inside_environment. Also had to fix multiple tests of other functions because I refactored the code to not use actions like "up" but instead as vectors. I fixed the tests of update_q_table, choose_action. Also refactored multiple functions so they would explicitly take cell_reward as an input instead of using a global variable. Also redid a test of add_custom_object
+145a5c9 formatting
+bfe32bf deleted duplicate storage of wall_color
+22a3785 deleted a duplicated storage of empty_cell_color
+69c9063 removed old unnecesary comments
+c513ca1 verified that i can make the maze huge by making the cell_lengths small and row&column counts high
+2fcafc6 testing changing cell_y_length and cell_x_length
+53ab2a7 Changed display of arrays to only show 2 decimal places when printed. doesn't change actual values
+5fc6acc renamed main to _main and inputs_file to _inputs_file so they appeared higher in my directory
+18f7d85 testing
+393e0bc Big refactoring done. All the functions felt so disorganized in their files, so i mapped out a way to group them by functionality. I created new files, moved funtions and inputs into a file based on similar functionality, and deleted the old files
+6b8581b increased window size
+8e1a88e removed old left off message
+fe5c53b renamed game_loop_learning to game_loop_learning_one_run
+e599e2e Added stop light to game_loop_manual which is rendered in the top left corner of the window after all moves were executed.
+474b475 Confirmed that the agent's actions  correctly aligned with (row_index, column_index) and not flipped
+df47986 Big refactoring done. In the draw_one_object function the row index and column index were switched so the walls actual position and where they were draw was flipped over the diagonal
+8e91015 left off, there's still a bug
+de453b5 Now i made it so i can make the environment any dimensions i want (as long as the start and goals and walls are inside it), and using add_walls_on_border, the full_environment now has a border on all it's edges. To change the environment's side lengths, modify environment_y_length environment_x_length
+1183186 formatting
+21f64a3 function add_walls_on_border successfully adds walls to the 4 edges of the environment, but it only works for environment_y_length == environment_x_length, and based on the error messages it makes me think that the x and y coord system is inconsistent in the choose object function
+2880775 made it so each function explicitly requires the input of cell_value_to_name_map
+a9b852b Now i'm actually adjusting the model. I see that the agent doesn't get any punishment for hitting the environment border. Since empty cells have a negative reward, this could cause the agent to just keep bumping into the walls. I'll fix this now.
+b4961dc Seems like the agent is moving and updating the q table correctly
+55deab5 Fixed all the bugs, it was because I changed the input of multiple functions to include possible_actions, so i had to find when those functions were called in other functions and update their input. Also the agent is moving around the box seemingly randomly, which is exactly what i wanted
+9b2cbb2 deleted action_map
+2338aea Refactoring done! I changed the whole codebase so instead of functions taking directions as a string like "down" "right", etc, I made it so they take tuples. So now "right" corresponds to (0,1). I also changed the functions to require you to explicitly pass possible_actions into it. The value of this is that i can now freely add or remove movement options for my agent
+1adbb37 Idk if these changed worked. I'll have to make more changes to other functions before i can test everything at once. move_agent, adjacent_coords
+f2bdc05 now coordinates_after_moving has been updated to take in tuples instead of strings for actions, and all of it's tests pass. But it broke the tests of other functions which use coordinates_after_moving, so i'll work on those now
+0fb1e17 Before I refactor code from using strings as actions to tuple[int,int] as actions
+f7f3a37 earlier i changed update_q_table so it doesn't return the updated q table. So I Just changed test_update_q_table to refect this
+f7ec8a8 simplified draw_agent by decoupling it from the action named "remain"
+ddfde26 since i changed the order of the actions in action_map, i had to change the test_choose_action to match
+f8138e6 changed order of action_map and clarified that # The order of the actions here determine which column of the q table mean what. For example, the action below at index 1 represents the q_table column with index 1.
+06932cb renamed the global moves to actions_to_execute because moves is less general than actions, and I might want to add more actions in the future
+518ba7e formatting
+853a0df fixed bug
+c85dd07 game_loop_learning prints q table after every action. This is for my testing
+e84685c wrote game_loop_learning function, next step is to test it
+57e3094 changed inputs of game_loop_learning
+9ffd940 setup scaffold fro game_loop_learning
+e22d402 i mistakenly changed the inputs of update_q_table so i just changed them back to the correct inputs
+30f0fa8 format
+4b3da24 formatting
+8f3525f rendering input to gampe_loop_manual works, now i just have to make it so the window doesn't open when rendering == print
+956e43d modified game_loop_manual to have rendering input so i can choose how to render it
+f1c8ef8 moving that choose_action test to test_logic
+9c9004e Added functionality so the choose_action function, if the q table row has all zeros, now the agent randomly selects a direction instead of always picking the first action on the actions list
+686b0c8 left off message. clarifying how to implement learning into the game loop. I decided that I want to do these: "Modify game_loop_manual, add an input 'rendering': str as an input. It could speed up my simulation. Value of 'pygame' could make it so every frame is rendered on the pygame window. Value of 'print' means that the full environment is printed in the terminal every frame. And 'none' means that the function does all the calculations without printing or rendering anything.
+85b750b left off message
+2c5dd92 left off message
+d9fdbb1 formattting
+7a371fb Added more outputs for the function update_q_table, and wrote test for update_q_table and it passed
+a8b497c wrote entirety of update_q_table function, haven't testing it yet though
+10806fb replaced the work "direction" with "action" everywhere
+4aefc6f left off message
+fdfa19e Successfully got the randomness functionality of epsilon (exploration rate) in choose_action working by writing for loops so I could see what the function returned, and using claude to analyze the distribution of outputs. I put these tests as commented blocks under test_choose_action()
+d9438e2 While testing the randomness exploration rate of choose_action, I learned the function wasn't returning the actions 'right' or 'remain'. Upon inspection, it's because I was using .pop improprly. I fixed it. "# testing the exploration rate of choose_action. This resulted in the second item being 'left': 56 times, 'up': 24 times, 'down': 18 times, 'right': 0 times. Why isn't 'right' or 'remain' appearing? # testing the exploration rate of choose_action. This resulted in Second position counts: 'down': 48 times 'up': 48 times 'left': 0 times 'right': 0 times 'remain': 0 times Percentages: 'down': 50 'up': 50% Everything else: 0% "
+4502668 left off message
+fe4eb31 noticed error with coordinates_to_q_table_index where I was using the q_table_width instead of the environment_x_lenght so it was messing up my caluculations. I fixed it and successfullly got the choose_action function to work
+4a1cc88 second successful choose_action test written
+7705750 added test to coordinates_to_q_table_index
+b6b1257 corrected coordinates_to_q_table_index and it's tests. the x and y coord were flipped so i corrected it
+fd1e0f1 left off message
+b35313c changes tests of coordinates_to_q_table_index to include q_table_width. Also wrote a single test that passed for test_choose_action
+0a401b1 updated coordinates_to_q_table_index to include the environemnt's x and y length, and therefore changed choose_action to input not only the q table but those parameters too. left off now I have to make tests for choose_action
+fccbe8b changed output of choose_action to tuple where first element is optimal action and second action is the chosen action
+a50a856 choose_action function runs but I haven't written any tests yet
+5c21568 exploration rate with randomness in the choose_action works
+57a61ef created most of choose_action, but not the exploration rate part with epsilon yet
+f90a0d0 created actions list. realized I actually do need coordinates to q table index function
+56428eb removed duplicate info by changing directions_agent_can_move from 4 to len(direction_map)
+af9936b formatting
+a194ec1 left off message
+bd61232 created get_reward, I used example_environment in test_logic.py to test the function, all tests passed.
+62f1a34 left off message
+0e6736f created an example environment for testing, so I can change my main environment without changing the results of my tests
+f94b59a I had been incorrectly calling the first element of my coordinates tuples x_coord and the second coord y_coord, even though the first element was the row (horizontal position) and the second element was the element within that row (horizontal position). I made this change successfully for the following : - [x]  adjacent_coords - [x]  object_at_coords - [x]  coords_to_center_of_cell_in_pixels - [x]  coordinates_after_moving - [x]  add_custom_object - [x]  add_walls - [x]  all_goals - [x]  coordinates_to_q_table_index - [x]  q_table - [x]  variables about cell x and y length - [x]  variables about environment y and x length - [x]  draw_objects - [x]  draw_one_object - [x]  draw_background
+1d5dd30 successfully created the adjacent_coords function with tests that all passed
+665e60e changed a lot. I created the object_at_coordinates funtion so I can eventually calculate the q values of the cells adjcant to the agent. I also added tests for that function. I also changed a lot of my other tests which were built incorrectly. For example, coordinates after moving tests were only supposed to return the new coordinates if both the start and new coordinates were valid. I reworked all that too.
+cb38ef0 created working function object_at_coords
+cd20d2e I spent 2 hours creating detailed plan about how to implement logic to use q table to choose which direction to go, and how to write data to it so the agent learns. # q table starts blank # I use a get_reward function that takes in the starting coordinates and a direction, and it uses coordinates_after_moving to determine if the move is valid, and it finds the type of cell the agent is trying to move to, and it looks at the cell_reward dictionary, and therefore it outputs the reward the agent.
+8ac28f3 added variables for each item in cell_reward
+1db65f4 created new file reward.py
+64846b1 created dictionary for cell rewards which inform the Q table, different from cell values which are just used to identify cells
+de9f54c adjusted cell values
+5d9705b fixed bug so now the cell values can be anything and the empty cells, and everything else, still renders properly
+a64e65e fixed bug where colors didn't show properly
+db199ad instead of having cell names and values in two different dictionaries but with vice versa'ed keys and values, I make it so one is genrated from the other,
+65d48d5 deciding to use continous learning with Q table instead of failure ends episode
+903860d left off
+11075d6 discovered and documented bugs with cell lengths and pixel rendering offsets when x value isn't equal to y value. Not an issue for now, but I documented it as comments
+59d56d3 made there only one goal
+73b7abb formatting
+81faeb5 formatting
+e4bdf3f formatting
+1f210bc left off message
+a1fcc9e adding a more detailed explanation of the output of game_loop to it's doc string
+eecbafa another wat to improve game loop function
+9a6a329 listing out a way to improve my game_loop function
+7548efb added starting coordinates as an input to the game_loop instead of using the global variable
+e09e891 turned the game loop into a function game_loop
+3e77dee left off message
+1eba9f7 formatting
+be78467 created framerate variable which successfully changes framerate of simulation
+c25f731 I officially created the game loop in my for loop. By putting a list of direction in the list 'moves' the agent follows those movements
+2b68818 created third frame and modified direction map so right and left take the agent the correct direction
+a3dfc13 formatting
+55ca05f successfully used coordinates_after_moving and draw_agent to move the agent using my functions!
+47f7e1f optimized game loop by realizing that my draw_grid_and_background function already draws the background first, clearing the previous frame
+37c8e9f successfully cretaed first and second frames with only 4 lines of code each!
+a3d6989 Combined draw_grid and draw_background into one function draw_grid_and_background so I only need to call that one function each game loop instead of two to render who whole static environment
+e184ddd created function draw_background
+409550e now the only place the agent is drawn is in main
+6424d07 game loop is now only in main.py file
+2f16a2e make it so start as a list because start_list, and start is now just a single tuple of coordinates. Makes functions much clearer to use
+63663d6 working using draw_agent to put agent at the start cell
+ee111ec draw_agent(coords: tuple[int,int])
+0cc4c42 created draw_agent function, haven't testing it yet
+9c2130d left off message
+13de37b formatting
+f18b974 fixing values for direction map
+f63fd94 changed move_agent function to get global variables from different files, and to use the coords_to_center_of_cell_in_pixels function
+2e42ff0 renamed visual.py to setup_environment.py
+4ae74b2 making move_agent run faster
+c83d704 modifying functions to include global variables
+9160b22 changing the way agent is drawn to use the coords to pixels at center function
+07a1f1d formatting
+7dd29f9 formatting
+4f77f0b created function coords_to_center_of_cell_in_pixels
+7de186c make scaffolding of move_agent function
+8a2ec53 left off
+84eddcb # LEFT OFF. Now use the function to move the agent, and have his coords update, and have the visual rerender.
+f26ee7b agent renders on start square even including pixel offsets
+c220eb3 agent centered on the start square (doesn't work with pixel offset)
+ce0f510 the agent is now a proportional size to a cell
+5ea8529 made a main.py file which imports the logic, then the visuals
+4d01507 created start cell, colored it, and it's drawn and rendered
+f685fc2 changing the layout of the grid
+d9e7afa changed add_walls and add_goals to reference cell_name_to_value_map
+a76fbdf changed name of cell_value map to cell_value_to_name_map and add a reverse lookup called cell_name_to_value_map
+1693da6 draw_grid fully draw the inputted grid and colors it
+248e10b now draw_one_object accepts a single tuple for the color instead of the map
+61ef076 draw_object works. But I have to change it so it accepts cell_color as a tuple instead of cell_colors as a map
+f655c20 draw_one_object function works
+87b2926 deciding to crete anotehr function draw_one_object, since draw_Objects isn't conducive to taking in an array with different cell values and rendering it all at once
+64314b5 reversing order of cell_type_map
+57af269 draw_objects function working and rendering cells in the correct size and spacing and coordinates
+7b88337 added maps for cell_types and cell_color
+bcd1f8d created a loop which takes a list of coordinates and renders them as cells with the proper dimensions and offsets
+299a60b window appears
+f431676 sperated logic and visuals into 2 different files
+1cb64fb adding documentation about hwo add_custom_object is a more general version of add_walls and add_goals
+76b12a1 added add_custom_object() function, because I saw that add_walls() and add_goals() were very similar, just with a different value placed onto the cells.
+5060c76 changed goal_value for add_goals() and changed tests to make it so the function passes
+2dc3226 formattting
+336dc32 working function add_goals() with tests
+99c8863 removing global variable from add_walls
+5165f35 leaving next step
+013900b coordinates_after_moving() now accepts a list of walls, and checks if the resulting location hits a wall or leaves the environment. Now, the function returns 2 outputs, the first is the final coordinates, and the second is a boolean about if that movement or starting position were valid. This is better than what I had before, which was just outputting (-2,-2) if the starting position was invalid and (-5,-5) if the ending position was invalid.
+a6d6462 coordinates_after_moving() now accepts a list of walls, and checks if the resulting location hits a wall or leaves the environment. Now, the function returns 2 outputs, the first is the final coordinates, and the second is a boolean about if that movement or starting position were valid. This is better than what I had before, which was just outputting (-2,-2) if the starting position was invalid and (-5,-5) if the ending position was invalid.
+90639ff working function add_walls
+da055aa wrote tests for add_walls before writing the function
+9944787 initialized the maze
+0ec5965 modified tests to ensure boundary conditons are accurately checked
+8bab75b modified boundary checks on functions, since the coordinates are 0 indexed, not 1 indexed
+88626ec I fixed the function so it returns tuples instead of lists
+7a74f19 working coordinates_after_moving, which takes coordinates and a directing and returns the new coordinates. It checks to make sure that the initial and final coordaintes are in the environment.
+fda23b4 working function coordinates_after_moving which given coordinates and a direction, returns the new coordinates, as long as the initial and new coordinates are inside the environment
+40c1d0f same
+ce13c1a changed coordinates_to_q_table_index to accept a tuple of x and y coordinates instead of 2 seperate int inputs
+bb8b38c working function coordinates_to_q_table
+633eaff q table as zeros and direction map
+c5a0c25 did
+f26aa42 start
