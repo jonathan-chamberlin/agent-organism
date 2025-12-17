@@ -14,51 +14,6 @@ simulation_option = 2
 recording = True
 
 # setting custom environemnts
-if simulation_option == 0: 
-    framerate = 100
-    runs = 5000
-    action_limit = 225
-    environment_row_count = 30
-    environment_column_count = 30
-    cell_y_length = 25
-    cell_x_length = 25
-    walls_input = [(2,2),(2,3),(3,2)]
-    goals = [(28,28),(27,28),(26,28)]
-    start_list = [(1,1)]
-if simulation_option == 1:
-    framerate = 100
-
-    runs = 400
-    run_indexes_to_render = [0,50,100,150,200,250,300,350, 399]
-    
-    action_limit = 250
-    environment_row_count = 15
-    environment_column_count = 15
-    cell_y_length = 60
-    cell_x_length = 60
-    
-    goals = [(10,8)]
-    start_list = [(1,1)]
-    
-    walls_input = [
-    # Vertical wall segments
-    (2,3), (3,3), (4,3), (5,3),
-    (2,6), (3,6), (4,6), (5,6), (6,6), (7,6),
-    (2,9), (3,9), (4,9), (5,9), (6,9),
-    (8,3), (9,3), (10,3), (11,3), (12,3),
-    (8,9), (9,9), (10,9), (11,9),(1,6),
-    
-    # Horizontal wall segments  
-    (6,1), (6,2), (6,3), (6,4),
-    (3,7), (3,8), (3,9), (3,10), (3,11),
-    (9,4), (9,5), (9,6), (9,7),
-    (12,6), (12,7), (12,8), (12,9), (12,10),
-    
-    # Internal obstacles
-    (5,11), (6,11), (7,11), (8,11),
-    (10,1), (10,2), (11,1), (11,2),
-    (7,13), (8,13), (9,13),
-    (13,3), (13,4),(9,8)] 
 if simulation_option == 2:
     framerate = 50
     runs = 1000
@@ -127,7 +82,51 @@ if simulation_option == 2:
     (16,20), (17,20), (18,20),
     (22,2), (22,3), (23,2),
     (20,23), (21,23), (22,23)]
+if simulation_option == 0: 
+    framerate = 100
+    runs = 5000
+    action_limit = 225
+    environment_row_count = 30
+    environment_column_count = 30
+    cell_y_length = 25
+    cell_x_length = 25
+    walls_input = [(2,2),(2,3),(3,2)]
+    goals = [(28,28),(27,28),(26,28)]
+    start_list = [(1,1)]
+if simulation_option == 1:
+    framerate = 100
 
+    runs = 400
+    run_indexes_to_render = [0,50,100,150,200,250,300,350, 399]
+    
+    action_limit = 250
+    environment_row_count = 15
+    environment_column_count = 15
+    cell_y_length = 60
+    cell_x_length = 60
+    
+    goals = [(10,8)]
+    start_list = [(1,1)]
+    
+    walls_input = [
+    # Vertical wall segments
+    (2,3), (3,3), (4,3), (5,3),
+    (2,6), (3,6), (4,6), (5,6), (6,6), (7,6),
+    (2,9), (3,9), (4,9), (5,9), (6,9),
+    (8,3), (9,3), (10,3), (11,3), (12,3),
+    (8,9), (9,9), (10,9), (11,9),(1,6),
+    
+    # Horizontal wall segments  
+    (6,1), (6,2), (6,3), (6,4),
+    (3,7), (3,8), (3,9), (3,10), (3,11),
+    (9,4), (9,5), (9,6), (9,7),
+    (12,6), (12,7), (12,8), (12,9), (12,10),
+    
+    # Internal obstacles
+    (5,11), (6,11), (7,11), (8,11),
+    (10,1), (10,2), (11,1), (11,2),
+    (7,13), (8,13), (9,13),
+    (13,3), (13,4),(9,8)] 
 if simulation_option == 3: 
     run_indexes_to_render = [0,1]
     framerate = 20
