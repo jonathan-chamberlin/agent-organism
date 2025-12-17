@@ -16,7 +16,7 @@ An autonomous agent that learns to navigate complex mazes through pure reinforce
 **Demo Video:**
 
 🎥 **Watch Full Demo Video**
-
+https://github.com/user-attachments/assets/8d979445-c313-4c38-8870-839c39a6295c
 *Video showing agent's learning progression from Run 1 (random exploration) to Run 1000 (optimized navigation)*
 
 ### Key Achievement
