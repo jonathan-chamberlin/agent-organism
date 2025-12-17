@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.14+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[🎥 Watch Demo Video](https://github.com/jonathan-chamberlin/agent-organism) | [📊 View Performance Graphs](#results--performance) | [💻 GitHub Repository](https://github.com/jonathan-chamberlin/agent-organism)
+[🎥 Watch Demo Video](documentation/maze_run.mp4) | [📊 View Performance Graphs](#results--performance) | [💻 GitHub Repository](https://github.com/jonathan-chamberlin/agent-organism)
 
 ---
 
@@ -68,12 +68,12 @@ Unlike episodic RL where failures terminate episodes, continuous learning allows
 
 This creates a highly constrained navigation challenge with narrow passages and complex routing requirements.
 
-![Maze Environment](https://github.com/jonathan-chamberlin/agent-organism/raw/main/maze_environment.png)
+![Maze Environment](documentation/maze_environment.png)
 *Dense 25×25 maze with 53.6% wall coverage requiring sophisticated pathfinding*
 
 ### Learning Progression
 
-![Convergence Graph](https://github.com/jonathan-chamberlin/agent-organism/raw/main/run_index_vs_moves_to_reach_goal.png)
+![Convergence Graph](documentation/run_index_vs_moves_to_reach_goal.png)
 *Run Index vs. Moves to Goal - Note the dramatic improvement around Run 500*
 
 **Training Timeline:**
@@ -110,7 +110,11 @@ This creates a highly constrained navigation challenge with narrow passages and 
 
 ### Visual Learning Demonstration
 
-[🎥 **Watch Full Demo Video**](https://github.com/jonathan-chamberlin/agent-organism/blob/main/maze_run.mp4)
+**Demo Video:**
+
+[🎥 **Watch Full Demo Video**](documentation/maze_run.mp4)
+
+*Video showing agent's learning progression from Run 1 (random exploration) to Run 1000 (optimized navigation)*
 
 **Run Comparison:**
 - **Run 1:** Random wandering, frequent wall collisions, no goal discovery
@@ -136,7 +140,7 @@ Where:
 - **Q(s, a)** = Value of taking action *a* in state *s*
 - **α (alpha)** = Learning rate (0.1) - controls information update speed
 - **γ (gamma)** = Discount factor (0.99) - prioritizes future rewards
-- **R** = Immediate reward (−10 for walls, +100 for goal, −1 for empty cells)
+- **R** = Immediate reward (−2 for walls, +5 for goal, −1 for empty cells)
 - **s'** = Next state after taking action *a*
 
 **Implementation Details:**
@@ -770,8 +774,8 @@ def game_loop_manual(..., recording):
 
 **1. Exploration Phase (Runs 0-449)**
 - Agent moves randomly through maze
-- Hits walls frequently (−10 reward)
-- Discovers goal occasionally (+100 reward)
+- Hits walls frequently (−2 reward)
+- Discovers goal occasionally (+5 reward)
 - Builds initial Q-table mapping: "In this spot, which direction looks promising?"
 
 **Analogy:** Like learning a new city—initially you try random streets, noting which lead to dead ends and which get you closer to home.
@@ -1274,9 +1278,6 @@ This would enable:
 **Inspiration:**
 Nick Sheft (M.S. Data Science, Northeastern University, Specialization: Multimodal Generative AI):
 > "That Q-learning you're using, that's hard stuff. This is real reinforcement learning."
-
-**Recommended for Next Steps:**
-- [MuJoCo Physics Engine](https://mujoco.org/) for advanced physics-based RL
 
 ### Development Metrics
 
