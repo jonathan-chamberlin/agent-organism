@@ -595,6 +595,24 @@ def test_coordinates_to_q_table_index() -> None:
     assert coordinates_to_q_table_index([0,11], test_environment_column_count, 
                                        10, test_q_table_width) == -100
 ```
+**File Organization:**
+```
+agent-organism/
+├── _inputs_file.py           # Configuration hub
+├── environment_file.py        # World building
+├── coords_and_movement_file.py # Physics engine
+├── q_learning_file.py         # Core RL algorithm
+├── rendering_file.py          # Visualization
+├── game_loop_file.py          # Orchestration
+├── test_logic.py              # Test suite
+└── _main.py                   # Entry point
+```
+
+**Benefits:**
+- Each file has single, clear responsibility
+- Easy to locate and modify specific functionality
+- Can reuse modules in other projects
+- Simplifies collaborative development
 
 **Advanced Testing: Exploration Randomness Analysis**
 
@@ -637,27 +655,6 @@ pytest test_logic.py --cov=. --cov-report=html
 - ✅ **Algorithm correctness:** Bellman equation implementation verified
 - ✅ **Statistical validation:** Exploration strategy randomness confirmed
 - ✅ **Regression prevention:** Tests catch breaking changes during refactoring
-
-#### 3. Modular Architecture for Reusability
-
-**File Organization:**
-```
-agent-organism/
-├── _inputs_file.py           # Configuration hub
-├── environment_file.py        # World building
-├── coords_and_movement_file.py # Physics engine
-├── q_learning_file.py         # Core RL algorithm
-├── rendering_file.py          # Visualization
-├── game_loop_file.py          # Orchestration
-├── test_logic.py              # Test suite
-└── _main.py                   # Entry point
-```
-
-**Benefits:**
-- Each file has single, clear responsibility
-- Easy to locate and modify specific functionality
-- Can reuse modules in other projects
-- Simplifies collaborative development
 
 ### Code Quality Metrics
 
