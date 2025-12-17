@@ -113,6 +113,57 @@ The visualization shows Q-values around the agent in real-time, demonstrating ho
 
 ---
 
+## How It Works: Q-Learning Explained
+
+*For non-technical readers and portfolio reviewers*
+
+### The Learning Process
+
+**1. Exploration Phase (Runs 0-449)**
+- Agent moves randomly through maze
+- Hits walls frequently (−2 reward)
+- Discovers goal occasionally (+5 reward)
+- Builds initial Q-table mapping: "In this spot, which direction looks promising?"
+
+**Analogy:** Like learning a new city—initially you try random streets, noting which lead to dead ends and which get you closer to home.
+
+**2. Value Assignment (Runs 450-843)**
+- Agent notices patterns: "When I was at position (5,3) and went right, I eventually reached the goal"
+- Q-values increase for action sequences that lead to success
+- Walls get strong negative values (learned to avoid)
+- Paths toward goal get positive values (learned to follow)
+
+**Analogy:** After a few trips, you start remembering: "That street always has traffic" or "This route is usually faster."
+
+**3. Policy Optimization (Runs 843-1000)**
+- Agent prefers high-scoring moves (exploitation) 
+- Occasionally tries new paths (exploration)
+- Balances known good routes with discovering better ones
+- Convergence: Consistent navigation with minimal exploration
+
+**Analogy:** Now you automatically take your favorite route but might occasionally try a side street if conditions change.
+
+### Real-World Applications
+
+This same algorithm (with variations) powers:
+- **Robot Navigation:** Warehouse robots, autonomous vehicles
+- **Game AI:** NPCs learning player behavior
+- **Resource Management:** Data center optimization, network routing
+- **Finance:** Trading algorithms, portfolio optimization
+- **Healthcare:** Treatment planning, drug discovery
+
+### Why This Implementation Matters
+
+**Understanding from First Principles:**
+Most RL implementations use libraries like TensorFlow, PyTorch, or Stable-Baselines that abstract away core concepts. This project implements everything from scratch, demonstrating:
+
+1. **Deep Conceptual Understanding:** Know exactly how Q-learning works mathematically
+2. **Debugging Capability:** Can identify issues at algorithm level, not just API level
+3. **Customization Ability:** Can modify algorithm for specific use cases
+4. **Interview Readiness:** Can explain RL concepts without relying on framework magic
+
+---
+
 ## Technical Architecture
 
 ### Core Algorithm: Q-Learning Implementation
@@ -975,57 +1026,6 @@ def game_loop_manual(..., recording):
 - Profile before optimizing (don't optimize blindly)
 
 **Git Commits:** `13ff96c`, `ce29187`
-
----
-
-## How It Works: Q-Learning Explained
-
-*For non-technical readers and portfolio reviewers*
-
-### The Learning Process
-
-**1. Exploration Phase (Runs 0-449)**
-- Agent moves randomly through maze
-- Hits walls frequently (−2 reward)
-- Discovers goal occasionally (+5 reward)
-- Builds initial Q-table mapping: "In this spot, which direction looks promising?"
-
-**Analogy:** Like learning a new city—initially you try random streets, noting which lead to dead ends and which get you closer to home.
-
-**2. Value Assignment (Runs 450-843)**
-- Agent notices patterns: "When I was at position (5,3) and went right, I eventually reached the goal"
-- Q-values increase for action sequences that lead to success
-- Walls get strong negative values (learned to avoid)
-- Paths toward goal get positive values (learned to follow)
-
-**Analogy:** After a few trips, you start remembering: "That street always has traffic" or "This route is usually faster."
-
-**3. Policy Optimization (Runs 843-1000)**
-- Agent prefers high-scoring moves (exploitation) 
-- Occasionally tries new paths (exploration)
-- Balances known good routes with discovering better ones
-- Convergence: Consistent navigation with minimal exploration
-
-**Analogy:** Now you automatically take your favorite route but might occasionally try a side street if conditions change.
-
-### Real-World Applications
-
-This same algorithm (with variations) powers:
-- **Robot Navigation:** Warehouse robots, autonomous vehicles
-- **Game AI:** NPCs learning player behavior
-- **Resource Management:** Data center optimization, network routing
-- **Finance:** Trading algorithms, portfolio optimization
-- **Healthcare:** Treatment planning, drug discovery
-
-### Why This Implementation Matters
-
-**Understanding from First Principles:**
-Most RL implementations use libraries like TensorFlow, PyTorch, or Stable-Baselines that abstract away core concepts. This project implements everything from scratch, demonstrating:
-
-1. **Deep Conceptual Understanding:** Know exactly how Q-learning works mathematically
-2. **Debugging Capability:** Can identify issues at algorithm level, not just API level
-3. **Customization Ability:** Can modify algorithm for specific use cases
-4. **Interview Readiness:** Can explain RL concepts without relying on framework magic
 
 ---
 
