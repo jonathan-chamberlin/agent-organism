@@ -9,7 +9,10 @@ import imageio
 from datetime import datetime
 
 
-
+now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+frame_dir = f"frames {now}"
+os.makedirs(frame_dir, exist_ok=True)
+frame_count = 0
 
 np.set_printoptions(precision=2, suppress=True)
 
@@ -25,12 +28,9 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     """
     from rendering_file import display_q_values_around_agent
     from rendering_file import display_run_and_action_index
+    global frame_dir
+    global frame_count
     
-    if recording == True:
-        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        frame_dir = f"frames {now}"
-        os.makedirs(frame_dir, exist_ok=True)
-        frame_count = 0
     
     rendering_pygame_value = "pygame"
     movement_valid_list = []
@@ -42,6 +42,8 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
 
 
     for action in actions_to_do:
+        pg.event.get()
+        
         draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
         display_run_and_action_index(run_index,action_index, coords_of_run_action_message, Font)
         
@@ -92,12 +94,14 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         frames = sorted(glob.glob(frames_path))
         
         video_path = f"{frame_dir}/maze_run.mp4"
-        with imageio.get_writer(video_path, fps=30, codec='libx264') as writer:  # Adjust fps
+        with imageio.get_writer(video_path, fps=framerate, codec='libx264') as writer:  # Adjust fps
             for frame_file in frames:
                 image = imageio.imread(frame_file)
                 writer.append_data(image)
         
         print(f"Video saved: {video_path}")
+        
+        
     return movement_valid_list
 
 def game_loop_learning_one_run(action_limit: int, possible_actions: list[tuple[int,int]],environment: tuple[tuple[int,int]], environment_row_count: int, environment_column_count: int, start: tuple[int,int], goals: list[tuple[int,int]], walls: list[tuple[int,int]], object_coloring: dict, color_for_background: tuple[int],q_table: tuple[tuple[int,int]], epsilon: float, alpha:float, gamma: float, run_indexes_to_render: list[int], cell_value_to_name_map: dict, cell_reward:dict, run_index:int, coords_of_run_action_indexs: tuple[int,int], runs: int, recording: bool) -> tuple[list[tuple[int,int]], tuple[tuple[int,int]], float, list[float], int]:

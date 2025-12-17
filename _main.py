@@ -27,9 +27,5 @@ plt.ylabel("How many moves it took agent to reach goal")
 plt.title("Run Index vs. How many moves it took agent to reach goal")
 plt.show()
 
-running = True
-while running:
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            running = False
+
 
