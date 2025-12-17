@@ -17,7 +17,11 @@ An autonomous agent that learns to navigate complex mazes through pure reinforce
 
 🎥 **Watch Full Demo Video**
 
-*Video showing agent's learning progression from Run 1 (random exploration) to Run 1000 (optimized navigation)*
+**Demo Video - Agent Learning Progression:**
+
+https://github.com/user-attachments/assets/8d979445-c313-4c38-8870-839c39a6295c
+
+*Watch the agent evolve from random exploration (Run 1) to optimized navigation (Run 1000). The video showcases Q-values updating in real-time as the agent learns the optimal path through the maze.*
 
 ### Key Achievement
 After 1000 training runs through a highly constrained maze (53.6% wall density), the agent achieves **100% success rate** with an average navigation time of **133 ± 60 moves**, demonstrating robust convergence and effective exploration-exploitation balance.
@@ -74,7 +78,7 @@ Unlike episodic RL where failures terminate episodes, continuous learning allows
 
 This creates a highly constrained navigation challenge with narrow passages and complex routing requirements.
 
-![Maze Environment](documentation/maze_environment.png)
+![Maze Environment](documentation/maze_environment_1.png)
 *Dense 25×25 maze with 53.6% wall coverage requiring sophisticated pathfinding*
 
 ### Learning Progression
@@ -113,14 +117,6 @@ This creates a highly constrained navigation challenge with narrow passages and 
 - **Total Training Time:** 18.08 seconds (1000 runs)
 - **Actions Per Run:** 400 (with Q-table update on each)
 - **Q-Value Stability:** Converged and capped at 500.00
-
-### Visual Learning Demonstration
-
-**Demo Video - Agent Learning Progression:**
-
-https://github.com/user-attachments/assets/8d979445-c313-4c38-8870-839c39a6295c
-
-*Watch the agent evolve from random exploration (Run 1) to optimized navigation (Run 1000). The video showcases Q-values updating in real-time as the agent learns the optimal path through the maze.*
 
 **Run Comparison:**
 - **Run 1:** Random wandering, frequent wall collisions, no goal discovery
