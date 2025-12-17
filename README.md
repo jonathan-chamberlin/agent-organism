@@ -240,6 +240,47 @@ Most RL implementations use libraries like TensorFlow, PyTorch, or Stable-Baseli
 - Results visualization with Matplotlib
 - Performance analysis
 
+### Project Structure
+
+```
+agent-organism/
+│
+├── _main.py                    # Program entry point
+├── _inputs_file.py             # Configuration hub
+├── requirements.txt            # Dependencies
+│
+├── environment_file.py         # Maze generation
+│   ├── add_custom_object()     # Generic object placement
+│   └── add_walls_on_border()   # Boundary creation
+│
+├── coords_and_movement_file.py # Movement physics
+│   ├── coordinates_after_moving()  # Position updates
+│   ├── adjacent_coords()           # Spatial relationships
+│   └── object_at_coords()          # State identification
+│
+├── q_learning_file.py          # Core RL algorithm
+│   ├── update_q_table()        # Bellman equation
+│   ├── choose_action()         # ε-greedy policy
+│   ├── get_reward()            # Reward function
+│   └── coordinates_to_q_table_index()  # State mapping
+│
+├── rendering_file.py           # Visualization engine
+│   ├── draw_grid_and_background()  # Environment rendering
+│   ├── draw_agent()                # Agent visualization
+│   └── display_q_values_around_agent()  # Q-value overlay
+│
+├── game_loop_file.py           # Training orchestration
+│   ├── game_loop_manual()      # Single run rendering
+│   ├── game_loop_learning_one_run()     # One training run
+│   └── game_loop_learning_multiple_runs()  # Full training
+│
+└── test_logic.py               # Test suite (9 tests)
+    ├── test_update_q_table()
+    ├── test_choose_action()
+    ├── test_get_reward()
+    └── ... (6 more)
+```
+
 ### Core Algorithm: Q-Learning Implementation
 
 **Bellman Equation:**
@@ -1092,7 +1133,7 @@ run_indexes_to_render = [0, 500, 999]  # Render specific runs
 # Edit _inputs_file.py:
 recording = True
 run_indexes_to_render = [0, 100, 500, 999]  # Select runs for video
-framerate = 10  # Playback speed (frames per second)
+framerate = 60  # Playback speed (frames per second)
 ```
 
 ### Configuration
@@ -1139,47 +1180,6 @@ goals = [(10, 8)]          # Goal position
 walls_input = [            # Add walls as (row, col) tuples
     (1,3), (2,3), (3,3), ...
 ]
-```
-
-### Project Structure
-
-```
-agent-organism/
-│
-├── _main.py                    # Program entry point
-├── _inputs_file.py             # Configuration hub
-├── requirements.txt            # Dependencies
-│
-├── environment_file.py         # Maze generation
-│   ├── add_custom_object()     # Generic object placement
-│   └── add_walls_on_border()   # Boundary creation
-│
-├── coords_and_movement_file.py # Movement physics
-│   ├── coordinates_after_moving()  # Position updates
-│   ├── adjacent_coords()           # Spatial relationships
-│   └── object_at_coords()          # State identification
-│
-├── q_learning_file.py          # Core RL algorithm
-│   ├── update_q_table()        # Bellman equation
-│   ├── choose_action()         # ε-greedy policy
-│   ├── get_reward()            # Reward function
-│   └── coordinates_to_q_table_index()  # State mapping
-│
-├── rendering_file.py           # Visualization engine
-│   ├── draw_grid_and_background()  # Environment rendering
-│   ├── draw_agent()                # Agent visualization
-│   └── display_q_values_around_agent()  # Q-value overlay
-│
-├── game_loop_file.py           # Training orchestration
-│   ├── game_loop_manual()      # Single run rendering
-│   ├── game_loop_learning_one_run()     # One training run
-│   └── game_loop_learning_multiple_runs()  # Full training
-│
-└── test_logic.py               # Test suite (9 tests)
-    ├── test_update_q_table()
-    ├── test_choose_action()
-    ├── test_get_reward()
-    └── ... (6 more)
 ```
 
 ### Running Tests
@@ -1374,20 +1374,6 @@ recording = False
 
 ### Engineering & Analysis
 
-**A/B Testing Framework:**
-```python
-# Proposed structure:
-class ExperimentManager:
-    def run_experiment(self, config):
-        """Run training with specific hyperparameters"""
-        results = train_agent(config)
-        save_results(config, results)
-        
-    def compare_experiments(self, exp_ids):
-        """Statistical comparison of performance"""
-        return analyze_results(exp_ids)
-```
-
 **Automated Hyperparameter Search:**
 - Grid search over α, γ, ε parameter space
 - Bayesian optimization for efficient search
@@ -1469,7 +1455,7 @@ This would enable:
 
 ### Project Timeline
 
-**Development Period:** [Start Date] - December 2025
+**Development Period:** December 2025
 
 **Commit Statistics:**
 - **Total Commits:** 400+
@@ -1480,7 +1466,6 @@ This would enable:
 ### Learning Resources
 
 **Primary References:**
-- *Reinforcement Learning: An Introduction* by Sutton & Barto
 - *The Pragmatic Programmer* by Hunt & Thomas
 - Anthropic's Claude AI for architectural discussions and debugging
 
@@ -1491,14 +1476,14 @@ Nick Sheft (M.S. Data Science, Northeastern University, Specialization: Multimod
 ### Development Metrics
 
 **Code Volume:**
-- **Lines of Code:** ~2,500 (excluding comments/blank lines)
+- **Lines of Code:** ~1,200
 - **Files:** 8 main modules
 - **Test Coverage:** Core algorithms fully tested
 - **Documentation:** Comprehensive docstrings throughout
 
 **Training Statistics:**
 - **Experiments Run:** 50+ hyperparameter configurations
-- **Total Training Runs:** 50,000+ (across all experiments)
+- **Total Training Runs:** 100,000+ (across all experiments)
 - **Bugs Encountered:** 20+
 - **Bugs Solved:** 20 (100% resolution rate)
 
@@ -1553,15 +1538,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 - **Matplotlib** - Data visualization
 - **Pytest** - Testing framework
 
-**Learning Resources:**
-- Reinforcement Learning textbooks and papers
-- Software engineering best practices literature
-- Online RL community discussions
-
 **Special Thanks:**
 - Nick Sheft for validation and encouragement
 - Anthropic's Claude for architectural discussions
-- The broader ML/RL community for foundational research
 
 ---
 
