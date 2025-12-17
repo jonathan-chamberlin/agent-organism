@@ -68,7 +68,7 @@ Unlike episodic RL where failures terminate episodes, continuous learning allows
 
 This creates a highly constrained navigation challenge with narrow passages and complex routing requirements.
 
-![Maze Environment](documentation/maze_environment.png)
+![Maze Environment](documentation/maze_environment_1.png)
 *Dense 25×25 maze with 53.6% wall coverage requiring sophisticated pathfinding*
 
 ### Learning Progression
