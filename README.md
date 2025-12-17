@@ -84,7 +84,6 @@ This creates a highly constrained navigation challenge with narrow passages and 
 
 **Training Timeline:**
 - **Run 0-449:** Pure exploration phase (0.4% success rate)
-- **Run 450:** First successful goal reach (345 moves)
 - **Run 500-843:** Rapid learning phase (53.8% success rate)
 - **Run 843:** Convergence point (sustained 80%+ success rate)
 - **Run 900-1000:** Mastery phase (100% success rate)
@@ -101,10 +100,6 @@ This creates a highly constrained navigation challenge with narrow passages and 
 | **Final Mastery** | **900-1000** | **100%** | **133.0** | **81** | **59.5** |
 
 **Key Performance Indicators:**
-- ✅ **First Success:** Run #449 (345 moves to goal)
-- ✅ **Convergence Point:** Run ~843 (80%+ success in 50-run window)
-- ✅ **Final Success Rate:** 100% (last 100 runs)
-- ✅ **Average Performance:** 133.0 ± 59.5 moves
 - ✅ **Best Performance:** 81 moves (1.37× theoretical optimal path)
 - ✅ **Worst Performance:** 359 moves (still successful navigation)
 
@@ -113,12 +108,6 @@ This creates a highly constrained navigation challenge with narrow passages and 
 - **Total Training Time:** 18.08 seconds (1000 runs)
 - **Actions Per Run:** 400 (with Q-table update on each)
 - **Q-Value Stability:** Converged and capped at 500.00
-
-**Run Comparison:**
-- **Run 1:** Random wandering, frequent wall collisions, no goal discovery
-- **Run 450:** First successful navigation after extensive exploration
-- **Run 843:** Consistent pathfinding with efficient routing
-- **Run 1000:** Near-optimal path with minimal exploration, confident navigation
 
 The visualization shows Q-values around the agent in real-time, demonstrating how the value function guides decision-making as learning progresses.
 
