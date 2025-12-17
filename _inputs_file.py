@@ -64,7 +64,7 @@ if simulation_option == 2:
     runs = 1
     run_indexes_to_render = [0]
     
-    action_limit = 400
+    action_limit = 100
     environment_row_count = 25
     environment_column_count = 25
     cell_y_length = 25

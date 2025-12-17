@@ -70,8 +70,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         
         if recording == True:
             filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
-            filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
-            pg.image.save(window, f"agent_maze_video_{now}")
+            pg.image.save(window, filename)
             frame_count += 1
         
         agent_coords = next_coords
