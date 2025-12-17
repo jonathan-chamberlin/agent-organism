@@ -30,6 +30,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     from rendering_file import display_run_and_action_index
     global frame_dir
     global frame_count
+    global framerate
     
     
     rendering_pygame_value = "pygame"

@@ -60,7 +60,7 @@ if simulation_option == 1:
     (7,13), (8,13), (9,13),
     (13,3), (13,4),(9,8)] 
 if simulation_option == 2:
-    framerate = 1000
+    framerate = 50
     runs = 1000
     run_indexes_to_render = [0,250,500,999]
     
