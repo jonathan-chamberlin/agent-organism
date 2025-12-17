@@ -41,9 +41,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     total_reward_for_run = np.sum(list_of_rewards_for_each_action)
 
 
-    for action in actions_to_do:
-        pg.event.get()
-        
+    for action in actions_to_do:        
         draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
         display_run_and_action_index(run_index,action_index, coords_of_run_action_message, Font)
         
@@ -73,6 +71,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         if recording == True:
             filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
             pg.image.save(window, filename)
+            pg.event.get()
             frame_count += 1
         
         agent_coords = next_coords
@@ -84,23 +83,7 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         display_message_and_value("Loading next run...","", (-0.8,0))
         
         pg.time.delay(framerate)
-        pg.display.flip()
-    
-    if recording == True:
-        import imageio
-        import glob
-        
-        frames_path = os.path.join(frame_dir, "frame_*.png")
-        frames = sorted(glob.glob(frames_path))
-        
-        video_path = f"{frame_dir}/maze_run.mp4"
-        with imageio.get_writer(video_path, fps=framerate, codec='libx264') as writer:  # Adjust fps
-            for frame_file in frames:
-                image = imageio.imread(frame_file)
-                writer.append_data(image)
-        
-        print(f"Video saved: {video_path}")
-        
+        pg.display.flip()        
         
     return movement_valid_list
 
@@ -189,5 +172,20 @@ def game_loop_learning_multiple_runs(runs: int, action_limit: int, possible_acti
         pg.draw.rect(window,(255,0,0),(0.5*pixel_rendering_offset_x_from_top_left,0.5*pixel_rendering_offset_y_from_top_left,1*cell_x_length,1*cell_y_length))
         display_message_and_value("Simulation Done","", (-0.8,0))
         pg.display.flip()
+    
+    if recording == True:
+        import imageio
+        import glob
+        
+        frames_path = os.path.join(frame_dir, "frame_*.png")
+        frames = sorted(glob.glob(frames_path))
+        
+        video_path = f"{frame_dir}/maze_run.mp4"
+        with imageio.get_writer(video_path, fps=framerate, codec='libx264') as writer:  # Adjust fps
+            for frame_file in frames:
+                image = imageio.imread(frame_file)
+                writer.append_data(image)
+        
+        print(f"Video saved: {video_path}")
     
     return (q_table, array_of_rewards_for_all_runs, list_of_action_index_agent_first_touched_goal)
