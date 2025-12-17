@@ -166,78 +166,6 @@ Most RL implementations use libraries like TensorFlow, PyTorch, or Stable-Baseli
 
 ## Technical Architecture
 
-### Core Algorithm: Q-Learning Implementation
-
-**Bellman Equation:**
-```
-Q(s, a) ← Q(s, a) + α · [R + γ · max Q(s', a') - Q(s, a)]
-                              a'
-```
-
-Where:
-- **Q(s, a)** = Value of taking action *a* in state *s*
-- **α (alpha)** = Learning rate (0.1) - controls information update speed
-- **γ (gamma)** = Discount factor (0.99) - prioritizes future rewards
-- **R** = Immediate reward (−2 for walls, +5 for goal, −1 for empty cells)
-- **s'** = Next state after taking action *a*
-
-**Implementation Details:**
-```python
-def update_q_table(old_pos, action, new_pos, possible_actions, environment, 
-                   environment_column_count, environment_row_count, walls, 
-                   q_table, alpha, gamma, cell_reward):
-    """
-    Updates Q-table using Bellman equation after each action.
-    
-    Key Design Decision: new_pos passed explicitly (not recalculated)
-    Rationale: Already computed in physics step before this function call.
-               Prevents redundant calculation every frame → significant 
-               performance gain (called 400 times per run × 1000 runs = 400,000 times)"""
-    
-    # Get reward for this action
-    reward_calc = get_reward(old_pos, action, possible_actions, 
-                            environment, walls, cell_reward)
-    reward = reward_calc[0]
-    movement_valid = reward_calc[2]
-    
-    q_table_width = len(q_table[0])
-    
-    # Convert coordinates to Q-table indices
-    old_pos_q_table_index = coordinates_to_q_table_index(
-        old_pos, environment_row_count, environment_column_count, q_table_width)
-    new_pos_q_table_index = coordinates_to_q_table_index(
-        new_pos, environment_row_count, environment_column_count, q_table_width)
-    
-    # Get action index in Q-table
-    action_index = possible_actions.index(action)
-    
-    # Bellman equation implementation
-    old_q_value = q_table[old_pos_q_table_index][action_index]
-    max_future_q = max(q_table[new_pos_q_table_index])
-    learning_adjustment = alpha * (reward + (gamma * max_future_q - old_q_value))
-    
-    # Prevent Q-value explosion (cap at 2^1022 to avoid float overflow)
-    new_q_value = min(old_q_value + learning_adjustment, 1<<1022)
-    
-    # Update Q-table in place
-    q_table[old_pos_q_table_index][action_index] = new_q_value
-    
-    return [new_q_value, old_pos_q_table_index, new_pos_q_table_index, movement_valid]
-```
-
-**Safety Mechanism:**
-The Q-value capping at 2^1022 prevents floating-point overflow that was discovered during the "Exploding Q-Value Bug" debugging (see Engineering Journey section). Without this safeguard, values exceeding ~10^308 cause all Q-values to become equal, resulting in random agent behavior.
-
-**Exploration Strategy:**
-- **ε-greedy policy** with ε = 0.01 (99% exploitation, 1% exploration)
-- Ensures continued exploration even after convergence
-- Balances learning efficiency with policy stability
-
-**Learning Paradigm:**
-- **Continuous learning** (no episode termination)
-- Agent learns from every action, including mistakes
-- Faster convergence than episodic approaches for this problem
-
 ### System Architecture
 
 ```
@@ -311,6 +239,78 @@ The Q-value capping at 2^1022 prevents floating-point overflow that was discover
 - Program execution
 - Results visualization with Matplotlib
 - Performance analysis
+
+### Core Algorithm: Q-Learning Implementation
+
+**Bellman Equation:**
+```
+Q(s, a) ← Q(s, a) + α · [R + γ · max Q(s', a') - Q(s, a)]
+                              a'
+```
+
+Where:
+- **Q(s, a)** = Value of taking action *a* in state *s*
+- **α (alpha)** = Learning rate (0.1) - controls information update speed
+- **γ (gamma)** = Discount factor (0.99) - prioritizes future rewards
+- **R** = Immediate reward (−2 for walls, +5 for goal, −1 for empty cells)
+- **s'** = Next state after taking action *a*
+
+**Implementation Details:**
+```python
+def update_q_table(old_pos, action, new_pos, possible_actions, environment, 
+                   environment_column_count, environment_row_count, walls, 
+                   q_table, alpha, gamma, cell_reward):
+    """
+    Updates Q-table using Bellman equation after each action.
+    
+    Key Design Decision: new_pos passed explicitly (not recalculated)
+    Rationale: Already computed in physics step before this function call.
+               Prevents redundant calculation every frame → significant 
+               performance gain (called 400 times per run × 1000 runs = 400,000 times)"""
+    
+    # Get reward for this action
+    reward_calc = get_reward(old_pos, action, possible_actions, 
+                            environment, walls, cell_reward)
+    reward = reward_calc[0]
+    movement_valid = reward_calc[2]
+    
+    q_table_width = len(q_table[0])
+    
+    # Convert coordinates to Q-table indices
+    old_pos_q_table_index = coordinates_to_q_table_index(
+        old_pos, environment_row_count, environment_column_count, q_table_width)
+    new_pos_q_table_index = coordinates_to_q_table_index(
+        new_pos, environment_row_count, environment_column_count, q_table_width)
+    
+    # Get action index in Q-table
+    action_index = possible_actions.index(action)
+    
+    # Bellman equation implementation
+    old_q_value = q_table[old_pos_q_table_index][action_index]
+    max_future_q = max(q_table[new_pos_q_table_index])
+    learning_adjustment = alpha * (reward + (gamma * max_future_q - old_q_value))
+    
+    # Prevent Q-value explosion (cap at 2^1022 to avoid float overflow)
+    new_q_value = min(old_q_value + learning_adjustment, 1<<1022)
+    
+    # Update Q-table in place
+    q_table[old_pos_q_table_index][action_index] = new_q_value
+    
+    return [new_q_value, old_pos_q_table_index, new_pos_q_table_index, movement_valid]
+```
+
+**Safety Mechanism:**
+The Q-value capping at 2^1022 prevents floating-point overflow that was discovered during the "Exploding Q-Value Bug" debugging (see Engineering Journey section). Without this safeguard, values exceeding ~10^308 cause all Q-values to become equal, resulting in random agent behavior.
+
+**Exploration Strategy:**
+- **ε-greedy policy** with ε = 0.01 (99% exploitation, 1% exploration)
+- Ensures continued exploration even after convergence
+- Balances learning efficiency with policy stability
+
+**Learning Paradigm:**
+- **Continuous learning** (no episode termination)
+- Agent learns from every action, including mistakes
+- Faster convergence than episodic approaches for this problem
 
 ### Key Design Principle: Orthogonality
 
