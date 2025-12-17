@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.14+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[🎥 Watch Demo Video](#visual-learning-demonstration) | [📊 View Performance Graphs](#results--performance) | [💻 GitHub Repository](https://github.com/jonathan-chamberlin/agent-organism)
+[📊 View Performance Graphs](#results--performance) | [💻 GitHub Repository](https://github.com/jonathan-chamberlin/agent-organism)
 
 ---
 
@@ -13,11 +13,7 @@
 
 An autonomous agent that learns to navigate complex mazes through pure reinforcement learning, implementing **Q-learning from scratch without pre-built ML frameworks**. This project demonstrates deep understanding of RL fundamentals by building the entire learning pipeline—from the Bellman equation to real-time visualization—using only NumPy and core Python libraries.
 
-**Demo Video:**
-
-🎥 **Watch Full Demo Video**
-
-**Demo Video - Agent Learning Progression:**
+ 🎥**Demo Video: Agent Learning Progression:**
 
 https://github.com/user-attachments/assets/8d979445-c313-4c38-8870-839c39a6295c
 
