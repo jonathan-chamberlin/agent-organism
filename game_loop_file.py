@@ -41,7 +41,9 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
     total_reward_for_run = np.sum(list_of_rewards_for_each_action)
 
 
-    for action in actions_to_do:        
+    for action in actions_to_do:   
+        pg.event.get()
+        
         draw_grid_and_background(full_environment, color_map, background_color, cell_value_to_name_map)
         display_run_and_action_index(run_index,action_index, coords_of_run_action_message, Font)
         
@@ -71,7 +73,6 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         if recording == True:
             filename = os.path.join(frame_dir, f"frame_{frame_count:04d}.png")
             pg.image.save(window, filename)
-            pg.event.get()
             frame_count += 1
         
         agent_coords = next_coords
@@ -83,7 +84,8 @@ def game_loop_manual(environment: tuple[tuple[int,int]], start: tuple[int,int], 
         display_message_and_value("Loading next run...","", (-0.8,0))
         
         pg.time.delay(framerate)
-        pg.display.flip()        
+        pg.display.flip()
+        
         
     return movement_valid_list
 
