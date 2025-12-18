@@ -11,7 +11,9 @@
 
 ## Overview
 
-An autonomous agent that learns to navigate complex mazes through pure reinforcement learning, implementing **Q-learning from scratch without pre-built ML frameworks**. This project demonstrates deep understanding of RL fundamentals by building the entire learning pipeline—from the Bellman equation to real-time visualization—using only NumPy and core Python libraries.
+An autonomous agent that learns to navigate complex mazes through pure reinforcement learning, implementing **Q-learning from scratch without pre-built ML frameworks**. This project demonstrates deep understanding of RL fundamentals by building the entire system from the ground up: **custom physics engine**, **game loop architecture**, and **Q-learning algorithm**—all implemented using only NumPy and core Python libraries.
+
+Unlike typical RL projects that use pre-built environments (OpenAI Gym) or learning libraries (Stable-Baselines, TensorFlow), every component here was designed and implemented from scratch, demonstrating full-stack ML engineering capabilities.
 
  🎥**Demo Video: Agent Learning Progression:**
 
@@ -24,7 +26,7 @@ After 1000 training runs through a highly constrained maze (53.6% wall density),
 
 ### Technical Highlights
 - ✅ **Tabular Q-Learning** implemented from mathematical foundations (Bellman equation)
-- ✅ **8-directional movement** with continuous learning (no episode termination on failure)
+- ✅ **9-directional movement** with continuous learning (no episode termination on failure)
 - ✅ **Modular architecture** following software engineering best practices
 - ✅ **Systematic debugging methodology** for complex RL challenges
 - ✅ **Real-time visualization** with Q-value display and video generation
@@ -75,18 +77,12 @@ Unlike episodic RL where failures terminate episodes, continuous learning allows
 This creates a highly constrained navigation challenge with narrow passages and complex routing requirements.
 
 ![Maze Environment](documentation/maze_environment_1.png)
-*Dense 25×25 maze with 53.6% wall coverage requiring sophisticated pathfinding*
+*Dense 25×25 maze with 53.6% wall coverage requiring sophisticated pathfinding. The blue agent starts on the green start square. The goal is the yellow square.*
 
 ### Learning Progression
 
 ![Convergence Graph](documentation/run_index_vs_moves_to_reach_goal.png)
-*Run Index vs. Moves to Goal - Note the dramatic improvement around Run 500*
-
-**Training Timeline:**
-- **Run 0-449:** Pure exploration phase (0.4% success rate)
-- **Run 500-843:** Rapid learning phase (53.8% success rate)
-- **Run 843:** Convergence point (sustained 80%+ success rate)
-- **Run 900-1000:** Mastery phase (100% success rate)
+*Run Index vs. Moves to Goal - Note the dramatic improvement around Run 600*
 
 ### Performance Metrics
 
@@ -458,38 +454,6 @@ def game_loop_manual(environment, start, walls, ...):
     Pre-computing wall list (done once) vs. scanning environment 
     array (done 400× per run) provides speedup.
     """
-```
-
-**Generalized Object Creation:**
-```python
-def add_custom_object(maze_grid, cells_to_put_object_in: list[tuple], chosen_value):
-    """
-    Generic function for placing any object type in environment.
-    Enables adding new terrain (walls, goals, mud, ice, traps) with zero code changes.
-    
-    Takes in a list of cells as tuples in the form (row_index, column_index).
-    Returns a modified maze array where specified cells are set to chosen_value.
-    
-    Key Design Decision: Creates a copy to prevent aliasing issues.
-    The original maze_grid is not modified in memory.
-    """
-    # Prevent aliasing - ensure original maze_grid isn't modified
-    copied_maze_grid_with_custom_objects = maze_grid.copy()
-    
-    for cell in cells_to_put_object_in:
-        row_index = cell[0]
-        column_index = cell[1]
-        
-        # Set the cell to the chosen value (wall, goal, etc.)
-        copied_maze_grid_with_custom_objects[row_index][column_index] = chosen_value
-    
-    return copied_maze_grid_with_custom_objects
-
-# Powers all specific object placement functions:
-# add_walls(), add_goals(), add_obstacles() all use this generic implementation
-# Example usage:
-#   walls_added = add_custom_object(maze, wall_coords, WALL_VALUE)
-#   goals_added = add_custom_object(maze, goal_coords, GOAL_VALUE)
 ```
 
 **Benefits:**
