@@ -94,6 +94,7 @@ This creates a highly constrained navigation challenge with narrow passages and 
 | Rapid Learning | 500-843 | 53.8% | 193.5 | - | 92.8 |
 | Post-Convergence | 843-1000 | 87.3% | 165.2 | 81 | 76.4 |
 | **Final Mastery** | **900-1000** | **100%** | **133.0** | **81** | **59.5** |
+From early exploration to final mastery, the avg moves decreased by 64.01%.
 
 **Key Performance Indicators:**
 - ✅ **Best Performance:** 81 moves (1.37× theoretical optimal path)
